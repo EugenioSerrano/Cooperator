@@ -5,7 +5,7 @@ fecha: "2026-05-09"
 autor: "Eugenio Serrano"
 llm: "DeepSeek V4"
 severidad: "🔴 crítica"
-estado: "abierto"
+estado: "resuelto"
 detectado_en: "BUG-009 (producción)"
 artefactos_afectados:
   - "1.4/Tools/CooperatorModeler/Templates/CSharpClasses/DefaultLazyProvider.cs"
@@ -13,7 +13,7 @@ artefactos_afectados:
   - "1.4/Tools/CooperatorModeler/Templates/CSharpClasses/Mapper.Auto.cs"
   - "1.4/Tools/CooperatorModeler/Templates/VisualBasicClasses/Mapper.Auto.cs"
 spec_test: ""
-spec_fix: ""
+spec_fix: "SPEC-260509-1106"
 ---
 
 # BUG-001 — Condición asimétrica en DefaultLazyProvider.cs omite Mappers en MappersCache

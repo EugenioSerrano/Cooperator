@@ -4,7 +4,7 @@ titulo: "Corregir condición asimétrica en DefaultLazyProvider.cs que omite Map
 fecha: "2026-05-09"
 autor: "Eugenio Serrano"
 llm: "DeepSeek V4"
-estado: "pendiente"
+estado: "completada"
 origen: "BUG-001"
 fa_asociado: ""
 adrs_asociados: []
