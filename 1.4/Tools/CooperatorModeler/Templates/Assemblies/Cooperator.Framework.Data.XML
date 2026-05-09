@@ -1,0 +1,2611 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cooperator.Framework.Data</name>
+    </assembly>
+    <members>
+        <member name="T:Cooperator.Framework.Data.IBaseGateway">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway.ResetCache">
+            <summary>
+            Reset the cache if it is a cacheable table.
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Data.IBaseGateway`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="T2"></typeparam>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.GetOne(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get one Object or Entity by execute stored procedure: [TableName]_GetOne
+            </summary>
+            <param name="primaryKey">PrimaryKey of record to retrive</param>
+            <returns>Object or Entity</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.GetOne(System.Data.Common.DbTransaction,Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get one Object or Entity by execute stored procedure: [TableName]_GetOne
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="primaryKey">PrimaryKey of record to retrive</param>
+            <returns>Object or Entity</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.GetAll(System.Data.Common.DbTransaction)">
+            <summary>
+            Get all rows or entities by execute stored procedure: [TableName]_GetAll
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <returns>ObjectList or entity list</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.GetAll">
+            <summary>
+            Get all rows or entities by execute stored procedure: [TableName]_GetAll
+            </summary>
+            <returns>ObjectList or entity list</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.GetByParent(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get rows by parent
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.GetByParent(System.Data.Common.DbTransaction,Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get rows by parent
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Insert(`0)">
+            <summary>
+            Insert a Object or Entity in related table.
+            </summary>
+            <param name="row">Object or Entity to insert</param>	
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Insert(System.Data.Common.DbTransaction,`0)">
+            <summary>
+            Insert a Object or Entity in related table.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="row">Object or Entity to insert</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Append(`1)">
+            <summary>
+            Append a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are inserted in a transaction.
+            </summary>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Append(System.Data.Common.DbTransaction,`1)">
+            <summary>
+            Append a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are inserted in a transaction.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Delete(`0)">
+            <summary>
+            Delete a Object or Entity from related table.
+            </summary>
+            <param name="row">Object or Entity to delete.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Delete(System.Data.Common.DbTransaction,`0)">
+            <summary>
+            Delete a Object or Entity from related table.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="row">Object or Entity to delete.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Remove(`1)">
+            <summary>
+            Append a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are inserted in a transaction.
+            </summary>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Remove(System.Data.Common.DbTransaction,`1)">
+            <summary>
+            Append a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are inserted in a transaction.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Save(`0)">
+            <summary>
+            Update a Object or Entity in related table.
+            </summary>
+            <param name="row">Object or Entity to update</param>	
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Save(System.Data.Common.DbTransaction,`0)">
+            <summary>
+            Update a Object or Entity in related table.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="row">Object or Entity to update</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Update(`1)">
+            <summary>
+            Update a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are updated in a transaction.
+            </summary>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.IBaseGateway`2.Update(System.Data.Common.DbTransaction,`1)">
+            <summary>
+            Update a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are updated in a transaction.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="E:Cooperator.Framework.Data.IBaseGateway`2.BeforeInsert">
+            <summary>
+            Event raised before insert Object or Entity
+            </summary>
+        </member>
+        <member name="E:Cooperator.Framework.Data.IBaseGateway`2.BeforeDelete">
+            <summary>
+            Event raised before delete Object or Entity
+            </summary>
+        </member>
+        <member name="E:Cooperator.Framework.Data.IBaseGateway`2.BeforeSave">
+            <summary>
+            Event raised before save Object or Entity
+            </summary>
+        </member>
+        <member name="E:Cooperator.Framework.Data.IBaseGateway`2.BeforeUpdate">
+            <summary>
+            Event raised before update Object or Entity
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Data.BaseLoader`3">
+            <summary>
+            
+            </summary>
+            <typeparam name="E"></typeparam>
+            <typeparam name="T"></typeparam>
+            <typeparam name="T2"></typeparam>
+        </member>
+        <member name="T:Cooperator.Framework.Data.BaseRule">
+            <summary>
+            Base class that provide database access for inheritors
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.#ctor">
+            <summary>
+            Class contructor
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.checkForSqlInjection(System.String)">
+            <summary>
+            Checks for Sql Injection in query
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.IsReadOnly">
+            <summary>
+            If the table is read only
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.IsCacheable">
+            <summary>
+            If the table is cacheable
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.SQLQueriesEnabled">
+            <summary>
+            Enables the GetObjectBySQLText and GetObjectListBySQLText methods
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.StoredProceduresPrefix">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Cooperator.Framework.Data.BaseRule.ConnectionStringKeyName">
+            <summary>
+            Default connection string key name.
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Data.BaseRule.DataBaseHelper">
+            <summary>
+            Provide access to all database operations
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Data.BaseRule.MaxRowsInObjectList">
+            <summary>
+            Max number of rows in ObjectList
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Data.BaseRule.MaxObjectsInCacheForReadOnlyTable">
+            <summary>
+            The max number of records to keep in cache for readonly tables.
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Data.BaseRule.TableName">
+            <summary>
+            Table name of matching Object or Entity
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Data.BaseRule.RuleName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Data.BaseRule.InternalDBHelper">
+            <summary>
+            Provide access to all database operations
+            </summary>        
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.#ctor(Cooperator.Framework.Data.BaseRule)">
+            <summary>
+            This class is instantiated inside BaseRule
+            </summary>
+            <param name="parentClass"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.SetConnectionStringValue(System.String)">
+            <summary>
+            Set a connection string. Used for database access without configuration file.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.GetAndBeginTransaction">
+            <summary>
+            Begin a transaction. If Isolation Level is not specified, Read Committed is used
+            </summary>
+            <returns>DbTransaction object</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.GetAndBeginTransaction(System.Data.IsolationLevel)">
+            <summary>
+            Begin a transaction. If Isolation Level is not specified, Read Committed is used
+            </summary>
+            <param name="isolationLevel">Transaction isolation level</param>
+            <returns>DbTransaction object</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.GetNewConnection">
+            <summary>
+            Get a new open connection
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.correctSpName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="SpName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteScalarBySQLText(System.String)">
+            <summary>			
+            Execute a SQL Text that return a scalar (1 x 1)
+            </summary>
+            <param name="commandText">Sql command</param>
+            <returns>Object with scalar value</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteScalarBySQLText(System.Data.Common.DbTransaction,System.String)">
+            <summary>
+            Execute a SQL Text that return a scalar (1 x 1)
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="commandText">Sql command</param>
+            <returns>Object with scalar value</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteScalarByStoredProcedure(System.String,System.Object[])">
+            <summary>
+            Execute a Stored Procedure that return a scalar (1 x 1)
+            </summary>
+            <param name="spName">Stored procedure name</param>
+            <param name="parameterValues">Stored procedure parameters</param>
+            <returns>Object with scalar value</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteScalarByStoredProcedure(System.Data.Common.DbTransaction,System.String,System.Object[])">
+            <summary>
+            Execute a Stored Procedure that return a scalar (1 x 1)
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="spName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+            <returns>Object with scalar value</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteNoQueryBySQLText(System.String)">
+            <summary>
+            Execute a SQL Command that returns no value
+            </summary>
+            <param name="commandText">Sql command</param>
+            <returns>Number of affected rows</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteNoQueryBySQLText(System.Data.Common.DbTransaction,System.String)">
+            <summary>
+            Execute a SQL Command that returns no value
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="commandText">Sql command</param>
+            <returns>Number of affected rows</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteNoQueryByStoredProcedure(System.String,System.Object[])">
+            <summary>
+            Execute a Stored Procedure that returns no value
+            </summary>
+            <param name="spName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+            <returns>Number of affected rows</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteNoQueryByStoredProcedure(System.Data.Common.DbTransaction,System.String,System.Object[])">
+            <summary>
+            Execute a Stored Procedure that returns no value
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="spName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+            <returns>Number of affected rows</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteReaderBySQLText(System.Data.Common.DbConnection,System.String)">
+            <summary>
+            Get a DbDataReader by execute a SQL Command
+            </summary>
+            <param name="conn"></param>
+            <param name="commandText">Sql Command</param>
+            <returns>DbDataReader</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteReaderBySQLText(System.String)">
+            <summary>
+            Get a DbDataReader by execute a SQL Command
+            </summary>
+            <param name="commandText">Sql Command</param>
+            <returns>DbDataReader</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteReaderBySQLText(System.Data.Common.DbTransaction,System.String)">
+            <summary>
+            Get a DbDataReader by execute a SQL Command
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="commandText">Sql Command</param>
+            <returns>DbDataReader</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteReaderByStoredProcedure(System.Data.Common.DbConnection,System.String,System.Object[])">
+            <summary>
+            Get a DbDataReader by execute a Stored Procedure
+            </summary>
+            <param name="conn"></param>
+            <param name="spName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+            <returns>DbDataReader</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteReaderByStoredProcedure(System.String,System.Object[])">
+            <summary>
+            Get a DbDataReader by execute a Stored Procedure
+            </summary>
+            <param name="spName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+            <returns>DbDataReader</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ExecuteReaderByStoredProcedure(System.Data.Common.DbTransaction,System.String,System.Object[])">
+            <summary>
+            Get a DbDataReader by execute a Stored Procedure
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="spName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+            <returns>DbDataReader</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.FillDataSetBySQLText(System.String,System.Data.DataSet,System.String[])">
+            <summary>
+            Fill a Dataset by execute SQL Command
+            </summary>
+            <param name="commandText">Sql command</param>
+            <param name="dataSet">Dataset to fill</param>
+            <param name="tableNames">Names of tables in dataset</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.FillDataSetBySQLText(System.Data.Common.DbTransaction,System.String,System.Data.DataSet,System.String[])">
+            <summary>
+            Fill a Dataset by execute SQL Command
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="commandText">Sql command</param>
+            <param name="dataSet">Dataset to fill</param>
+            <param name="tableNames">Names of tables in dataset</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.FillDataSetByStoredProcedure(System.String,System.Data.DataSet,System.String[],System.Object[])">
+            <summary>
+            Fill a Dataset by execute Stored Procedure
+            </summary>
+            <param name="spName">Stored Procedure name</param>
+            <param name="dataSet">Dataset to fill</param>
+            <param name="tableNames">Names of tables in dataset</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseRule.InternalDBHelper.FillDataSetByStoredProcedure(System.Data.Common.DbTransaction,System.String,System.Data.DataSet,System.String[],System.Object[])">
+            <summary>
+            Fill a Dataset by execute Stored Procedure
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="spName">Stored Procedure name</param>
+            <param name="dataSet">Dataset to fill</param>
+            <param name="tableNames">Names of tables in dataset</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+        </member>
+        <member name="P:Cooperator.Framework.Data.BaseRule.InternalDBHelper.ConnectionString">
+            <summary>
+            Connection string stored in app.config or web.config 
+            For security reasons, it is hidden outside assembly
+            </summary>
+            <returns>Connection string</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.CheckForSecurityRights(Cooperator.Framework.Core.SecurityRights,`2)">
+            <summary>
+            
+            </summary>
+            <param name="action"></param>
+            <param name="ObjectListOrEntityList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.CompleteEntity(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.HydrateFields(System.Data.Common.DbDataReader,`1)">
+            <summary>
+            
+            </summary>
+            <param name="reader"></param>
+            <param name="row"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetOne(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get one Object or Entity by execute stored procedure: [TableName]_GetOne
+            </summary>
+            <param name="primaryKey">PrimaryKey of record to retrive</param>
+            <returns>Object or Entity</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetOne(System.Data.Common.DbTransaction,Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get one Object or Entity by execute stored procedure: [TableName]_GetOne
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="primaryKey">PrimaryKey of record to retrive</param>
+            <returns>Object or Entity</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetRow(System.Data.Common.DbDataReader)">
+            <summary>
+            
+            </summary>
+            <param name="reader"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.ResetCache">
+            <summary>
+            Reset the cache if it is a cacheable table.
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetAll(System.Data.Common.DbTransaction)">
+            <summary>
+            Get all rows or entities by execute stored procedure: [TableName]_GetAll
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <returns>ObjectList or entity list</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetAll">
+            <summary>
+            Get all rows or entities by execute stored procedure: [TableName]_GetAll
+            </summary>
+            <returns>ObjectList or entity list</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetByParent(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get rows by parent
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetByParent(System.Data.Common.DbTransaction,Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get rows by parent
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetObjectListByAnyStoredProcedure(System.Data.Common.DbTransaction,System.String,System.Object[])">
+            <summary>
+            Get ObjectList or EntityList by execute any stored procedure
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="storedProcedureName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetObjectListByAnyStoredProcedure(System.String,System.Object[])">
+            <summary>
+            Get ObjectList or EntityList by execute any stored procedure
+            </summary>
+            <param name="storedProcedureName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetObjectByAnyStoredProcedure(System.Data.Common.DbTransaction,System.String,System.Object[])">
+            <summary>
+            Get one Object or Entity by execute any stored procedure
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="storedProcedureName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameter</param>
+            <returns>Object or Entity</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetObjectByAnyStoredProcedure(System.String,System.Object[])">
+            <summary>
+            Get one Object or Entity by execute any stored procedure
+            </summary>
+            <param name="storedProcedureName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameter</param>
+            <returns>Object or Entity</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetObjectListBySQLText(System.Data.Common.DbTransaction,System.String)">
+            <summary>
+            Get ObjectList or EntityList by execute a SQL Text
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="sqlQueryText">SQL Query Text</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetObjectListBySQLText(System.String)">
+            <summary>
+            Get ObjectList or EntityList by execute a SQL Text
+            </summary>
+            <param name="sqlQueryText">SQL Query Text</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetObjectBySQLText(System.Data.Common.DbTransaction,System.String)">
+            <summary>
+            Get Object or Entity by execute SQL Text
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="sqlQueryText">SQL Query Text</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseLoader`3.GetObjectBySQLText(System.String)">
+            <summary>
+            Get Object or Entity by execute SQL Text
+            </summary>
+            <param name="sqlQueryText">SQL Query Text</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="T:Cooperator.Framework.Data.BaseGateway`2">
+            <summary>
+            Base class for Gateways and Mappers
+            </summary>
+            <typeparam name="T">Object or Entity type</typeparam>
+            <typeparam name="T2">ObjectList or EntityList type</typeparam>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.CompleteEntity(`0)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.CheckForSecurityRights(Cooperator.Framework.Core.SecurityRights,`1)">
+            <summary>
+            Overwrite this function to give or forbid access for acctions in mapper
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.HydrateFields(System.Data.Common.DbDataReader,`0)">
+            <summary>
+            
+            </summary>
+            <param name="reader"></param>
+            <param name="row"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetFieldsForInsert(`0)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetFieldsForDelete(`0)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetFieldsForUpdate(`0)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.UpdateObjectFromOutputParams(`0,System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <param name="parameters"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetOne(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get one Object or Entity by execute stored procedure: [TableName]_GetOne
+            </summary>
+            <param name="primaryKey">PrimaryKey of record to retrive</param>
+            <returns>Object or Entity</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetOne(System.Data.Common.DbTransaction,Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get one Object or Entity by execute stored procedure: [TableName]_GetOne
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="primaryKey">PrimaryKey of record to retrive</param>
+            <returns>Object or Entity</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.ResetCache">
+            <summary>
+            Reset the cache if it is a cacheable table.
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetAll(System.Data.Common.DbTransaction)">
+            <summary>
+            Get all rows or entities by execute stored procedure: [TableName]_GetAll
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <returns>ObjectList or entity list</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetAll">
+            <summary>
+            Get all rows or entities by execute stored procedure: [TableName]_GetAll
+            </summary>
+            <returns>ObjectList or entity list</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.ExecuteNonQuery(System.Data.Common.DbTransaction,System.String,System.Object[])">
+            <summary>
+            Ejecuta ExecuteNonQuery de SqlHelper y gestiona las excepciones
+            </summary>
+            <param name="transaction"></param>
+            <param name="storedProcedureName"></param>
+            <param name="parameterValues"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetByParent(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get rows by parent
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetByParent(System.Data.Common.DbTransaction,Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get rows by parent
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetObjectListByAnyStoredProcedure(System.Data.Common.DbTransaction,System.String,System.Object[])">
+            <summary>
+            Get ObjectList or EntityList by execute any stored procedure
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="storedProcedureName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetObjectListByAnyStoredProcedure(System.String,System.Object[])">
+            <summary>
+            Get ObjectList or EntityList by execute any stored procedure
+            </summary>
+            <param name="storedProcedureName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameters</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetObjectByAnyStoredProcedure(System.Data.Common.DbTransaction,System.String,System.Object[])">
+            <summary>
+            Get one Object or Entity by execute any stored procedure
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="storedProcedureName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameter</param>
+            <returns>Object or Entity</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetObjectByAnyStoredProcedure(System.String,System.Object[])">
+            <summary>
+            Get one Object or Entity by execute any stored procedure
+            </summary>
+            <param name="storedProcedureName">Stored Procedure name</param>
+            <param name="parameterValues">Stored Procedure parameter</param>
+            <returns>Object or Entity</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetObjectListBySQLText(System.Data.Common.DbTransaction,System.String)">
+            <summary>
+            Get ObjectList or EntityList by execute a SQL Text
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="sqlQueryText">SQL Query Text</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetObjectListBySQLText(System.String)">
+            <summary>
+            Get ObjectList or EntityList by execute a SQL Text
+            </summary>
+            <param name="sqlQueryText">SQL Query Text</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetObjectBySQLText(System.Data.Common.DbTransaction,System.String)">
+            <summary>
+            Get Object or Entity by execute SQL Text
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="sqlQueryText">SQL Query Text</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.GetObjectBySQLText(System.String)">
+            <summary>
+            Get Object or Entity by execute SQL Text
+            </summary>
+            <param name="sqlQueryText">SQL Query Text</param>
+            <returns>ObjectList or EntityList</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Insert(`0)">
+            <summary>
+            Insert a Object or Entity in related table.
+            </summary>
+            <param name="row">Object or Entity to insert</param>	
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Insert(System.Data.Common.DbTransaction,`0)">
+            <summary>
+            Insert a Object or Entity in related table.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="row">Object or Entity to insert</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.OnBeforeInsert(Cooperator.Framework.Data.InsertEventArgs{`0})">
+            <summary>
+            Raise BeforeInsert event, if applicable
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Append(`1)">
+            <summary>
+            Append a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are inserted in a transaction.
+            </summary>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Append(System.Data.Common.DbTransaction,`1)">
+            <summary>
+            Append a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are inserted in a transaction.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Delete(`0)">
+            <summary>
+            Delete a Object or Entity from related table.
+            </summary>
+            <param name="row">Object or Entity to delete.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Delete(System.Data.Common.DbTransaction,`0)">
+            <summary>
+            Delete a Object or Entity from related table.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="row">Object or Entity to delete.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.OnBeforeDelete(Cooperator.Framework.Data.DeleteEventArgs{`0})">
+            <summary>
+             Raise BeforeDelete event, if applicable
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Remove(`1)">
+            <summary>
+            Append a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are inserted in a transaction.
+            </summary>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Remove(System.Data.Common.DbTransaction,`1)">
+            <summary>
+            Append a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are inserted in a transaction.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Save(`0)">
+            <summary>
+            Update a Object or Entity in related table.
+            </summary>
+            <param name="row">Object or Entity to update</param>	
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Save(System.Data.Common.DbTransaction,`0)">
+            <summary>
+            Update a Object or Entity in related table.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="row">Object or Entity to update</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.OnBeforeSave(Cooperator.Framework.Data.SaveEventArgs{`0})">
+            <summary>
+            Raise BeforeSave event, if applicable
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Update(`1)">
+            <summary>
+            Update a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are updated in a transaction.
+            </summary>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.Update(System.Data.Common.DbTransaction,`1)">
+            <summary>
+            Update a ObjectList or EntityList in related table. All objects in ObjectList or EntityList are updated in a transaction.
+            </summary>
+            <param name="transaction">DbTransaction object</param>
+            <param name="ObjectList">ObjectList or EntityList to update.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.BaseGateway`2.OnBeforeUpdate(Cooperator.Framework.Data.UpdateEventArgs{`0,`1})">
+            <summary>
+            Raise BeforeUpdate event, if applicable
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="E:Cooperator.Framework.Data.BaseGateway`2.BeforeInsert">
+            <summary>
+            Event raised before insert Object or Entity
+            </summary>
+        </member>
+        <member name="E:Cooperator.Framework.Data.BaseGateway`2.BeforeDelete">
+            <summary>
+            Event raised before delete Object or Entity
+            </summary>
+        </member>
+        <member name="E:Cooperator.Framework.Data.BaseGateway`2.BeforeSave">
+            <summary>
+            Event raised before save Object or Entity
+            </summary>
+        </member>
+        <member name="E:Cooperator.Framework.Data.BaseGateway`2.BeforeUpdate">
+            <summary>
+            Event raised before update Object or Entity
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Data.InsertEventArgs`1">
+            <summary>
+            Event argument for BeforeInsert event
+            </summary>
+            <typeparam name="T">Object or Entity type</typeparam>
+        </member>
+        <member name="M:Cooperator.Framework.Data.InsertEventArgs`1.#ctor(System.Boolean,`0)">
+            <summary>
+            Event argument for BeforeInsert event
+            </summary>
+            <param name="cancel">If cancel operation</param>
+            <param name="row">Object or Entity to insert</param>
+        </member>
+        <member name="P:Cooperator.Framework.Data.InsertEventArgs`1.Cancel">
+            <summary>
+            If cancel operation
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Data.InsertEventArgs`1.Row">
+            <summary>
+            Object or Entity to insert 
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Data.DeleteEventArgs`1">
+            <summary>
+            Event argument for BeforeDelete event
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.DeleteEventArgs`1.#ctor(System.Boolean,`0)">
+            <summary>
+            Event argument for Delete events
+            </summary>
+            <param name="cancel">If cancel operation</param>
+            <param name="row">Object or Entity to delete</param>
+        </member>
+        <member name="P:Cooperator.Framework.Data.DeleteEventArgs`1.Cancel">
+            <summary>
+            If cancel operation
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Data.DeleteEventArgs`1.Row">
+            <summary>
+            Object to delete
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Data.SaveEventArgs`1">
+            <summary>
+            Event argument for BeforeSave event
+            </summary>
+            <typeparam name="T">Object or Entity type</typeparam>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SaveEventArgs`1.#ctor(System.Boolean,`0)">
+            <summary>
+            Event argument for BeforeSave event
+            </summary>
+            <param name="cancel">If cancel operation</param>
+            <param name="row">Object or Entity to save</param>
+        </member>
+        <member name="P:Cooperator.Framework.Data.SaveEventArgs`1.Cancel">
+            <summary>
+            If cancel operation
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Data.SaveEventArgs`1.Row">
+            <summary>
+            Object or Entity to save
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Data.UpdateEventArgs`2">
+            <summary>
+            Event argument for BeforeUpdate events
+            </summary>
+            <typeparam name="T">Object or Entity type</typeparam>
+            <typeparam name="T2">ObjectList or EntityList type</typeparam>
+        </member>
+        <member name="M:Cooperator.Framework.Data.UpdateEventArgs`2.#ctor(System.Boolean,`1)">
+            <summary>
+            Event argument for BeforeUpdate events
+            </summary>
+            <param name="cancel">If cancel operation</param>
+            <param name="ObjectList">ObjectList or EntityList to update</param>
+        </member>
+        <member name="P:Cooperator.Framework.Data.UpdateEventArgs`2.Cancel">
+            <summary>
+            If cancel operation
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Data.UpdateEventArgs`2.ObjectList">
+            <summary>
+            ObjectList or EntityList to update
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.ConnectionStringNotFoundException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.DataException">
+            <summary>
+            Clase base para todas las excepciones del Cooperator.Framework.Data, hereda de Cooperator.Framework.Library.Exceptions.BaseException
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DataException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DataException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DataException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DataException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.ConnectionStringNotFoundException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.ConnectionStringNotFoundException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.ConnectionStringNotFoundException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.ConnectionStringNotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.InsufficientSecurityRightsException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InsufficientSecurityRightsException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InsufficientSecurityRightsException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InsufficientSecurityRightsException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InsufficientSecurityRightsException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.DangerousQueryException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DangerousQueryException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DangerousQueryException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DangerousQueryException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DangerousQueryException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.InvalidMappingException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InvalidMappingException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InvalidMappingException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InvalidMappingException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InvalidMappingException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.SqlQueriesDisabledException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.SqlQueriesDisabledException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.SqlQueriesDisabledException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.SqlQueriesDisabledException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.SqlQueriesDisabledException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.TableHaveNoParentException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TableHaveNoParentException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TableHaveNoParentException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TableHaveNoParentException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TableHaveNoParentException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.RowConcurrenceException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.RowConcurrenceException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.RowConcurrenceException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.RowConcurrenceException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.RowConcurrenceException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.RowDoNotExistException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.RowDoNotExistException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.RowDoNotExistException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.RowDoNotExistException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.RowDoNotExistException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.DeleteCanceledException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DeleteCanceledException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DeleteCanceledException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DeleteCanceledException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.DeleteCanceledException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.InsertCanceledException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InsertCanceledException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InsertCanceledException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InsertCanceledException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InsertCanceledException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.InvalidConnectionStringException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InvalidConnectionStringException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InvalidConnectionStringException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InvalidConnectionStringException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.InvalidConnectionStringException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.NoRowAffectedException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.NoRowAffectedException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.NoRowAffectedException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.NoRowAffectedException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.NoRowAffectedException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.TableIsReadOnlyException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TableIsReadOnlyException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TableIsReadOnlyException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TableIsReadOnlyException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TableIsReadOnlyException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.TooMuchRowsInQueryException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TooMuchRowsInQueryException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TooMuchRowsInQueryException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TooMuchRowsInQueryException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.TooMuchRowsInQueryException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.Exceptions.UpdateCanceledException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.UpdateCanceledException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.UpdateCanceledException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.UpdateCanceledException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.Exceptions.UpdateCanceledException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Data.SqlHelperParameterCache">
+            <summary>
+            SqlHelperParameterCache provides functions to leverage a static cache of procedure parameters, and the
+            ability to discover parameters for stored procedures at run-time.
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelperParameterCache.DiscoverSpParameterSet(System.Data.SqlClient.SqlConnection,System.String,System.Boolean)">
+            <summary>
+            Resolve at run time the appropriate set of SqlParameters for a stored procedure
+            </summary>
+            <param name="connection">A valid SqlConnection object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="includeReturnValueParameter">Whether or not to include their return value parameter</param>
+            <returns>The parameter array discovered.</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelperParameterCache.CloneParameters(System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Deep copy of cached SqlParameter array
+            </summary>
+            <param name="originalParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelperParameterCache.CacheParameterSet(System.String,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Add parameter array to the cache
+            </summary>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters to be cached</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelperParameterCache.GetCachedParameterSet(System.String,System.String)">
+            <summary>
+            Retrieve a parameter array from the cache
+            </summary>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>An array of SqlParamters</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelperParameterCache.GetSpParameterSet(System.String,System.String)">
+            <summary>
+            Retrieves the set of SqlParameters appropriate for the stored procedure
+            </summary>
+            <remarks>
+            This method will query the database for this information, and then store it in a cache for future requests.
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <returns>An array of SqlParameters</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelperParameterCache.GetSpParameterSet(System.String,System.String,System.Boolean)">
+            <summary>
+            Retrieves the set of SqlParameters appropriate for the stored procedure
+            </summary>
+            <remarks>
+            This method will query the database for this information, and then store it in a cache for future requests.
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="includeReturnValueParameter">A bool value indicating whether the return value parameter should be included in the results</param>
+            <returns>An array of SqlParameters</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelperParameterCache.GetSpParameterSet(System.Data.SqlClient.SqlConnection,System.String)">
+            <summary>
+            Retrieves the set of SqlParameters appropriate for the stored procedure
+            </summary>
+            <remarks>
+            This method will query the database for this information, and then store it in a cache for future requests.
+            </remarks>
+            <param name="connection">A valid SqlConnection object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <returns>An array of SqlParameters</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelperParameterCache.GetSpParameterSet(System.Data.SqlClient.SqlConnection,System.String,System.Boolean)">
+            <summary>
+            Retrieves the set of SqlParameters appropriate for the stored procedure
+            </summary>
+            <remarks>
+            This method will query the database for this information, and then store it in a cache for future requests.
+            </remarks>
+            <param name="connection">A valid SqlConnection object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="includeReturnValueParameter">A bool value indicating whether the return value parameter should be included in the results</param>
+            <returns>An array of SqlParameters</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelperParameterCache.GetSpParameterSetInternal(System.Data.SqlClient.SqlConnection,System.String,System.Boolean)">
+            <summary>
+            Retrieves the set of SqlParameters appropriate for the stored procedure
+            </summary>
+            <param name="connection">A valid SqlConnection object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="includeReturnValueParameter">A bool value indicating whether the return value parameter should be included in the results</param>
+            <returns>An array of SqlParameters</returns>
+        </member>
+        <member name="T:Cooperator.Framework.Data.SqlHelper">
+            <summary>
+            The SqlHelper class is intended to encapsulate high performance, scalable best practices for 
+            common uses of SqlClient
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.AttachParameters(System.Data.SqlClient.SqlCommand,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            This method is used to attach array of SqlParameters to a SqlCommand.
+            
+            This method will assign a value of DbNull to any parameter with a direction of
+            InputOutput and a value of null.  
+            
+            This behavior will prevent default values from being used, but
+            this will be the less common case than an intended pure output parameter (derived as InputOutput)
+            where the user provided no input value.
+            </summary>
+            <param name="command">The command to which the parameters will be added</param>
+            <param name="commandParameters">An array of SqlParameters to be added to command</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.AssignParameterValues(System.Data.SqlClient.SqlParameter[],System.Data.DataRow)">
+            <summary>
+            This method assigns dataRow column values to an array of SqlParameters
+            </summary>
+            <param name="commandParameters">Array of SqlParameters to be assigned values</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.AssignParameterValues(System.Data.SqlClient.SqlParameter[],System.Object[])">
+            <summary>
+            This method assigns an array of values to an array of SqlParameters
+            </summary>
+            <param name="commandParameters">Array of SqlParameters to be assigned values</param>
+            <param name="parameterValues">Array of objects holding the values to be assigned</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.PrepareCommand(System.Data.SqlClient.SqlCommand,System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[],System.Boolean@)">
+            <summary>
+            This method opens (if necessary) and assigns a connection, transaction, command type and parameters 
+            to the provided command
+            </summary>
+            <param name="command">The SqlCommand to be prepared</param>
+            <param name="connection">A valid SqlConnection, on which to execute this command</param>
+            <param name="transaction">A valid SqlTransaction, or 'null'</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParameters to be associated with the command or 'null' if no parameters are required</param>
+            <param name="mustCloseConnection"><c>true</c> if the connection was opened by the method, otherwose is false.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQuery(System.String,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns no resultset and takes no parameters) against the database specified in 
+            the connection string
+            </summary>
+            <remarks>
+            e.g.:  
+             int result = ExecuteNonQuery(connString, CommandType.StoredProcedure, "PublishOrders");
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQuery(System.String,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns no resultset) against the database specified in the connection string 
+            using the provided parameters
+            </summary>
+            <remarks>
+            e.g.:  
+             int result = ExecuteNonQuery(connString, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQuery(System.String,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns no resultset) against the database specified in 
+            the connection string using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             int result = ExecuteNonQuery(connString, "PublishOrders", 24, 36);
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="spName">The name of the stored prcedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQuery(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns no resultset and takes no parameters) against the provided SqlConnection. 
+            </summary>
+            <remarks>
+            e.g.:  
+             int result = ExecuteNonQuery(conn, CommandType.StoredProcedure, "PublishOrders");
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQuery(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns no resultset) against the specified SqlConnection 
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             int result = ExecuteNonQuery(conn, CommandType.StoredProcedure, "PublishOrders", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQuery(System.Data.SqlClient.SqlConnection,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns no resultset) against the specified SqlConnection 
+            using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             int result = ExecuteNonQuery(conn, "PublishOrders", 24, 36);
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQuery(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns no resultset and takes no parameters) against the provided SqlTransaction. 
+            </summary>
+            <remarks>
+            e.g.:  
+             int result = ExecuteNonQuery(trans, CommandType.StoredProcedure, "PublishOrders");
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQuery(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns no resultset) against the specified SqlTransaction
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             int result = ExecuteNonQuery(trans, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQuery(System.Data.SqlClient.SqlTransaction,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns no resultset) against the specified 
+            SqlTransaction using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             int result = ExecuteNonQuery(conn, trans, "PublishOrders", 24, 36);
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSet(System.String,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns a resultset and takes no parameters) against the database specified in 
+            the connection string. 
+            </summary>
+            <remarks>
+            e.g.:  
+             DataSet ds = ExecuteDataSet(connString, CommandType.StoredProcedure, "GetOrders");
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSet(System.String,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset) against the database specified in the connection string 
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             DataSet ds = ExecuteDataSet(connString, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSet(System.String,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the database specified in 
+            the connection string using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             DataSet ds = ExecuteDataSet(connString, "GetOrders", 24, 36);
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSet(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlConnection. 
+            </summary>
+            <remarks>
+            e.g.:  
+             DataSet ds = ExecuteDataSet(conn, CommandType.StoredProcedure, "GetOrders");
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSet(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset) against the specified SqlConnection 
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             DataSet ds = ExecuteDataSet(conn, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSet(System.Data.SqlClient.SqlConnection,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified SqlConnection 
+            using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             DataSet ds = ExecuteDataSet(conn, "GetOrders", 24, 36);
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSet(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlTransaction. 
+            </summary>
+            <remarks>
+            e.g.:  
+             DataSet ds = ExecuteDataSet(trans, CommandType.StoredProcedure, "GetOrders");
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSet(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset) against the specified SqlTransaction
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             DataSet ds = ExecuteDataSet(trans, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSet(System.Data.SqlClient.SqlTransaction,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified 
+            SqlTransaction using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             DataSet ds = ExecuteDataSet(trans, "GetOrders", 24, 36);
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReader(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[],Cooperator.Framework.Data.SqlHelper.SqlConnectionOwnership)">
+            <summary>
+            Create and prepare a SqlCommand, and call ExecuteReader with the appropriate CommandBehavior.
+            </summary>
+            <remarks>
+            If we created and opened the connection, we want the connection to be closed when the DataReader is closed.
+            
+            If the caller provided the connection, we want to leave it to them to manage.
+            </remarks>
+            <param name="connection">A valid SqlConnection, on which to execute this command</param>
+            <param name="transaction">A valid SqlTransaction, or 'null'</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParameters to be associated with the command or 'null' if no parameters are required</param>
+            <param name="connectionOwnership">Indicates whether the connection parameter was provided by the caller, or created by SqlHelper</param>
+            <returns>SqlDataReader containing the results of the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReader(System.String,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns a resultset and takes no parameters) against the database specified in 
+            the connection string. 
+            </summary>
+            <remarks>
+            e.g.:  
+             SqlDataReader dr = ExecuteReader(connString, CommandType.StoredProcedure, "GetOrders");
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReader(System.String,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset) against the database specified in the connection string 
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             SqlDataReader dr = ExecuteReader(connString, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReader(System.String,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the database specified in 
+            the connection string using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             SqlDataReader dr = ExecuteReader(connString, "GetOrders", 24, 36);
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReader(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlConnection. 
+            </summary>
+            <remarks>
+            e.g.:  
+             SqlDataReader dr = ExecuteReader(conn, CommandType.StoredProcedure, "GetOrders");
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReader(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset) against the specified SqlConnection 
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             SqlDataReader dr = ExecuteReader(conn, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReader(System.Data.SqlClient.SqlConnection,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified SqlConnection 
+            using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             SqlDataReader dr = ExecuteReader(conn, "GetOrders", 24, 36);
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReader(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlTransaction. 
+            </summary>
+            <remarks>
+            e.g.:  
+             SqlDataReader dr = ExecuteReader(trans, CommandType.StoredProcedure, "GetOrders");
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReader(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset) against the specified SqlTransaction
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+              SqlDataReader dr = ExecuteReader(trans, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReader(System.Data.SqlClient.SqlTransaction,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified
+            SqlTransaction using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             SqlDataReader dr = ExecuteReader(trans, "GetOrders", 24, 36);
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalar(System.String,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the database specified in 
+            the connection string. 
+            </summary>
+            <remarks>
+            e.g.:  
+             int orderCount = (int)ExecuteScalar(connString, CommandType.StoredProcedure, "GetOrderCount");
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalar(System.String,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a 1x1 resultset) against the database specified in the connection string 
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             int orderCount = (int)ExecuteScalar(connString, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalar(System.String,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the database specified in 
+            the connection string using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             int orderCount = (int)ExecuteScalar(connString, "GetOrderCount", 24, 36);
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalar(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided SqlConnection. 
+            </summary>
+            <remarks>
+            e.g.:  
+             int orderCount = (int)ExecuteScalar(conn, CommandType.StoredProcedure, "GetOrderCount");
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalar(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a 1x1 resultset) against the specified SqlConnection 
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             int orderCount = (int)ExecuteScalar(conn, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalar(System.Data.SqlClient.SqlConnection,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the specified SqlConnection 
+            using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             int orderCount = (int)ExecuteScalar(conn, "GetOrderCount", 24, 36);
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalar(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns a 1x1 resultset and takes no parameters) against the provided SqlTransaction. 
+            </summary>
+            <remarks>
+            e.g.:  
+             int orderCount = (int)ExecuteScalar(trans, CommandType.StoredProcedure, "GetOrderCount");
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalar(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a 1x1 resultset) against the specified SqlTransaction
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             int orderCount = (int)ExecuteScalar(trans, CommandType.StoredProcedure, "GetOrderCount", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalar(System.Data.SqlClient.SqlTransaction,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the specified
+            SqlTransaction using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             int orderCount = (int)ExecuteScalar(trans, "GetOrderCount", 24, 36);
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteXmlReader(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlConnection. 
+            </summary>
+            <remarks>
+            e.g.:  
+             XmlReader r = ExecuteXmlReader(conn, CommandType.StoredProcedure, "GetOrders");
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command using "FOR XML AUTO"</param>
+            <returns>An XmlReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteXmlReader(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset) against the specified SqlConnection 
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             XmlReader r = ExecuteXmlReader(conn, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command using "FOR XML AUTO"</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>An XmlReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteXmlReader(System.Data.SqlClient.SqlConnection,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified SqlConnection 
+            using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             XmlReader r = ExecuteXmlReader(conn, "GetOrders", 24, 36);
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="spName">The name of the stored procedure using "FOR XML AUTO"</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>An XmlReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteXmlReader(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String)">
+            <summary>
+            Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlTransaction. 
+            </summary>
+            <remarks>
+            e.g.:  
+             XmlReader r = ExecuteXmlReader(trans, CommandType.StoredProcedure, "GetOrders");
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command using "FOR XML AUTO"</param>
+            <returns>An XmlReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteXmlReader(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset) against the specified SqlTransaction
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             XmlReader r = ExecuteXmlReader(trans, CommandType.StoredProcedure, "GetOrders", new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command using "FOR XML AUTO"</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <returns>An XmlReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteXmlReader(System.Data.SqlClient.SqlTransaction,System.String,System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified 
+            SqlTransaction using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             XmlReader r = ExecuteXmlReader(trans, "GetOrders", 24, 36);
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.FillDataSet(System.String,System.Data.CommandType,System.String,System.Data.DataSet,System.String[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset and takes no parameters) against the database specified in 
+            the connection string. 
+            </summary>
+            <remarks>
+            e.g.:  
+             FillDataSet(connString, CommandType.StoredProcedure, "GetOrders", ds, new string[] {"orders"});
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="dataSet">A DataSet wich will contain the resultset generated by the command</param>
+            <param name="tableNames">This array will be used to create table mappings allowing the DataTables to be referenced
+            by a user defined name (probably the actual table name)</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.FillDataSet(System.String,System.Data.CommandType,System.String,System.Data.DataSet,System.String[],System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset) against the database specified in the connection string 
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             FillDataSet(connString, CommandType.StoredProcedure, "GetOrders", ds, new string[] {"orders"}, new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+            <param name="dataSet">A DataSet wich will contain the resultset generated by the command</param>
+            <param name="tableNames">This array will be used to create table mappings allowing the DataTables to be referenced
+            by a user defined name (probably the actual table name)
+            </param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.FillDataSet(System.String,System.String,System.Data.DataSet,System.String[],System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the database specified in 
+            the connection string using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             FillDataset(connString, CommandType.StoredProcedure, "GetOrders", ds, new string[] {"orders"}, 24);
+            </remarks>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataSet">A DataSet wich will contain the resultset generated by the command</param>
+            <param name="tableNames">This array will be used to create table mappings allowing the DataTables to be referenced
+            by a user defined name (probably the actual table name)
+            </param>    
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.FillDataSet(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String,System.Data.DataSet,System.String[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlConnection. 
+            </summary>
+            <remarks>
+            e.g.:  
+             FillDataSet(conn, CommandType.StoredProcedure, "GetOrders", ds, new string[] {"orders"});
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="dataSet">A DataSet wich will contain the resultset generated by the command</param>
+            <param name="tableNames">This array will be used to create table mappings allowing the DataTables to be referenced
+            by a user defined name (probably the actual table name)
+            </param>    
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.FillDataSet(System.Data.SqlClient.SqlConnection,System.Data.CommandType,System.String,System.Data.DataSet,System.String[],System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset) against the specified SqlConnection 
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             FillDataSet(conn, CommandType.StoredProcedure, "GetOrders", ds, new string[] {"orders"}, new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="dataSet">A DataSet wich will contain the resultset generated by the command</param>
+            <param name="tableNames">This array will be used to create table mappings allowing the DataTables to be referenced
+            by a user defined name (probably the actual table name)
+            </param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.FillDataSet(System.Data.SqlClient.SqlConnection,System.String,System.Data.DataSet,System.String[],System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified SqlConnection 
+            using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             FillDataSet(conn, "GetOrders", ds, new string[] {"orders"}, 24, 36);
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataSet">A DataSet wich will contain the resultset generated by the command</param>
+            <param name="tableNames">This array will be used to create table mappings allowing the DataTables to be referenced
+            by a user defined name (probably the actual table name)
+            </param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.FillDataSet(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.DataSet,System.String[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset and takes no parameters) against the provided SqlTransaction. 
+            </summary>
+            <remarks>
+            e.g.:  
+             FillDataSet(trans, CommandType.StoredProcedure, "GetOrders", ds, new string[] {"orders"});
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="dataSet">A DataSet wich will contain the resultset generated by the command</param>
+            <param name="tableNames">This array will be used to create table mappings allowing the DataTables to be referenced
+            by a user defined name (probably the actual table name)
+            </param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.FillDataSet(System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.DataSet,System.String[],System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Execute a SqlCommand (that returns a resultset) against the specified SqlTransaction
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             FillDataSet(trans, CommandType.StoredProcedure, "GetOrders", ds, new string[] {"orders"}, new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="dataSet">A DataSet wich will contain the resultset generated by the command</param>
+            <param name="tableNames">This array will be used to create table mappings allowing the DataTables to be referenced
+            by a user defined name (probably the actual table name)
+            </param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.FillDataSet(System.Data.SqlClient.SqlTransaction,System.String,System.Data.DataSet,System.String[],System.Object[])">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified 
+            SqlTransaction using the provided parameter values.  This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <remarks>
+            This method provides no access to output parameters or the stored procedure's return value parameter.
+            
+            e.g.:  
+             FillDataSet(trans, "GetOrders", ds, new string[]{"orders"}, 24, 36);
+            </remarks>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataSet">A DataSet wich will contain the resultset generated by the command</param>
+            <param name="tableNames">This array will be used to create table mappings allowing the DataTables to be referenced
+            by a user defined name (probably the actual table name)
+            </param>
+            <param name="parameterValues">An array of objects to be assigned as the input values of the stored procedure</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.FillDataSet(System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlTransaction,System.Data.CommandType,System.String,System.Data.DataSet,System.String[],System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Private helper method that execute a SqlCommand (that returns a resultset) against the specified SqlTransaction and SqlConnection
+            using the provided parameters.
+            </summary>
+            <remarks>
+            e.g.:  
+             FillDataSet(conn, trans, CommandType.StoredProcedure, "GetOrders", ds, new string[] {"orders"}, new SqlParameter("@prodid", 24));
+            </remarks>
+            <param name="connection">A valid SqlConnection</param>
+            <param name="transaction">A valid SqlTransaction</param>
+            <param name="commandType">The CommandType (stored procedure, text, etc.)</param>
+            <param name="commandText">The stored procedure name or T-SQL command</param>
+            <param name="dataSet">A DataSet wich will contain the resultset generated by the command</param>
+            <param name="tableNames">This array will be used to create table mappings allowing the DataTables to be referenced
+            by a user defined name (probably the actual table name)
+            </param>
+            <param name="commandParameters">An array of SqlParamters used to execute the command</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.UpdateDataSet(System.Data.SqlClient.SqlCommand,System.Data.SqlClient.SqlCommand,System.Data.SqlClient.SqlCommand,System.Data.DataSet,System.String)">
+            <summary>
+            Executes the respective command for each inserted, updated, or deleted row in the DataSet.
+            </summary>
+            <remarks>
+            e.g.:  
+             UpdateDataSet(conn, insertCommand, deleteCommand, updateCommand, dataSet, "Order");
+            </remarks>
+            <param name="insertCommand">A valid transact-SQL statement or stored procedure to insert new records into the data source</param>
+            <param name="deleteCommand">A valid transact-SQL statement or stored procedure to delete records from the data source</param>
+            <param name="updateCommand">A valid transact-SQL statement or stored procedure used to update records in the data source</param>
+            <param name="dataSet">The DataSet used to update the data source</param>
+            <param name="tableName">The DataTable used to update the data source.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.CreateCommand(System.Data.SqlClient.SqlConnection,System.String,System.String[])">
+            <summary>
+            Simplify the creation of a Sql command object by allowing
+            a stored procedure and optional parameters to be provided
+            </summary>
+            <remarks>
+            e.g.:  
+             SqlCommand command = CreateCommand(conn, "AddCustomer", "CustomerID", "CustomerName");
+            </remarks>
+            <param name="connection">A valid SqlConnection object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="sourceColumns">An array of string to be assigned as the source columns of the stored procedure parameters</param>
+            <returns>A valid SqlCommand object</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQueryTypedParameters(System.String,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns no resultset) against the database specified in 
+            the connection string using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on row values.
+            </summary>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQueryTypedParameters(System.Data.SqlClient.SqlConnection,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns no resultset) against the specified SqlConnection 
+            using the dataRow column values as the stored procedure's parameters values.  
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on row values.
+            </summary>
+            <param name="connection">A valid SqlConnection object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteNonQueryTypedParameters(System.Data.SqlClient.SqlTransaction,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns no resultset) against the specified
+            SqlTransaction using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on row values.
+            </summary>
+            <param name="transaction">A valid SqlTransaction object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>An int representing the number of rows affected by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSetTypedParameters(System.String,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the database specified in 
+            the connection string using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on row values.
+            </summary>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSetTypedParameters(System.Data.SqlClient.SqlConnection,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified SqlConnection 
+            using the dataRow column values as the store procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on row values.
+            </summary>
+            <param name="connection">A valid SqlConnection object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteDataSetTypedParameters(System.Data.SqlClient.SqlTransaction,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified SqlTransaction 
+            using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on row values.
+            </summary>
+            <param name="transaction">A valid SqlTransaction object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>A DataSet containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReaderTypedParameters(System.String,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the database specified in 
+            the connection string using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReaderTypedParameters(System.Data.SqlClient.SqlConnection,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified SqlConnection 
+            using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <param name="connection">A valid SqlConnection object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteReaderTypedParameters(System.Data.SqlClient.SqlTransaction,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified SqlTransaction 
+            using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <param name="transaction">A valid SqlTransaction object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>A SqlDataReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalarTypedParameters(System.String,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the database specified in 
+            the connection string using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <param name="connectionString">A valid connection string for a SqlConnection</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalarTypedParameters(System.Data.SqlClient.SqlConnection,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the specified SqlConnection 
+            using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <param name="connection">A valid SqlConnection object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteScalarTypedParameters(System.Data.SqlClient.SqlTransaction,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a 1x1 resultset) against the specified SqlTransaction
+            using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <param name="transaction">A valid SqlTransaction object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>An object containing the value in the 1x1 resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteXmlReaderTypedParameters(System.Data.SqlClient.SqlConnection,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified SqlConnection 
+            using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <param name="connection">A valid SqlConnection object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>An XmlReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Data.SqlHelper.ExecuteXmlReaderTypedParameters(System.Data.SqlClient.SqlTransaction,System.String,System.Data.DataRow)">
+            <summary>
+            Execute a stored procedure via a SqlCommand (that returns a resultset) against the specified SqlTransaction 
+            using the dataRow column values as the stored procedure's parameters values.
+            This method will query the database to discover the parameters for the 
+            stored procedure (the first time each stored procedure is called), and assign the values based on parameter order.
+            </summary>
+            <param name="transaction">A valid SqlTransaction object</param>
+            <param name="spName">The name of the stored procedure</param>
+            <param name="dataRow">The dataRow used to hold the stored procedure's parameter values.</param>
+            <returns>An XmlReader containing the resultset generated by the command</returns>
+        </member>
+        <member name="T:Cooperator.Framework.Data.SqlHelper.SqlConnectionOwnership">
+            <summary>
+            This enum is used to indicate whether the connection was provided by the caller, or created by SqlHelper, so that
+            we can set the appropriate CommandBehavior when calling ExecuteReader()
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Data.SqlHelper.SqlConnectionOwnership.Internal">
+            <summary>Connection is owned and managed by SqlHelper</summary>
+        </member>
+        <member name="F:Cooperator.Framework.Data.SqlHelper.SqlConnectionOwnership.External">
+            <summary>Connection is owned and managed by the caller</summary>
+        </member>
+    </members>
+</doc>

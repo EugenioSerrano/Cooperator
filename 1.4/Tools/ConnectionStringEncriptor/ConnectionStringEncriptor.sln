@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionStringEncriptor", "ConnectionStringEncriptor.csproj", "{6CE84D2A-58BE-4798-B91A-5C8BA26AC8A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cooperator.Framework.Library", "..\..\Cooperator.Framework.Library\Cooperator.Framework.Library.csproj", "{4F8F7A4D-605D-4505-BED2-78460F09130C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6CE84D2A-58BE-4798-B91A-5C8BA26AC8A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CE84D2A-58BE-4798-B91A-5C8BA26AC8A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CE84D2A-58BE-4798-B91A-5C8BA26AC8A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CE84D2A-58BE-4798-B91A-5C8BA26AC8A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F8F7A4D-605D-4505-BED2-78460F09130C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F8F7A4D-605D-4505-BED2-78460F09130C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F8F7A4D-605D-4505-BED2-78460F09130C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F8F7A4D-605D-4505-BED2-78460F09130C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,1538 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cooperator.Framework.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Cooperator.Framework.Core.CancelEditEventDelegate">
+            <summary>
+            CancelEditEventDelegate Delegate definition.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <remarks>Implements the callback when an CancelEditEvent produces.</remarks>
+        </member>
+        <member name="T:Cooperator.Framework.Core.BeginEditEventDelegate">
+            <summary>
+             CancelEditEventDelegate Delegate definition.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <remarks>Implements the callback when an BeginEditEvent produces.</remarks>
+        </member>
+        <member name="T:Cooperator.Framework.Core.EndEditEventDelegate">
+            <summary>
+             BeginEditEventDelegate Delegate definition.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+            <remarks>Implements the callback when an EndEditEvent produces.</remarks>
+        </member>
+        <member name="T:Cooperator.Framework.Core.BaseObject">
+            <summary>
+            Base class for Objects and Entities, implements IRow.
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.IObject">
+            <summary>
+            Interface for row classes
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IObject.OriginalValue">
+            <summary>
+            Get original value of row or entity.
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.IObject.State">
+            <summary>
+            State of entity or row
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.BaseObject.inTxn">
+            <summary>
+            This local variable isolates the boolean value if the event 
+            is in the context of a transaction
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.BaseObject.System#ComponentModel#IEditableObject#BeginEdit">
+            <summary>
+            IEditableObject.BeginEdit implements the OnBeginEdit event call 
+            that fires the function delegates in BeginEditEventDelegate
+            </summary>
+            <remarks>If in the context of a Transaction, then fire the OnBeginEdit with 
+            a reference to itself and a new System.EventArgs() like parameters.</remarks>
+        </member>
+        <member name="M:Cooperator.Framework.Core.BaseObject.System#ComponentModel#IEditableObject#CancelEdit">
+            <summary>
+            IEditableObject.CancelEdit implements the OnCancelEdit event call 
+            that fires the function delegates in CancelEditEventDelegate
+            </summary>
+            <remarks>If in the context of a Transaction, then fire the OnCancelEdit with 
+            a reference to itself and a new System.EventArgs() like parameters.</remarks>
+        </member>
+        <member name="M:Cooperator.Framework.Core.BaseObject.System#ComponentModel#IEditableObject#EndEdit">
+            <summary>
+            IEditableObject.EndEdit implements the OnEndEdit event call 
+            that fires the function delegates in EndEditEventDelegate
+            </summary>
+            <remarks>If in the context of a Transaction, then fire the OnEndEdit with 
+            a reference to itself and a new System.EventArgs() like parameters.</remarks>
+        </member>
+        <member name="F:Cooperator.Framework.Core.BaseObject._Initializing">
+            <summary>
+            This private variable remains true while the constructor is 
+            executing, when it finished then become false
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.BaseObject.#ctor">
+            <summary>
+            Class constructor, set initial value state for Object or Entity
+            </summary>
+            <remarks>When Initialize() finished it execution, then the object 
+            is initialized and set _Initializing = false</remarks>
+        </member>
+        <member name="M:Cooperator.Framework.Core.BaseObject.Initialize">
+            <summary>
+            Called from constructor
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.BaseObject.Initialized">
+            <summary>
+            Called only after parameterized constructor
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.BaseObject._state">
+            <summary>
+            State of row or entity
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.BaseObject.InternalOriginalValue">
+            <summary>
+            When a property is changed, a copy of original object is stored here
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.BaseObject.PropertyModified">
+            <summary>
+            When any property value changes, this method should be invoked.
+            </summary>
+            <remarks>If the object is initializing (_Initializing is true), 
+            no clone it.
+            If is modified for first time 
+            ((_state &amp; ObjectState.Modified) != ObjectState.Modified ), 
+            sets _OriginalValue and the object as modified</remarks>
+        </member>
+        <member name="M:Cooperator.Framework.Core.BaseObject.CorrectDescriptionField(Cooperator.Framework.Core.IObject)">
+            <summary>
+            When a associated entity is set in the current entity, we call this method to give the posibility to correct the string that represents the object. (Description field)
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.BaseObject.SetOriginalValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.BaseObject.OriginalValue">
+            <summary>
+            Get original value of row or entity.
+            </summary>
+        </member>
+        <member name="E:Cooperator.Framework.Core.BaseObject.OnCancelEdit">
+            <summary>
+            OnCancelEdit event of CancelEditEventDelegate type.
+            </summary>
+            <remarks>This event is binded to CancelEditEventDelegate Delegate</remarks>
+        </member>
+        <member name="E:Cooperator.Framework.Core.BaseObject.OnBeginEdit">
+            <summary>
+            OnBeginEdit event of BeginEditEventDelegate type.
+            </summary>
+            <remarks>This event is binded to BeginEditEventDelegate Delegate</remarks>
+        </member>
+        <member name="E:Cooperator.Framework.Core.BaseObject.OnEndEdit">
+            <summary>
+            OnBeginEdit event of EndEditEventDelegate type.
+            </summary>
+            <remarks>This event is binded to EndEditEventDelegate Delegate</remarks>
+        </member>
+        <member name="P:Cooperator.Framework.Core.BaseObject.Cooperator#Framework#Core#IObject#State">
+            <summary>
+            Return the object state.
+            </summary>
+            <remarks>It may value
+            New = 1,
+            Modified = 2,
+            Deleted = 4,
+            Restored = 8 and
+            Updated = 16</remarks>
+        </member>
+        <member name="T:Cooperator.Framework.Core.ObjectList`1">
+            <summary>
+            Base class for Objects and entity collections
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.IObjectList`1">
+            <summary>
+            Interface for Objects and entity collections
+            </summary>
+            <typeparam name="T">Row or entity type</typeparam>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IObjectList`1.DeletedItems">
+            <summary>
+            Get items removed from list
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IObjectList`1.ResetDeletedItems">
+            <summary>
+            Clear the deletedItems list.
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IObjectList`1.Replace(`0)">
+            <summary>
+            Replace Object or Entity in list, based on UniqueIdentifier
+            </summary>
+            <param name="replacingEntity">New Object or Entity</param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IObjectList`1.RemoveRange(System.Int32,System.Int32)">
+            <summary>
+            Remove items in range
+            </summary>
+            <param name="index">Items from</param>
+            <param name="count">Number of items to remove</param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IObjectList`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Add items from a IEnumerable collection
+            </summary>
+            <param name="collection">Collection to Add</param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IObjectList`1.GetItem(`0)">
+            <summary>
+            Get a item from list searching by UniqueIdentifier.
+            </summary>
+            <param name="itemToSearch">Item to search for.</param>
+            <returns>Row or Entity, null if item not found.</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IObjectList`1.GetItem(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Get a item from list searching by UniqueIdentifier.
+            </summary>
+            <param name="itemToSearch">Item to search for.</param>
+            <returns>Row or Entity, null if item not found.</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IObjectList`1.ToDataSet">
+            <summary>
+            Returns a Dataset containing data from Objectset o entitylist.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.ConvertList``1">
+            <summary>
+            BaseRowSet based on TOutput Type
+            </summary>
+            <typeparam name="TOutput">Type for convertion</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.CurrentTto``1(`0)">
+            <summary>
+            Converter for BaseRowSet ConvertList
+            </summary>
+            <typeparam name="TOutput">Type for convertion result. </typeparam>
+            <param name="p">Object to convert</param>
+            <returns>Converter object</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.Replace(`0)">
+            <summary>
+            Replace Object or Entity in list, based on UniqueIdentifier
+            </summary>
+            <param name="replacingEntity">New Object or Entity</param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.Remove(`0)">
+            <summary>
+            Remove item from list. 
+            </summary>
+            <param name="itemToRemove">Row or Entity to remove from ObjectSet or list.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.RemoveAll(System.Predicate{`0})">
+            <summary>
+            
+            </summary>
+            <param name="match"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.RemoveAt(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.RemoveRange(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+            <param name="count"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.GetItem(`0)">
+            <summary>
+            Get a item from list searching by UniqueIdentifier.
+            </summary>
+            <param name="itemToSearch">Item to search for.</param>
+            <returns>Row or Entity, null if item not found.</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.GetItem(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            
+            </summary>
+            <param name="itemToSearch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.SetState(Cooperator.Framework.Core.ObjectState)">
+            <summary>
+            Set Object state for all items in Objectset or list.
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.isTheSame(`0,`0)">
+            <summary>
+            
+            </summary>
+            <param name="obj1"></param>
+            <param name="obj2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.isTheSame(Cooperator.Framework.Core.IUniqueIdentifiable,Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            
+            </summary>
+            <param name="obj1"></param>
+            <param name="obj2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.Sort(System.String,System.Boolean)">
+            <summary>
+            Sort the list based on a property.
+            </summary>
+            <param name="propertyName">Property name to sort on</param>
+            <param name="ascDesc">Descending or ascending order</param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectList`1.ToDataSet">
+            <summary>
+            Returns a Dataset containing data from Objectset o entitylist.
+            </summary>
+            <returns>Untyped dataset</returns>
+        </member>
+        <member name="T:Cooperator.Framework.Core.ObjectList`1.GenericComparer">
+            <summary>
+            Private class used by sort
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.ObjectListView`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.#ctor(Cooperator.Framework.Core.ObjectList{`0})">
+            <summary>
+            
+            </summary>
+            <param name="list"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.Synchronize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.ApplySort(System.ComponentModel.ListSortDescriptionCollection)">
+            <summary>
+            
+            </summary>
+            <param name="sorts"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.ApplySort(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)">
+            <summary>
+            
+            </summary>
+            <param name="property"></param>
+            <param name="direction"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.RemoveSort">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.RemoveFilter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.ApplyFilter(System.Predicate{`0})">
+            <summary>
+            Forces the filtering of the list based on the use of the specified Predicate.
+            </summary>
+            <param name="match"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.OnListChanged(System.ComponentModel.ListChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="ev"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.OnClearComplete">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.OnInsertComplete(System.Int32,Cooperator.Framework.Core.BaseObject)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+            <param name="item"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.OnRemoveComplete(System.Int32,Cooperator.Framework.Core.BaseObject)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+            <param name="item"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.OnSetComplete(System.Int32,System.Object,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+            <param name="oldValue"></param>
+            <param name="newValue"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.Find(System.ComponentModel.PropertyDescriptor,System.Object)">
+            <summary>
+             Finds the first object in the list matching the search criteria.
+            </summary>
+             <param name="property">The <see cref="T:System.ComponentModel.PropertyDescriptor"/> to search.</param>
+             <param name="key">Value to find in the property.</param>
+             <returns>The index of the object in the list, -1 if not found.</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.Find(System.ComponentModel.PropertyDescriptor,System.Object,System.Boolean)">
+            <summary>
+             Finds the first object in the list matching the search criteria.
+            </summary>
+             <param name="property">The <see cref="T:System.ComponentModel.PropertyDescriptor"/> to search.</param>
+             <param name="key">Value to find in the property.</param>
+             <param name="ignoreCase">Perform the search on case-sensitive/insensitive mode with strings.</param>
+             <returns>The index of the object in the list, -1 if not found.</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.Find(System.String,System.Object)">
+            <summary>
+             Finds the first object in the list matching the search criteria.
+            </summary>
+             <param name="property">Property to search.</param>
+             <param name="key">Value to find in the property.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.Find(System.String,System.Object,System.Boolean)">
+            <summary>
+             Finds the first object in the list matching the search criteria.
+            </summary>
+             <param name="property">Property to search.</param>
+             <param name="key">Value to find in the property.</param>
+             <param name="ignoreCase">Perform the search on case-sensitive/insensitive mode with strings.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.Find(System.String,System.Object,System.Boolean,Cooperator.Framework.Core.StringLike,System.Int32)">
+            <summary>
+             Finds the first object in the list matching the search criteria.
+            </summary>
+             <param name="property">Property to search.</param>
+             <param name="key">Value to find in the property.</param>
+             <param name="ignoreCase">Perform the search on case-sensitive/insensitive mode with strings.</param>
+             <param name="stringLike">One of the <see cref="T:Cooperator.Framework.Core.StringLike"/> enum values.</param>
+             <param name="start">The zero-based index of the list to start the search.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.Find(System.ComponentModel.PropertyDescriptor,System.Object,System.Boolean,Cooperator.Framework.Core.StringLike,System.Int32)">
+            <summary>
+            Finds the index of the item with the specified value in the specified property descriptor.
+            </summary>
+            <param name="property">The <see cref="T:System.ComponentModel.PropertyDescriptor"/> to search in.</param>
+            <param name="key">Value to look for.</param>
+            <param name="ignoreCase">Perform the search on case-sensitive/insensitive mode with strings.</param>
+            <param name="stringLike">One of the <see cref="T:Cooperator.Framework.Core.StringLike"/> enum values.</param>
+            <param name="start">The zero-based index of the list to start the search.</param>
+            <returns>The zero-based index of the item that matches the search-criteria. </returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.AddIndex(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+            
+            </summary>
+            <param name="property"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.RemoveIndex(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+            
+            </summary>
+            <param name="property"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.Add(`0)">
+            <summary>
+            
+            </summary>
+            <param name="item"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="collection"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.Insert(System.Int32,`0)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+            <param name="item"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.InsertRange(System.Int32,System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+            <param name="collection"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.Remove(`0)">
+            <summary>
+            
+            </summary>
+            <param name="itemToRemove"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.RemoveAll(System.Predicate{`0})">
+            <summary>
+            
+            </summary>
+            <param name="match"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.RemoveAt(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.RemoveRange(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+            <param name="count"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.Replace(`0)">
+            <summary>
+            
+            </summary>
+            <param name="replacingEntity"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.SetState(Cooperator.Framework.Core.ObjectState)">
+            <summary>
+            
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListView`1.AddNew">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.IsSorted">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.SortDescriptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.SortDirection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.SortProperty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.SupportsAdvancedSorting">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.SupportsSorting">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.Filter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.SupportsFiltering">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:Cooperator.Framework.Core.ObjectListView`1.ListChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.Item(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.SupportsSearching">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.AllowNew">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.AllowEdit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.AllowRemove">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ObjectListView`1.SupportsChangeNotification">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.StringLike">
+            <summary>
+            Enumeration to specify how a string looks like in another string.
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.StringLike.Equal">
+            <summary>
+            The string is equal.
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.StringLike.StartsWith">
+            <summary>
+            The string starts with.
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.StringLike.EndsWith">
+            <summary>
+            The string ends with.
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.StringLike.Contains">
+            <summary>
+            The string is contained.
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.DescriptionFieldEventArg">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.DescriptionFieldEventArg.#ctor(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            
+            </summary>
+            <param name="objectToFind"></param>
+        </member>
+        <member name="P:Cooperator.Framework.Core.DescriptionFieldEventArg.ObjectToFind">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.DescriptionFieldEventArg.DescriptionString">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.Exceptions.InvalidFilterArgumentException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.Exceptions.CoreException">
+            <summary>
+            Clase base para todas las excepciones del Cooperator.Framework.Core
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.CoreException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.CoreException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.CoreException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.CoreException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidFilterArgumentException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidFilterArgumentException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidFilterArgumentException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidFilterArgumentException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Core.Exceptions.InvalidSortArgumentException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidSortArgumentException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidSortArgumentException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidSortArgumentException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidSortArgumentException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Core.Factory.SingleFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Factory.SingleFactory.CreateObject(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="assemblyName"></param>
+            <param name="className"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Factory.SingleFactory.CreateObject(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="assemblyPath"></param>
+            <param name="assemblyName"></param>
+            <param name="className"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Factory.SingleFactory.CreateObject(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Factory.SingleFactory.CreateObject``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Core.Factory.FactoryCache">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Factory.FactoryCache.Get(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="assemblyName"></param>
+            <param name="className"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Core.ICRUDable`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ICRUDable`1.Delete(`0)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ICRUDable`1.GetOne(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            
+            </summary>
+            <param name="primaryKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ICRUDable`1.Insert(`0)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ICRUDable`1.Save(`0)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Core.IGateway`2">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="T2"></typeparam>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IGateway`2.Update(`1)">
+            <summary>
+            
+            </summary>
+            <param name="rowSet"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IGateway`2.GetByParent(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            
+            </summary>
+            <param name="parent"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Core.IGenericGateway">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IGenericGateway.GetOne(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            
+            </summary>
+            <param name="identifier"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IGenericGateway.GetAll">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IGenericGateway.GetByParent(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            
+            </summary>
+            <param name="parentEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Core.LazyLoad.Provider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.Provider.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.Provider.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.Provider.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="assemblyName"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.Provider.#ctor(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="assemblyName"></param>
+            <param name="className"></param>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.Provider.EntityName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.Provider.ClassName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.Provider.AssemblyName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.LazyLoad.ProvidersCollection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.CreateNewElement">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.CreateNewElement(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="elementName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.GetElementKey(System.Configuration.ConfigurationElement)">
+            <summary>
+            
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.IndexOf(Cooperator.Framework.Core.LazyLoad.Provider)">
+            <summary>
+            
+            </summary>
+            <param name="psh"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.Add(Cooperator.Framework.Core.LazyLoad.Provider)">
+            <summary>
+            
+            </summary>
+            <param name="psh"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.BaseAdd(System.Configuration.ConfigurationElement)">
+            <summary>
+            
+            </summary>
+            <param name="element"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.Remove(Cooperator.Framework.Core.LazyLoad.Provider)">
+            <summary>
+            
+            </summary>
+            <param name="psh"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.RemoveAt(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.Remove(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.Clear">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.CollectionType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.AddElementName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.ClearElementName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.RemoveElementName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.Count">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.Item(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.ProvidersCollection.Item(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="Name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Core.LazyLoad.ProvidersSection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersSection.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersSection.DeserializeSection(System.Xml.XmlReader)">
+            <summary>
+            
+            </summary>
+            <param name="reader"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ProvidersSection.SerializeSection(System.Configuration.ConfigurationElement,System.String,System.Configuration.ConfigurationSaveMode)">
+            <summary>
+            
+            </summary>
+            <param name="parentElement"></param>
+            <param name="name"></param>
+            <param name="saveMode"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.ProvidersSection.Providers">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.LazyLoad.LazyConfigurationHelper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.LazyConfigurationHelper.Read">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.LazyConfigurationHelper.Read(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.LazyConfigurationHelper.CreateEmpty">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.LazyConfigurationHelper.CreateEmpty(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.LazyConfigurationHelper.GetConfiguration(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.LazyConfigurationHelper.GetFileName">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.LazyConfigurationHelper.GetFileName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.LazyConfigurationHelper.GetExeConfigurationFileMap(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Cooperator.Framework.Core.LazyLoad.LazyConfigurationHelper.ProvidersSection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.LazyLoad.ILazyProvider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ILazyProvider.GetEntity(System.Type,Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            
+            </summary>
+            <param name="child"></param>
+            <param name="identifier"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.ILazyProvider.GetList(System.Type,Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            
+            </summary>
+            <param name="child"></param>
+            <param name="parent"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Core.LazyLoad.LazyProviderFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.LazyLoad.LazyProviderFactory.Get(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Core.ObjectListHelper`2">
+            <summary>
+            Helper methods for RowSet exportation.
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListHelper`2.FillDataSet(System.Data.DataSet,`1)">
+            <summary>
+            Fill a dataset from a RowSet
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectListHelper`2.CreateExcelFile(`1,System.String,System.String)">
+            <summary>
+            Create a Excel file from Row Set.
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.Exceptions.RuleValidationException">
+            <summary>
+            Clase para los errores en la capa de reglas.
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.RuleValidationException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.RuleValidationException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.RuleValidationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.RuleValidationException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Core.ObjectState">
+            <summary>
+            State of Row or Entity
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.ObjectState.New">
+            <summary>
+            Row or Entity is a new instance, marked for insertion
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.ObjectState.Modified">
+            <summary>
+            Row or Entity has been modified 
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.ObjectState.Deleted">
+            <summary>
+            Row or Entity is marked for deletion
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.ObjectState.Restored">
+            <summary>
+            Row or Entity has been restored from database
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.ObjectState.Updated">
+            <summary>
+            Row or Entity has been Inserted/Deleted/Updated into database
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.Exceptions.InvalidRowStateException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidRowStateException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidRowStateException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidRowStateException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidRowStateException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Core.IUniqueIdentifiable">
+            <summary>
+            Interface for unique identification of rows and entities.
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IUniqueIdentifiable.Identifier">
+            <summary>
+            Unique identifier of object.
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.Exceptions.InvalidDataSetException">
+            <summary>
+            Este error se dispara cuando se pasa un Dataset no valido al meoto FillDataset
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidDataSetException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidDataSetException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidDataSetException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.InvalidDataSetException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Core.Exceptions.ItemNotFoundInListException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.ItemNotFoundInListException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.ItemNotFoundInListException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.ItemNotFoundInListException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.Exceptions.ItemNotFoundInListException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Core.IRowVersion">
+            <summary>
+            Interface for row version of table.
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.IRowVersion.RowVersion">
+            <summary>
+            Version of row.
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.IValidable">
+            <summary>
+            Interface for row or entitiy validation
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.IValidable.Validate">
+            <summary>
+            Method to validete called for mappers on inserts and updates.
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.ObjectStateHelper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectStateHelper.IsNew(Cooperator.Framework.Core.IObject)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectStateHelper.IsModified(Cooperator.Framework.Core.IObject)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectStateHelper.IsDeleted(Cooperator.Framework.Core.IObject)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectStateHelper.SetAsDeleted(Cooperator.Framework.Core.IObject)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectStateHelper.IsRestored(Cooperator.Framework.Core.IObject)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectStateHelper.IsUpdated(Cooperator.Framework.Core.IObject)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectStateHelper.IsNewOrDeletedOrModified(Cooperator.Framework.Core.IObject)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.ObjectStateHelper.IsNewAndDeleted(Cooperator.Framework.Core.IObject)">
+            <summary>
+            
+            </summary>
+            <param name="row"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Core.SecurityRights">
+            <summary>
+            Security Rights enumeration
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.SecurityRights.Read">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.SecurityRights.Insert">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.SecurityRights.Update">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Core.SecurityRights.Delete">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Core.UniqueIdentifierHelper">
+            <summary>
+            Class with help methods for IUniqueIdentifier implementation
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Core.UniqueIdentifierHelper.IsSameObject(Cooperator.Framework.Core.IUniqueIdentifiable,Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Checks if two rows or entities are the same, based on UniqueIdentifier
+            </summary>
+            <param name="rowOrEntity1">First Row or Entity</param>
+            <param name="rowOrEntity2">Second Row or Entity</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.UniqueIdentifierHelper.IsTheSameKey(Cooperator.Framework.Core.IUniqueIdentifiable,Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Checks if two entities are the same, based on UniqueIdentifier
+            </summary>
+            <param name="obj1">First Row or Entity</param>
+            <param name="obj2">Second Row or Entity</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.UniqueIdentifierHelper.UniqueIdentifierToString(Cooperator.Framework.Core.IUniqueIdentifiable)">
+            <summary>
+            Returns a string with a concatenation of Unique Identifier values.
+            </summary>
+            <param name="rowOrEntity">Row or Entity</param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Core.UniqueIdentifierHelper.ComposeIdentifier(Cooperator.Framework.Core.IUniqueIdentifiable,System.Object[])">
+            <summary>
+            Returns a objects array with a concatenation of Unique Identifier values plus parameters values
+            </summary>
+            <param name="uniqueIdentifier">Unique Identifier</param>
+            <param name="parameters">Parameters</param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Core.ValuesGenerator">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ValuesGenerator.GetByte">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ValuesGenerator.GetInt16">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ValuesGenerator.GetInt32">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ValuesGenerator.GetInt64">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ValuesGenerator.GetDouble">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ValuesGenerator.GetDecimal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ValuesGenerator.GetDateTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ValuesGenerator.GetString">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ValuesGenerator.GetGuid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ValuesGenerator.GetByteArray">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Core.ValuesGenerator.GetObject">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

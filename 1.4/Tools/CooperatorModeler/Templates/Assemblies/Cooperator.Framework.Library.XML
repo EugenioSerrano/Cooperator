@@ -1,0 +1,779 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cooperator.Framework.Library</name>
+    </assembly>
+    <members>
+        <member name="T:Cooperator.Framework.Library.Cryptography">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Cryptography.Encrypt(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="sourceString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Cryptography.Encrypt(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="sourceString"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Cryptography.Decrypt(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="encryptedString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Cryptography.Decrypt(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="encryptedString"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Exceptions.ApplicationErrorException">
+            <summary>
+            Clase para los errores en la capa de usuario. (Aplicacion)
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Exceptions.BaseException">
+            <summary>
+            Clase base para todas las exceptiones en MSFramework
+            Cada ensamble tiene ademas una clase base tambien, pero esas clases heredan de esta.
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.BaseException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.BaseException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.BaseException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.BaseException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.ApplicationErrorException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.ApplicationErrorException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.ApplicationErrorException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.ApplicationErrorException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Exceptions.CryptoErrorException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.CryptoErrorException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.CryptoErrorException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.CryptoErrorException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.CryptoErrorException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Exceptions.FileAlreadyExist">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.FileAlreadyExist.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.FileAlreadyExist.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.FileAlreadyExist.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.FileAlreadyExist.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Exceptions.ItemExistButDiferentTypeException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.ItemExistButDiferentTypeException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.ItemExistButDiferentTypeException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.ItemExistButDiferentTypeException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.ItemExistButDiferentTypeException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Exceptions.NullValueNotAllowedException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.NullValueNotAllowedException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.NullValueNotAllowedException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.NullValueNotAllowedException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.NullValueNotAllowedException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Exceptions.RegistryIOErrorException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.RegistryIOErrorException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.RegistryIOErrorException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.RegistryIOErrorException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.RegistryIOErrorException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Exceptions.SmtpErrorException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.SmtpErrorException.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.SmtpErrorException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.SmtpErrorException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Exceptions.SmtpErrorException.#ctor(System.String,System.Exception)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Library.IO.CurrentUserInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.CurrentUserInfo.GetUserName">
+            <summary>
+            This method is used to Get Current User Name in Win9x
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.CurrentUserInfo.GetImpersonatedUser(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userName"></param>
+            <param name="domainName"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Library.IO.EventViewer">
+            <summary>
+            Provee metodos de acceso al visor de sucesos.
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.EventViewer.WriteEntry(System.String,System.String,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Escribe una entrada, en el visor de sucesos.
+            </summary>
+            <param name="source"></param>
+            <param name="message"></param>
+            <param name="logType"></param>
+        </member>
+        <member name="T:Cooperator.Framework.Library.IO.File">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.File.SaveStringToFileInAppFolder(System.String,System.String,System.Boolean)">
+            <summary>
+            Graba un string en un archivo en la carpeta de la aplicacación.
+            </summary>
+            <param name="fileName">Nombre del archivo sin path. Ej: MyFile.txt</param>
+            <param name="text">Texto a guardar</param>
+            <param name="replace">Si se reemplaza o no el archivo. Si no se reemplaza y el archivo existe se dispara un error.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.File.SaveStringToFile(System.String,System.String,System.Boolean)">
+            <summary>
+            Graba un string en un archivo.
+            </summary>
+            <param name="fullFileName">Nombre del archivo con path. Ej: C:\MyFiles\MyFile.txt</param>
+            <param name="text">Texto a guardar</param>
+            <param name="replace">Si se reemplaza o no el archivo. Si no se reemplaza y el archivo existe se dispara un error.</param>
+        </member>
+        <member name="T:Cooperator.Framework.Library.IO.Memory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Memory.SaveMemory">
+            <summary>
+            Esto en Net 1.1 libera cantidad de memoria tomada por el CLR.
+            En Net 2.0 parece no funcionar muy bien.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.NativeMethods.SetProcessWorkingSetSize(System.IntPtr,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="hProcess"></param>
+            <param name="dwMinimumWorkingSetSize"></param>
+            <param name="dwMaximumWorkingSetSize"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Library.IO.Path">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Path.AppPath">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Path.AppPath(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="backSlash"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Path.AppExeName">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Path.AppExeName(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="fullPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Path.DLLPath">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Path.DLLPath(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="backSlash"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Path.DLLName">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Path.DLLName(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="fullPath"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Library.IO.OperatingSystemInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.OperatingSystemInfo.GetWindowsVersion">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Library.IO.Registry">
+            <summary>
+            An useful class to read/write/delete/count registry keys
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Registry.Read(System.String)">
+            <summary>
+            To read a registry key.
+            input: KeyName (string)
+            output: value (string) 
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Registry.Write(System.String,System.Object)">
+            <summary>
+            To write into a registry key.
+            input: KeyName (string) , Value (object)
+            output: true or false 
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Registry.Write(System.String,System.Object,Microsoft.Win32.RegistryValueKind)">
+            <summary>
+            To write into a registry key.
+            input: KeyName (string) , Value (object)
+            output: true or false 
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Registry.DeleteKey(System.String)">
+            <summary>
+            To delete a registry key.
+            input: KeyName (string)
+            output: true or false 
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Registry.DeleteSubKeyTree">
+            <summary>
+            To delete a sub key and any child.
+            input: void
+            output: true or false 
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Registry.SubKeyCount">
+            <summary>
+            Retrive the count of subkeys at the current key.
+            input: void
+            output: number of subkeys
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.IO.Registry.ValueCount">
+            <summary>
+            Retrive the count of values in the key.
+            input: void
+            output: number of keys
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Library.IO.Registry.ThrowExceptionOnError">
+            <summary>
+            A property to show or hide error messages 
+            (default = false)
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Library.IO.Registry.SubKey">
+            <summary>
+            A property to set the SubKey value
+            (default = "SOFTWARE\\Cooperator Framework")
+            </summary>
+        </member>
+        <member name="P:Cooperator.Framework.Library.IO.Registry.BaseRegistryKey">
+            <summary>
+            A property to set the BaseRegistryKey value.
+            (default = Registry.CurrentUser)
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Repository.RepositoryMapper">
+            <summary>
+            Esta clase mapea el Objeto RepositoryEntity a la registry
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Repository.RegistryTarget">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Library.Repository.RegistryTarget.CurrentUser">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:Cooperator.Framework.Library.Repository.RegistryTarget.LocalMachine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Repository.RepositoryEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Repository.RepositoryEntity.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Resources">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Resources.GetResourceStream(System.String,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="objectName"></param>
+            <param name="sourceType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Resources.GetResourceStream(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="objectName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Resources.GetResourceString(System.String,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="sourceType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Library.SmtpMail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.SmtpMail.SendMailViaCDSYS(System.String,System.String,System.String,System.String,System.IO.FileInfo[])">
+            <summary>
+             Envia un mail usando CDSYS. Recuerde configurar la entrada SMTPServerName en su archivo de configuracion.
+            </summary>
+            <param name="from">Direccion de correo de quien envia</param>
+            <param name="to">Direccion de correo del destinatario</param>
+            <param name="subject">Asunto del mensajes</param>
+            <param name="body">Cuerpo del mensaje</param>
+            <param name="attachments">Lista de archivos adjuntos.</param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.SmtpMail.SendMailViaCDONTS(System.String,System.String,System.String,System.String,System.Web.HttpContext,System.IO.FileInfo[])">
+            <summary>
+             Envia un mail usando CDONTS. No requiere configurar la entrada SMTPServerName en su archivo de configuracion.
+            </summary>
+            <param name="from">Direccion de correo de quien envia</param>
+            <param name="to">Direccion de correo del destinatario</param>
+            <param name="subject">Asunto del mensajes</param>
+            <param name="body">Cuerpo del mensaje</param>
+            <param name="currentHttpContext">El objeto HttpContext actual</param>
+            <param name="attachments">Lista de archivos adjuntos.</param>        
+        </member>
+        <member name="T:Cooperator.Framework.Library.TaxIDVerification.Argentina">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.TaxIDVerification.Argentina.IsValidCuit(System.String,System.Boolean)">
+            <summary>
+            Funcion de verificacion de Cuit.
+            </summary>
+        </member>
+        <member name="T:Cooperator.Framework.Library.TimeFunctions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.TimeFunctions.DifferenceInYears(System.DateTime,System.DateTime)">
+            <summary>
+            
+            </summary>
+            <param name="dateOne"></param>
+            <param name="dateTwo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.TimeFunctions.DifferenceInMonths(System.DateTime,System.DateTime)">
+            <summary>
+            
+            </summary>
+            <param name="dateOne"></param>
+            <param name="dateTwo"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Utility">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Utility.#ctor">
+            <summary>
+            This class connot be instantiated
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Utility.NumberToWords(System.Decimal)">
+            <summary>
+            Converts numbers to words
+            </summary>
+            <param name="number"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Utility.IsEmailValid(System.String)">
+            <summary>
+            Chequea si el formato del mail es valido.
+            </summary>
+            <param name="emailAddress">La direccion de correo que se quiere verificar</param>
+            <returns>Verdadero o Falso si es una direccion valida o no</returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Utility.GetDriveSerialNumber(System.String)">
+            <summary>
+            Devuelve el numero de serie de la unidad especificada
+            </summary>
+            <param name="driveLetter"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Utility.RandomPassword">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Utility.RandomPassword.Generate">
+            <summary>
+            Generates a random password.
+            </summary>
+            <returns>
+            Randomly generated password.
+            </returns>
+            <remarks>
+            The length of the generated password will be determined at
+            random. It will be no shorter than the minimum default and
+            no longer than maximum default.
+            </remarks>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Utility.RandomPassword.Generate(System.Int32)">
+            <summary>
+            Generates a random password of the exact length.
+            </summary>
+            <param name="length">
+            Exact password length.
+            </param>
+            <returns>
+            Randomly generated password.
+            </returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Utility.RandomPassword.Generate(System.Int32,System.Int32)">
+            <summary>
+            Generates a random password.
+            </summary>
+            <param name="minLength">
+            Minimum password length.
+            </param>
+            <param name="maxLength">
+            Maximum password length.
+            </param>
+            <returns>
+            Randomly generated password.
+            </returns>
+            <remarks>
+            The length of the generated password will be determined at
+            random and it will fall with the range determined by the
+            function parameters.
+            </remarks>
+        </member>
+        <member name="T:Cooperator.Framework.Library.Repository.RegistryRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Repository.RegistryRepository.SaveItem(Cooperator.Framework.Library.Repository.RegistryTarget,System.String,System.String,System.Decimal)">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="ownerName"></param>
+            <param name="parameterName"></param>
+            <param name="number"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Repository.RegistryRepository.SaveItem(Cooperator.Framework.Library.Repository.RegistryTarget,System.String,System.String,System.DateTime)">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="ownerName"></param>
+            <param name="parameterName"></param>
+            <param name="date"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Repository.RegistryRepository.SaveItem(Cooperator.Framework.Library.Repository.RegistryTarget,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="ownerName"></param>
+            <param name="parameterName"></param>
+            <param name="str"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Repository.RegistryRepository.SaveItem(Cooperator.Framework.Library.Repository.RegistryTarget,System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="ownerName"></param>
+            <param name="parameterName"></param>
+            <param name="boolean"></param>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Repository.RegistryRepository.GetItemAsDateTime(Cooperator.Framework.Library.Repository.RegistryTarget,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="ownerName"></param>
+            <param name="parameterName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Repository.RegistryRepository.GetItemAsDecimal(Cooperator.Framework.Library.Repository.RegistryTarget,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="ownerName"></param>
+            <param name="parameterName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Repository.RegistryRepository.GetItemAsString(Cooperator.Framework.Library.Repository.RegistryTarget,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="ownerName"></param>
+            <param name="parameterName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Repository.RegistryRepository.GetItemAsBoolean(Cooperator.Framework.Library.Repository.RegistryTarget,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="ownerName"></param>
+            <param name="parameterName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Cooperator.Framework.Library.Repository.RegistryRepository.DeleteItem(Cooperator.Framework.Library.Repository.RegistryTarget,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="target"></param>
+            <param name="ownerName"></param>
+            <param name="parameterName"></param>
+        </member>
+    </members>
+</doc>

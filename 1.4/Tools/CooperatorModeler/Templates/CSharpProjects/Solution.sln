@@ -1,0 +1,38 @@
+﻿Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%Response.Write(parameters["AppProjectName"]);%>", "<%Response.Write(parameters["AppProjectName"]);%>\\<%Response.Write(parameters["AppProjectName"]);%>.csproj", "{<%Response.Write(parameters["RulesProjectGuid"]);%>}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%Response.Write(parameters["DataProjectName"]);%>", "<%Response.Write(parameters["DataProjectName"]);%>\\<%Response.Write(parameters["DataProjectName"]);%>.csproj", "{<%Response.Write(parameters["DataProjectGuid"]);%>}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%Response.Write(parameters["EntitiesProjectName"]);%>", "<%Response.Write(parameters["EntitiesProjectName"]);%>\\<%Response.Write(parameters["EntitiesProjectName"]);%>.csproj", "{<%Response.Write(parameters["EntitiesProjectGuid"]);%>}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "<%Response.Write(parameters["RulesProjectName"]);%>", "<%Response.Write(parameters["RulesProjectName"]);%>\\<%Response.Write(parameters["RulesProjectName"]);%>.csproj", "{<%Response.Write(parameters["RulesProjectGuid"]);%>}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{<%Response.Write(parameters["DataProjectGuid"]);%>}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{<%Response.Write(parameters["DataProjectGuid"]);%>}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{<%Response.Write(parameters["DataProjectGuid"]);%>}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{<%Response.Write(parameters["DataProjectGuid"]);%>}.Release|Any CPU.Build.0 = Release|Any CPU
+		{<%Response.Write(parameters["EntitiesProjectGuid"]);%>}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{<%Response.Write(parameters["EntitiesProjectGuid"]);%>}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{<%Response.Write(parameters["EntitiesProjectGuid"]);%>}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{<%Response.Write(parameters["EntitiesProjectGuid"]);%>}.Release|Any CPU.Build.0 = Release|Any CPU
+		{<%Response.Write(parameters["RulesProjectGuid"]);%>}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{<%Response.Write(parameters["RulesProjectGuid"]);%>}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{<%Response.Write(parameters["RulesProjectGuid"]);%>}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{<%Response.Write(parameters["RulesProjectGuid"]);%>}.Release|Any CPU.Build.0 = Release|Any CPU
+		{<%Response.Write(parameters["AppProjectGuid"]);%>}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{<%Response.Write(parameters["AppProjectGuid"]);%>}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{<%Response.Write(parameters["AppProjectGuid"]);%>}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{<%Response.Write(parameters["AppProjectGuid"]);%>}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+<%Response.SaveBuffer("\\ProjectFiles\\" +parameters["SolutionName"]+ ".sln");%>
