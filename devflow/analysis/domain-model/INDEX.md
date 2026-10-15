@@ -1,24 +1,38 @@
-# Domain Model — Índice
+# Domain Model — Index
 
-Modelo de dominio legible: entidades, relaciones y enumeraciones.
+**Methodology version:** 5.2
 
----
-
-## Entidades
-
-| Entidad | Label | Módulo | Estado |
-|---------|-------|--------|--------|
-| *(usar TEMPLATE-ENTITY.md para agregar entidades)* | | | |
+Readable domain model: entities, relationships and enumerations.
 
 ---
 
-## Documentos transversales
+## Entities
 
-| Documento | Descripción |
-|-----------|-------------|
-| [relationships.md](relationships.md) | Vista centralizada de todas las relaciones |
-| [enums.md](enums.md) | Value sets, estados y códigos |
+| Entity | Label | Module | Status |
+|--------|-------|--------|--------|
+| *(use `entities/TEMPLATE-ENTITY.md` to add entities)* |  |  |  |
+
+> Status: `draft` | `stable` | `deprecated`.
 
 ---
 
-**Última actualización:** *(fecha)*
+## Enumerations
+
+| Enum | Label | Module | Status |
+|------|-------|--------|--------|
+| *(use `enumerations/TEMPLATE-ENUM.md` to add enums)* |  |  |  |
+
+---
+
+## Relationships
+
+| Document | Purpose |
+|----------|----------|
+| [relationships/TEMPLATE-RELATIONSHIP.md](relationships/TEMPLATE-RELATIONSHIP.md) | Template for module-specific relationship catalogs |
+
+> Create one file per module/bounded context using the template. See
+> [relationships/README.md](relationships/README.md) for conventions.
+
+---
+
+**Last updated:** August 2026

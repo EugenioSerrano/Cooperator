@@ -1,120 +1,156 @@
 # Glossary (Ubiquitous Language)
 
-## Propósito
+**Methodology version:** 5.2
 
-Esta carpeta contiene el **glosario del dominio**: definiciones consensuadas de
-los términos de negocio que usa el equipo. Es el *ubiquitous language* (DDD) —
-el vocabulario compartido entre stakeholders, analistas, desarrolladores y
-agentes AI.
+## Purpose
 
-Un término bien definido aquí elimina ambigüedad en User Stories, Specs, código
-y conversaciones. Si dos personas usan la misma palabra con significados
-distintos, el glosario es la fuente de verdad.
+This folder contains the **domain glossary**: agreed-on definitions of the
+business terms the team uses. It is the *ubiquitous language* (DDD) — the
+shared vocabulary between stakeholders, analysts, developers and AI agents.
 
----
-
-## ¿Qué se documenta aquí?
-
-- **Términos de negocio** — Conceptos del dominio con definición precisa.
-- **Sinónimos y alias** — Palabras distintas que refieren al mismo concepto.
-- **Aclaraciones de contexto** — Cuándo un término cambia de significado según el módulo.
-- **Términos prohibidos** — Palabras ambiguas que el equipo decidió NO usar.
+A term well defined here removes ambiguity from User Stories, Specs, code
+and conversations. When two people use the same word with different
+meanings, the glossary is the source of truth.
 
 ---
 
-## Formato
+## What goes here
 
-Se usa Markdown con una estructura tabular simple. Puede ser un solo archivo
-(proyectos chicos) o múltiples archivos agrupados por módulo/bounded context.
+- **Business terms** — domain concepts with a precise definition.
+- **Synonyms and aliases** — different words that refer to the same concept.
+- **Context clarifications** — when a term shifts meaning across modules /
+  bounded contexts.
+- **Banned terms** — ambiguous words the team has decided NOT to use, and
+  what to use instead.
 
-### Estructura de una entrada
+---
+
+## Format
+
+Markdown with a simple tabular structure. One file for small projects,
+multiple files (one per module / bounded context) for larger ones.
+**Language:** YAML keys and status enums in English. Section headings and
+term definitions in the project's `content_language` (see
+devflow/README.md -> Language policy, §3.15).
+
+### Entry shape
 
 ```markdown
-### [Término]
+### [Term]
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| **Definición** | [Qué significa exactamente en este proyecto] |
-| **Sinónimos** | [Otras palabras que refieren a lo mismo] |
-| **No confundir con** | [Términos similares con significado distinto] |
-| **Entidad** | [Link a la entidad en domain-model/ si existe] |
-| **Ejemplo** | [Caso concreto que ilustra el uso] |
+| **Definition**       | What it means exactly in this project |
+| **Synonyms**         | Other words that mean the same thing |
+| **Do not confuse with** | Similar terms with different meaning |
+| **Entity**           | Link to the entity in `domain-model/entities/` if any |
+| **Example**          | Concrete case that illustrates the use |
+| **Source**           | Interview / document / stakeholder where the term was first observed |
 ```
 
-### Ejemplo
+### Worked example
 
 ```markdown
-### Cliente
+### Customer
 
-| Campo | Valor |
+| Field | Value |
 |-------|-------|
-| **Definición** | Persona física o jurídica que tiene al menos un contrato activo con la empresa. Un prospecto NO es un cliente hasta que firma. |
-| **Sinónimos** | Cuenta, Customer |
-| **No confundir con** | Prospecto (no tiene contrato), Usuario (puede ser empleado interno) |
-| **Entidad** | [Cliente](../domain-model/entities/Cliente.md) |
-| **Ejemplo** | "Juan Pérez, DNI 30.123.456, contrato #FC-2024-001 activo desde 2024-03-15" |
+| **Definition**       | Individual or legal entity with at least one active contract with the company. A prospect is NOT a customer until they sign. |
+| **Synonyms**         | Account, Client |
+| **Do not confuse with** | Prospect (no contract), User (may be an internal employee) |
+| **Entity**           | [Customer](../domain-model/entities/Customer.md) |
+| **Example**          | "Jane Doe, ID 30.123.456, contract #FC-2024-001 active since 2024-03-15" |
+| **Source**           | INT-002 (sales lead interview) |
 ```
+
+Use [TEMPLATE-GLOSSARY.md](TEMPLATE-GLOSSARY.md) for new files.
 
 ---
 
-## Organización de archivos
+## File organization
 
-La organización es libre:
+Free organization. Two common patterns:
 
 ```
 glossary/
-├── glosario-general.md          → Todo en un archivo (proyectos chicos)
+└── glossary-general.md       # everything in one file (small projects)
 ```
 
-O por bounded context:
+Or by bounded context:
+
 ```
 glossary/
-├── ventas.md
-├── facturacion.md
-├── logistica.md
+├── sales.md
+├── billing.md
+├── logistics.md
 └── README.md
 ```
 
 ---
 
-## Cómo construir el glosario
+## How to build the glossary with AI
 
-1. **Extraer términos** de las entrevistas (`interviews/`) — anotar cada palabra
-   que los stakeholders usan para referirse a conceptos del negocio.
-2. **Detectar conflictos** — si dos personas usan el mismo término con distinto
-   significado, resolver y documentar la definición oficial.
-3. **Vincular con domain-model** — cada término que sea una entidad modelada debe
-   referenciar su definición en `domain-model/`.
-4. **Validar con el equipo** — el glosario se consensúa, no se impone.
-5. **Mantener vivo** — actualizar cuando aparezcan términos nuevos o cambien
-   definiciones.
+1. **Term extraction** — point the agent at `input/interviews/` and ask:
+   > *"List every business term used. For each: best-guess definition,
+   > synonyms heard, conflicting definitions (if any), source interview."*
+2. **Conflict detection** — ask the agent to highlight terms used with
+   different meanings across interviews. The human picks the official
+   definition.
+3. **Link to domain-model** — every term that is also an entity must
+   reference its file in `domain-model/entities/`.
+4. **Validate with the team** — the glossary is *consensual*, not imposed.
+5. **Keep it alive** — update when new terms appear or definitions change.
 
 ---
 
-## Relación con el flujo
+## Position in the flow
 
 ```
-interviews/ → glossary/ (términos consensuados) → domain-model/ (modelo formal)
-                                                  → functional/ (US usan estos términos)
-                                                  → spec/ (código usa estos nombres)
+input/interviews/  →  glossary/ (agreed terms)
+                          ├─►  domain-model/ (formal model)
+                          ├─►  functional/  (US use these terms)
+                          └─►  spec/        (code uses these names)
 ```
 
-El glosario es el puente entre el lenguaje del negocio y el modelo técnico.
-Los nombres de entidades en domain-model, variables en código y campos en APIs deberían
-coincidir con los términos definidos aquí.
+The glossary is the bridge between business language and the technical
+model. Entity names in `domain-model/`, variables in code and API field
+names should match the terms defined here.
 
 ---
 
+## Lifecycle
+
+The glossary is a **living document**: edited in place when new terms
+appear, definitions change or conflicts surface. It is not versioned per
+entry — `INDEX.md` simply lists active files.
+
+If a term becomes obsolete, mark it `deprecated` and explain what replaced
+it. Do not delete history.
+
 ---
 
-## Ciclo de vida del glosario
+## Index
 
-El glosario es un **documento vivo**: se edita in-place cuando surgen términos nuevos, cambian definiciones o se detectan conflictos de lenguaje. No se depreca ni se versiona por separado.
-
-El INDEX.md lista todos los archivos del glosario activos.
+See **[INDEX.md](INDEX.md)** for the list of glossary files.
 
 ---
 
-## Índice de documentos
+## Language
 
-Ver **[INDEX.md](INDEX.md)** para el listado de archivos del glosario.
+YAML keys, status enums, and IDs stay in **English**
+(the schema). Section headings and all prose — descriptions, context,
+rationale, findings — go in the project's content_language (see
+[devflow/README.md](../../README.md) -> Language policy, §3.15).
+
+---
+
+## Feeds the introduction narrative
+
+Once this artifact exists — draft is enough — it feeds
+[`../introduction/`](../introduction/), the plain-language entry point written
+**last** in the analysis phase. It supplies the agreed words the narrative must use.
+
+That narrative is **derivative** (§5.5): it never introduces a rule of its own
+and is never governed input (G28). When a change here alters something the
+narrative states, update the narrative in the same pass — or mark it
+`deprecated` rather than let it keep circulating.

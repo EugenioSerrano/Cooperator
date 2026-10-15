@@ -1,0 +1,60 @@
+# agents/ — Index
+
+**Methodology version:** 5.2
+
+The DevFlow Agent definitions family. The canonical contract and the
+create-your-own-agent guide live in [README.md](README.md); the
+per-platform wrappers — and the skills the definitions reference, from [`../skills/`](../skills/INDEX.md) — are projected by the **Coordinator** (the
+AvengaDevFlow agent itself, one per tool) from the **live definitions in
+[`squad/`](squad/)** into the project's platform folders
+(`.claude/agents/`, `.opencode/agents/`, `.github/agents/`,
+`.codex/agents/`) following the mapping in [VERIFICATION.md](VERIFICATION.md)
+(N×4 parity verified) — the kit ships no pre-built role wrappers.
+
+## Examples (shipped — read-only references)
+
+| Example | Produces | Skills | Status |
+|---------|----------|--------|--------|
+| examples/functional-analyst/ | feature US | — | shipped |
+| examples/architect/ | ADR | — | shipped |
+| examples/developer/ | SPEC + code + tests | — | shipped |
+| examples/qa/ | TC/tests + MEM reviews | — | shipped |
+| examples/reviewer/ | REV + MEM/DISC approvals | — | shipped |
+| examples/test-designer/ | draft `TC-NNN` + manifests (TC-first, one per scenario family) for `AITL-TC-Approval` · `OQ-NNN` for story gaps · optional CSV of approved TCs | user-story-analysis · testing-heuristics · exploratory-scenario-generation · test-case-consolidation (on the `skills/examples/` shelf — adopt first) | shipped — adapted from TestWriter; executor-only |
+| TEMPLATE-new-role/ | **generic template** — copy it (or an example) into `squad/` to create any project-defined role | — | template |
+
+> Examples are **copied, never edited in place and never
+> roster-referenced** — see [examples/README.md](examples/README.md).
+
+## Squad (live — your project's agents)
+
+| Agent | Role | Produces | Skills | Status |
+|-------|------|----------|--------|--------|
+| —     | —    | —        | —      | —      |
+
+> The Coordinator creates agents here and installs their wrappers — see
+> [squad/README.md](squad/README.md). List each agent in this table — the
+> **Skills** column names the skills it references
+> ([`../skills/<skill-name>/`](../skills/INDEX.md), `—` when none) — and add
+> its actor entry to the roster (`actors/`).
+
+## The Coordinator
+
+**No separate folder** — the Coordinator is the Avenga DevFlow agent
+itself, shipped per platform (`CLAUDE.md`, `.agents/skills/…`,
+`.github/agents/…`, `.opencode/agents/…`) and **evolved** to act as the
+orchestrator: the shared body carries the "The Coordinator (the
+orchestrator)" paragraph (routes, delegates production, spawns approvers,
+records — **never signs**, `approves: []`), and each platform preamble
+declares the spawn-topology mechanics. The wrappers are projections of
+role agents only — no coordinator sub-agent exists.
+
+## Notes
+
+- **Examples are skeletons** — adopters copy them into `squad/` and
+  instantiate; they never edit the kit's examples in place.
+- **Project-defined agents** live in `squad/` and are listed in the Squad
+  table above (the adopter's `agents/` family grows with their team).
+- The **Coordinator is not generated**: its projections are the four
+  platform agent files; only role agents get wrappers.
+- Per-platform capability status: [VERIFICATION.md](VERIFICATION.md).

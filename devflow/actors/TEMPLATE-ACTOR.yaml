@@ -1,0 +1,58 @@
+# TEMPLATE-ACTOR — create an actor file
+#
+# Copy this file to `actors/<actor-id>.yaml` (naming N-rule), fill every
+# field, and LIST THE ACTOR IN `roster.yaml` — the team list is the
+# membership authority: an actor file not listed there is not in the
+# team. The schema (`roster.schema.yaml`) validates the result.
+#
+# NON-NEGOTIABLE BOUNDS (everything else is your team's freedom):
+#   - Authority lives in these structured fields, NEVER in prose.
+#   - The authority fields (`modes: [approver]`, `approves`) are written
+#     by a HUMAN — an agent never enables its own approval.
+#   - `approves` only real checkpoint codes (US, BUG, TC, BOLT-READY,
+#     BOLT-DONE, ADR, SPEC, MEM, DISC, REV, AREV-CRITIQUE, AREV-DEFENSE,
+#     AREV-VERDICT).
+#   - APPROVER CEILING: an actor acting as approver runs at T0 (at most
+#     T1 pinned), no write paths, no transactional MCPs — a methodology
+#     rule in v1 (the declared `capabilities` fields return with the v2
+#     hardening, and with them the schema-level enforcement).
+#   - Independence: an approver is always a different actor than the
+#     executor (approver.id ≠ executor.id).
+#   - `produces` is DERIVED from `role` (the single role → artifacts
+#     mapping, §3.0.1) — never a field here.
+
+id: <actor-id>               # kebab-case — the file/roster handle (the file
+                             # name, the roster.yaml listing); never the value
+                             # compared against records
+user: <git-email-local-part> # HUMAN actors ONLY (agents omit this field) —
+                             # the `git config user.email` local part,
+                             # VERBATIM (case kept; never lowercased or
+                             # stripped): the person's identity in every
+                             # record is human:<user>, resolved through this
+                             # field. The schema accepts ASCII letters,
+                             # digits, `.`, `-`, `_` and `+`; a local part
+                             # outside that set is reported for a recorded
+                             # team decision, never rewritten. Unique: no two
+                             # humans listed active in roster.yaml carry the
+                             # same user
+name: <project-chosen-name>  # free label, e.g. "Arq Juan", ".NET Architect"
+role: <role>                 # open archetype: functional-analyst · architect ·
+                             # developer · qa · reviewer · project-defined…
+model: inherit               # DevFlow Agent actors ONLY (humans omit this
+                             # field — human:<user> → model null, §3.0.1).
+                             # Per-instance, authoritative — follow the session
+                             # model, or pick any model from the platform catalog
+modes: [executor]            # executor (production, first-class) | approver
+approves: []                 # checkpoint codes it may sign; EMPTY = executor-only
+                             # (a non-empty approves REQUIRES approver in modes —
+                             # and approver in modes REQUIRES a non-empty approves)
+
+# DevFlow Agent actors only (humans omit this block AND the model field):
+definition: <agents/squad/<id>/agent.yaml>   # the reusable blueprint
+                                             # (N actors : 1 definition) — always
+                                             # a live agent in agents/squad/,
+                                             # never an example
+escalation:
+  - "<your escalation trigger 1>"
+write_paths: []              # the folders this actor writes; approver-mode
+                             # actors write nothing

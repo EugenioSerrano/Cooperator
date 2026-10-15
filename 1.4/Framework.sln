@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.11.12306.390 stable
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cooperator.Framework.Core", "Cooperator.Framework.Core\Cooperator.Framework.Core.csproj", "{A1946008-8222-47A9-A532-739249CD48D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cooperator.Framework.Data", "Cooperator.Framework.Data\Cooperator.Framework.Data.csproj", "{227E6BE6-C341-4854-8720-F05B49B6EEA4}"

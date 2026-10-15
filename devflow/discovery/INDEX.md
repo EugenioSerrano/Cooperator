@@ -1,21 +1,32 @@
-﻿# Discovery — Índice
+# Discovery — Index
 
-Documentos de descubrimiento: hallazgos, investigaciones y conocimiento obtenido durante la exploración de sistemas existentes, tecnologías, dominio de negocio y código legado. Alimentan las decisiones de arquitectura (ADRs) y las especificaciones (Specs).
+**Methodology version:** 5.2
 
----
-
-## ✅ Vigentes
-
-| ID | Documento | Descripción |
-|----|-----------|-------------|
-| DISC-001 | [DISC-001-analisis-cooperator-modeler.md](DISC-001-analisis-cooperator-modeler.md) | Análisis exhaustivo de la herramienta Cooperator Modeler: arquitectura, flujo de trabajo, motor de generación de código, sistema de scripting dinámico, jerarquía de clases, y brechas identificadas |
-
-## ⛔ Deprecados (Archive)
-
-| ID | Documento | Estado |
-|----|-----------|--------|
-| — | — | — |
+Need-driven investigations (`DISC-NNN`) that reduce a material unknown
+before a User Story or Bolt is created or materially refined. Conclusions
+are usable as governed input only after `AITL-DISC-Approval`. Feeds ADRs,
+risks, Bolts and specs — each with its own approval lifecycle.
 
 ---
 
-**Última actualización:** Mayo 2026
+## 🟡 Draft (pending AITL-DISC-Approval)
+
+| ID | Document | Category | Research question | Status |
+|----|----------|----------|-------------------|--------|
+| —  | —        | —        | —                 | —      |
+
+## ✅ Approved
+
+| ID | Document | Category | Research question | Status |
+|----|----------|----------|-------------------|--------|
+| —  | —        | —        | —                 | —      |
+
+## ⛔ Deprecated
+
+| ID | Document | Category | Research question | Status |
+|----|----------|----------|-------------------|--------|
+| —  | —        | —        | —                 | —      |
+
+---
+
+**Last updated:** August 2026

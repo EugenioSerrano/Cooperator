@@ -1,0 +1,23 @@
+# Canonical DevFlow Agent definition — TEMPLATE (adopters copy + instantiate;
+# pick your own id — the id is the identity).
+id: developer-agent            # adopters choose: <project>-developer-agent
+role: developer
+description: >
+  Executes V-Bounces: implements the approved SPEC (code, tests,
+  configuration) and produces the MEM + manifest entry. Delegate
+  implementation work to this agent.
+model: inherit                    # safe default: follow the session model; adopters override per platform catalog
+modes: [executor]                     # executor-only by default (production first)
+approves: []                          # EMPTY = executor-only; may never sign
+capabilities:
+  tier: T2                            # repo + read-only external + named transactional MCPs if enabled
+  tools: [read, grep, glob, bash, edit, write]
+  mcp_servers: []                     # named + allowlisted; [] default
+escalation:
+  - "SPEC is ambiguous or a governed source changed mid-run (G15)"
+  - "tests cannot go green within the turn budget"
+write_paths: ["devflow/spec/", "devflow/memory/", "devflow/metrics/bolts/"]  # governed records; add your project's source and test folders
+human_invocation: coordinator-only  # default posture; `direct` (the deliberate opt-in) re-opens the human-started session
+# NOTE: as a pure executor this agent never needs approver mode; if a
+# project grants it one, the APPROVER CEILING (T0/T1, no write paths, no
+# transactional MCPs — the approver ceiling) applies to that mode.

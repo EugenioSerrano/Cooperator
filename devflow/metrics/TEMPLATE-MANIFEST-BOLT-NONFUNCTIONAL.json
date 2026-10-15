@@ -1,0 +1,260 @@
+{
+  "schema_version": "5.0",
+  "bolt": {
+    "id": "US-000.BOLT-014",
+    "type": "non-functional",
+    "test_integration": "required",
+    "ref": "devflow/functional/bolts/US-000.BOLT-014-structured-logging.md",
+    "sources": [
+      "devflow/functional/user-stories/US-000-non-functional.md",
+      "devflow/adrs/ADR-011-observability.md"
+    ],
+    "generation": {
+      "created_at": "2026-08-03T09:10:00-03:00",
+      "created_by": "human:eugenio.serrano",
+      "runs": [
+        {
+          "tool": "opencode",
+          "provider": "openrouter",
+          "model": "anthropic/claude-sonnet-4.7",
+          "tokens": {
+            "input_uncached": 4100,
+            "input_cached_read": 900,
+            "input_cache_write": 0,
+            "output": 800
+          },
+          "agent": "avenga-devflow"
+        }
+      ],
+      "duration_seconds": 31
+    },
+    "review_ready_at": "2026-08-03T09:15:00-03:00",
+    "review_started_at": "2026-08-03T09:18:00-03:00",
+    "acceptance": {
+      "review_ready_at": "2026-08-03T11:15:00-03:00",
+      "review_started_at": "2026-08-03T11:20:00-03:00"
+    }
+  },
+  "spec_revisions": [
+    {
+      "revision": 1,
+      "ref": "devflow/spec/SPEC-260803-0930-structured-logging.md",
+      "sources": [
+        "devflow/functional/bolts/US-000.BOLT-014-structured-logging.md",
+        "devflow/adrs/ADR-011-observability.md"
+      ],
+      "git_commit": "a1b2c3d",
+      "generation": {
+        "created_at": "2026-08-03T09:30:00-03:00",
+        "created_by": "human:eugenio.serrano",
+        "runs": [
+          {
+            "tool": "codex",
+            "provider": "openai",
+            "model": "gpt-5.6",
+            "tokens": {
+              "input_uncached": 11800,
+              "input_cached_read": 4300,
+              "input_cache_write": 0,
+              "output": 2700
+            },
+            "agent": "avenga-devflow"
+          }
+        ],
+        "duration_seconds": 142
+      },
+      "review_ready_at": "2026-08-03T09:38:00-03:00",
+      "review_started_at": "2026-08-03T09:41:00-03:00"
+    }
+  ],
+  "v_bounces": [
+    {
+      "number": 1,
+      "spec_revision": 1,
+      "git_commit": "a1b2c3d",
+      "execution_outcome": "ready_for_review",
+      "code_generation": {
+        "created_at": "2026-08-03T10:05:00-03:00",
+        "created_by": "human:dev1",
+        "runs": [
+          {
+            "tool": "opencode",
+            "provider": "anthropic",
+            "model": "claude-sonnet-4.7",
+            "tokens": {
+              "input_uncached": 26400,
+              "input_cached_read": 9800,
+              "input_cache_write": 0,
+              "output": 7300
+            },
+            "agent": "developer-agent"
+          }
+        ],
+        "duration_seconds": 980
+      },
+      "mem": {
+        "ref": "devflow/memory/MEM-260803-1042-structured-logging.md",
+        "generation": {
+          "created_at": "2026-08-03T10:42:00-03:00",
+          "created_by": "human:dev1",
+          "runs": [
+            {
+              "tool": "opencode",
+              "provider": "anthropic",
+              "model": "claude-sonnet-4.7",
+              "tokens": {
+                "input_uncached": 5200,
+                "input_cached_read": 1800,
+                "input_cache_write": 0,
+                "output": 1300
+              },
+              "agent": "developer-agent"
+            }
+          ],
+          "duration_seconds": 38
+        }
+      },
+      "review_ready_at": "2026-08-03T10:45:00-03:00",
+      "review_started_at": "2026-08-03T11:00:00-03:00"
+    }
+  ],
+  "checkpoint_approvals": [
+    {
+      "checkpoint": "AITL-BOLT-READY-Approval",
+      "subject": {
+        "ref": "devflow/functional/bolts/US-000.BOLT-014-structured-logging.md"
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "human:arch.name",
+          "role": "architect",
+          "model": null
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "human:arch.name",
+          "role": "architect",
+          "model": null
+        }
+      ],
+      "decided_at": "2026-08-03T09:25:00-03:00",
+      "comment": null
+    },
+    {
+      "checkpoint": "AITL-SPEC-Approval",
+      "subject": {
+        "ref": "devflow/spec/SPEC-260803-0930-structured-logging.md",
+        "revision": 1
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "human:eugenio.serrano",
+          "role": "dev_validator",
+          "model": null
+        },
+        {
+          "actor": "human:arch.name",
+          "role": "architect",
+          "model": null
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:avenga-devflow",
+          "role": "coordinator",
+          "model": "gpt-5.6"
+        }
+      ],
+      "decided_at": "2026-08-03T09:55:00-03:00",
+      "comment": null
+    },
+    {
+      "checkpoint": "AITL-MEM-Approval",
+      "subject": {
+        "ref": "devflow/memory/MEM-260803-1042-structured-logging.md",
+        "v_bounce": 1
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "human:dev1",
+          "role": "dev_validator",
+          "model": null
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:avenga-devflow",
+          "role": "coordinator",
+          "model": "claude-sonnet-4.7"
+        }
+      ],
+      "decided_at": "2026-08-03T11:10:00-03:00",
+      "comment": null
+    },
+    {
+      "checkpoint": "AITL-BOLT-DONE-Approval",
+      "subject": {
+        "ref": "devflow/functional/bolts/US-000.BOLT-014-structured-logging.md"
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "human:tech.lead",
+          "role": "tech_lead",
+          "model": null
+        },
+        {
+          "actor": "human:sre.name",
+          "role": "sre",
+          "model": null
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "human:tech.lead",
+          "role": "tech_lead",
+          "model": null
+        }
+      ],
+      "decided_at": "2026-08-03T11:30:00-03:00",
+      "comment": null
+    }
+  ],
+  "integration_test_runs": [
+    {
+      "kind": "run",
+      "number": 1,
+      "covers": "4c5d6e7",
+      "environment": "staging",
+      "outcome": "fail",
+      "reason": null,
+      "evidence": "https://ci.example.com/logging/runs/201",
+      "ran_by": "human:dev1",
+      "runner": "github-actions",
+      "ran_at": "2026-08-03T11:12:00-03:00"
+    },
+    {
+      "kind": "classification",
+      "run": 1,
+      "cause": "environment",
+      "reason": "The staging log collector dropped events during the run; the failing checks read an incomplete stream, not the change's output.",
+      "classified_by": "human:dev1",
+      "classified_at": "2026-08-03T11:13:00-03:00"
+    },
+    {
+      "kind": "waiver",
+      "covers": "4c5d6e7",
+      "closes_runs": [
+        1
+      ],
+      "reason": "The staging log collector stays down until the platform maintenance window; the change is not run against it this time.",
+      "compensating_control": "https://ci.example.com/logging/runs/202",
+      "waived_by": "human:dev1",
+      "waived_at": "2026-08-03T11:15:00-03:00"
+    }
+  ]
+}

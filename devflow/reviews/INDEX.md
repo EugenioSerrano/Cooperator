@@ -1,21 +1,32 @@
-﻿# Reviews — Índice
+# Reviews — Index
 
-Auditorías técnicas formales: evalúan el estado del código, la arquitectura y la documentación contra estándares definidos. Identifican gaps, deuda técnica y oportunidades de mejora — nunca modifican código.
+**Methodology version:** 5.2
 
----
-
-## ✅ Vigentes
-
-| ID | Documento | Descripción |
-|----|-----------|-------------|
-| — | — | — |
-
-## ⛔ Deprecados (Archive)
-
-| ID | Documento | Estado |
-|----|-----------|--------|
-| — | — | — |
+Open structured examinations (`REV-NNN`): evaluate code, architecture,
+tests, US and documentation against ADRs and standards. Findings remain
+draft until `AITL-REV-Approval`; approved findings are routed to
+BUG / BOLT→SPEC / DISC / ADR / RISK — reviews never fix, only classify.
 
 ---
 
-**Última actualización:** Mayo 2026
+## 🟡 Draft (pending AITL-REV-Approval)
+
+| ID | Document | Scope | Findings | Status |
+|----|----------|-------|----------|--------|
+| —  | —        | —     | —        | draft  |
+
+## ✅ Approved (findings actionable — routing in progress)
+
+| ID | Document | Scope | Findings | Status |
+|----|----------|-------|----------|--------|
+| —  | —        | —     | —        | approved |
+
+## 🏁 Closed (all findings routed)
+
+| ID | Document | Closed date |
+|----|----------|-------------|
+| —  | —        | —           |
+
+---
+
+**Last updated:** August 2026

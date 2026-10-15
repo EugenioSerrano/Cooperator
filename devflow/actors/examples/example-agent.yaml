@@ -1,0 +1,21 @@
+# Example actor — a DevFlow Agent QA (worked example of TEMPLATE-ACTOR)
+#
+# Demonstrates: one file per actor, a project-chosen name, the
+# definition pointer (reusable N:1 — another actor may share it; it
+# references the project's live agent in agents/squad/, never an
+# example), and a per-instance model. `produces` is NOT here — it
+# derives from `role` (qa → TC/tests + MEM reviews, §3.0.1). The v1
+# shape carries no `capabilities` block (deferred to the v2 hardening;
+# the T0/T1 approver ceiling governs as a methodology rule). To be in
+# the team, an actor file must also be listed in ../roster.yaml.
+
+id: example-qa
+name: Example QA
+role: qa
+model: inherit
+modes: [executor, approver]
+approves: [MEM]
+definition: agents/squad/example-qa/agent.yaml
+escalation:
+  - "evidence missing, contradictory or unreproducible"
+write_paths: ["devflow/tests/"]

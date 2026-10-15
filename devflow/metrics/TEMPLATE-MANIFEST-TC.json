@@ -1,0 +1,74 @@
+{
+  "schema_version": "5.0",
+  "tc": {
+    "id": "TC-027",
+    "ref": "devflow/tests/test-cases/TC-027-invoice-download.md",
+    "sources": [
+      "devflow/functional/user-stories/US-012-invoices.md",
+      "devflow/functional/bolts/US-012.BOLT-003-invoice-download.md"
+    ],
+    "generation": {
+      "created_at": "2026-08-02T10:27:00-03:00",
+      "created_by": "human:qa.name",
+      "runs": [
+        {
+          "tool": "opencode",
+          "provider": "openrouter",
+          "model": "anthropic/claude-sonnet-4.7",
+          "tokens": {
+            "input_uncached": 2800,
+            "input_cached_read": 700,
+            "input_cache_write": 0,
+            "output": 520
+          },
+          "agent": "test-designer-agent"
+        }
+      ],
+      "duration_seconds": 44
+    },
+    "review_ready_at": "2026-08-02T10:31:00-03:00",
+    "review_started_at": "2026-08-02T10:33:00-03:00"
+  },
+  "verifies": {
+    "source_bolt": "US-012.BOLT-003",
+    "source_us": "US-012",
+    "covered_acs": [
+      "AC-1",
+      "AC-2",
+      "AC-3"
+    ]
+  },
+  "test_bolts": [
+    "devflow/functional/bolts/TC-027.BOLT-001-invoice-download-e2e.md"
+  ],
+  "checkpoint_approvals": [
+    {
+      "checkpoint": "AITL-TC-Approval",
+      "subject": {
+        "ref": "devflow/tests/test-cases/TC-027-invoice-download.md"
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "human:qa.name",
+          "role": "qa",
+          "model": null
+        },
+        {
+          "actor": "human:fa.name",
+          "role": "functional_analyst",
+          "model": null
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "human:qa.name",
+          "role": "qa",
+          "model": null
+        }
+      ],
+      "decided_at": "2026-08-02T10:38:00-03:00",
+      "comment": null
+    }
+  ]
+}

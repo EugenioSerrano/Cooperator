@@ -1,0 +1,72 @@
+# TEMPLATE — create your own DevFlow Agent (project-defined role)
+#
+# Copy this folder to agents/squad/<your-role>/, rename the files'
+# content and fill every field. The Coordinator (the AvengaDevFlow
+# MainAgent) projects ANY agent.yaml in squad/ into its platform wrapper
+# and installs it in your tool's spawn folder, following the mapping in
+# agents/VERIFICATION.md (the N×4 parity check as the safety net).
+#
+# NON-NEGOTIABLE BOUNDS (everything else is your team's freedom):
+#   - Authority lives in these structured fields, NEVER in prose (the
+#     identity model).
+#   - `approves` only real checkpoint codes (US, BUG, TC, BOLT-READY,
+#     BOLT-DONE, ADR, SPEC, MEM, DISC, REV, AREV-CRITIQUE, AREV-DEFENSE,
+#     AREV-VERDICT).
+#   - APPROVER CEILING (approver mode): an agent acting as approver runs
+#     at T0 (at most T1 pinned), no write paths, no transactional MCPs.
+#   - Independence: an approver is always a different actor than the
+#     executor (approver.id ≠ executor.id).
+#   - Role-generic: never write an actor's name or team-specific
+#     references into the definition — personalization lives in the
+#     actor file (actors/<actor-id>.yaml).
+id: <your-agent-id>          # kebab-case — THE identity (independence checks,
+                             # the roster). Pick once; renaming prompts never
+                             # changes the identity.
+role: <your-role>            # archetype: coordinator | functional-analyst |
+                             # architect | developer | qa | reviewer |
+                             # project-defined… (open — never a closed enum)
+description: >              # when the Coordinator should delegate to you
+  <one or two sentences: what you do, when the Coordinator spawns you>
+model: inherit               # safe default: follow the session model; you may
+                             # pick any model from the platform catalog
+modes: [executor]            # executor (production, first-class) | approver
+                             # (configured second role — see the ceiling above)
+approves: []                 # checkpoint classes you may sign; EMPTY =
+                             # executor-only (may never sign)
+capabilities:
+  tier: T1                   # T0 repo-only | T1 +read-only external |
+                             # T2 transactional MCPs | T3 unrestricted
+  tools: [read, grep, glob, bash, edit, write]   # least-privilege allowlist
+  mcp_servers: []            # named + allowlisted; [] default — no implicit
+                             # MCP exposure (the MCP allowlist rule)
+escalation:                  # when you MUST defer (always allowed above the
+                             # engine floor)
+  - "<your escalation trigger 1>"
+  - "<your escalation trigger 2>"
+write_paths: []              # the folders you write (G30/G31 mirror);
+                             # approver-mode agents write nothing
+human_invocation: coordinator-only  # direct | coordinator-only — may a HUMAN
+                                    # start a session where this role is the
+                                    # acting agent? coordinator-only (default) =
+                                    # the projection hides the wrapper from human
+                                    # pickers where the platform offers a control;
+                                    # direct = a human may start such a session.
+                                    # It NEVER restricts the Coordinator's spawn,
+                                    # and grants nothing: no tool, tier, MCP,
+                                    # spawn or approver mode. Set `direct` only
+                                    # deliberately: it re-opens the human-started
+                                    # session at the cost of the single-entry-point
+                                    # default; when spawn is unavailable the
+                                    # checkpoint resolves to the human, and the
+                                    # execution-evidence rule is the compensating
+                                    # control (approver-serving definitions stay
+                                    # coordinator-only).
+# skills: []                 # OPTIONAL — the skill set: the names of the
+#                            # project-level skills this role USES, each an
+#                            # existing devflow/skills/<skill-name>/ folder
+#                            # (references — nothing is copied in here).
+#                            # STRICT REFERENCE SYMMETRY: a missing skill makes
+#                            # this definition invalid (refused at copy and
+#                            # install); omitted = no skills. Skills are content,
+#                            # never authority — nothing in them grants tools,
+#                            # MCPs, tier, spawn or approval.

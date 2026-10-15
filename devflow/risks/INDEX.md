@@ -1,21 +1,31 @@
-# Riesgos — Índice
+# Risks — Index
 
-Amenazas identificadas que podrían impactar el éxito, la calidad o los plazos del proyecto. Cada riesgo tiene su documento individual (RISK-NNN-\*.md) con detalle de probabilidad, impacto, mitigación y contingencia.
+**Methodology version:** 5.2
 
----
-
-## ✅ Vigentes
-
-| ID | Documento | Descripción | Nivel | Estado |
-|----|-----------|-------------|-------|--------|
-| — | — | — | — | — |
-
-## ⛔ Cerrados (Archive)
-
-| ID | Documento | Estado |
-|----|-----------|--------|
-| — | — | — |
+Identified threats that could impact project success, quality or timelines.
+Each risk has its own document (RISK-NNN-*.md) with probability, impact,
+mitigation and contingency details.
 
 ---
 
-**Última actualización:** Mayo 2026
+## 🔴 Open
+
+| ID | Document | Description | Level | Status |
+|----|----------|-------------|-------|--------|
+| —  | —        | —           | —     | —      |
+
+## 🟡 Mitigated / Materialized
+
+| ID | Document | Description | Incident |
+|----|----------|-------------|----------|
+| —  | —        | —           | —        |
+
+## 🏁 Closed
+
+| ID | Document | Status |
+|----|----------|--------|
+| —  | —        | —      |
+
+---
+
+**Last updated:** August 2026

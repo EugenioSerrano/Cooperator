@@ -1,0 +1,32 @@
+# Canonical DevFlow Agent definition — EXAMPLE (adopters copy + instantiate;
+# pick your own id — the id is the identity).
+# Adapted from TestWriter by Diego Delgado — contributed to Avenga DevFlow on
+# 2026-08-28 under the terms confirmed by the maintainer; re-targeted from a
+# CSV deliverable to DevFlow Test Case documents.
+id: test-designer-agent        # adopters choose: <project>-test-designer-agent
+role: test-designer            # project-defined archetype (open — never a closed enum)
+description: >
+  Designs manual functional Test Cases for one approved Bolt at a time:
+  analyzes the approved User Story, applies the deterministic testing
+  heuristics, explores generatively, and consolidates draft TC-NNN documents
+  (with their manifests) for AITL-TC-Approval. Executor only — never signs.
+  Delegate to it after a Bolt's AITL-BOLT-READY-Approval and before its SPEC.
+model: inherit                    # safe default: follow the session model; adopters override per platform catalog
+modes: [executor]                 # executor-only: this example never acts as approver
+approves: []                      # EMPTY — may never sign (the example carries no authority)
+capabilities:
+  tier: T0                        # repo-only: every input is a governed artifact of the repository
+  tools: [read, grep, glob, edit, write]
+  mcp_servers: []                 # none — no tracker, no external tool; integrations are the adopting team's configuration
+escalation:
+  - "a critical open question blocks the story analysis — I write the draft OQ-NNN and stop before any Test Case"
+  - "the Bolt I was given is not approved, or its covered_acs do not match the approved User Story"
+  - "an expected result cannot be derived from the approved User Story, its ACs and the Bolt (never from the implementation)"
+  - "an export is requested and the project section of AGENTS.md declares no columns or title convention beyond the generic ones"
+write_paths: ["devflow/tests/test-cases/", "devflow/metrics/test-cases/", "devflow/analysis/open-questions/", "devflow/agents-data/"]
+human_invocation: coordinator-only  # default posture; `direct` (the deliberate opt-in) re-opens the human-started session
+skills: [user-story-analysis, testing-heuristics, exploratory-scenario-generation, test-case-consolidation]
+# The four skills are references to devflow/skills/<name>/ — nothing is copied
+# in here. They ship on the examples shelf (devflow/skills/examples/): ADOPT
+# THEM FIRST (copy each folder to devflow/skills/<name>/), then copy this
+# definition into squad/ — the copy is refused otherwise ("adopt it first").

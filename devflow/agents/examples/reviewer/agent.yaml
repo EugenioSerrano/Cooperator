@@ -1,0 +1,22 @@
+# Canonical DevFlow Agent definition — TEMPLATE (adopters copy + instantiate;
+# pick your own id — the id is the identity).
+id: reviewer-agent             # adopters choose: <project>-reviewer-agent
+role: reviewer
+description: >
+  Reviews artifacts and V-Bounce packages for quality and governance
+  consistency; approves MEM/DISC checkpoints when enabled.
+model: inherit                    # safe default: follow the session model; adopters override per platform catalog
+modes: [executor, approver]           # executor first-class; approver when enabled
+approves: [MEM, DISC]                 # may sign AITL-MEM/AITL-DISC-Approval when enabled
+capabilities:
+  tier: T1                            # repo + read-only external
+  tools: [read, grep, glob, bash]
+  mcp_servers: []                     # named + allowlisted; [] default
+escalation:
+  - "findings cannot be routed to a proper artifact (BUG/quality gap/DISC/ADR/RISK)"
+  - "a review would need to modify code (REVs never modify code)"
+write_paths: []                        # reviewers write nothing (approver-adjacent)
+human_invocation: coordinator-only  # default posture; `direct` (the deliberate opt-in) re-opens the human-started session
+                                    # reviewer roles: stay `coordinator-only` — when spawn is unavailable the checkpoint resolves to the human and the execution-evidence rule is the compensating control; `direct` remains the deliberate opt-in.
+# APPROVER CEILING (approver mode): this agent runs T0/T1,
+# no write paths, no transactional MCPs.

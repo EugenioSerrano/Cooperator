@@ -1,144 +1,229 @@
-﻿# Architecture Decision Records (ADRs)
+# Architecture Decision Records (ADRs)
 
-## Propósito
+**Methodology version:** 5.2
 
-Esta carpeta almacena los **Architecture Decision Records (ADRs)** del proyecto.
-Un ADR es un documento breve e inmutable que captura una decisión arquitectónica
-significativa junto con su contexto, las alternativas consideradas y las
-consecuencias esperadas.
+## Purpose
 
-El objetivo es construir una bitácora de decisiones técnicas que permita a
-cualquier persona comprender **POR QUÉ** el sistema está diseñado de la manera
-en que lo está.
+This folder stores the project's **Architecture Decision Records (ADRs)**.
+An ADR is a brief, immutable document that captures a significant
+architectural decision along with its context, the alternatives considered
+and the expected consequences.
+
+The goal is to build a decision log so that **anyone** can understand
+**WHY** the system is designed the way it is.
+
+Reference: Avenga DevFlow §2.8, §3.0 (AITL-ADR-Approval), §3.5.
 
 ---
 
-## Convención de nombres (MADR)
+## When to create an ADR
 
-Basado en [MADR](https://adr.github.io/madr/):
+| Trigger | Example |
+|---------|---------|
+| Significant technical decision | DB choice, API style, auth strategy |
+| Gate override / waiver | A gate override: the ADR must be approved through `AITL-ADR-Approval` and record **reason, owner, compensating control and expiry date** (§3.6); the gate then records `waived`, never `pass` |
+| NFR definition or trade-off | Performance vs. cost, availability vs. consistency — NFRs are governed **inside** approved ADRs (§2.7) |
+| L4 autonomy grant | Multi-Bolt scope granted to the agent (§3.3) |
+
+**Timing (§2.8, §3.5):** An ADR that constrains implementation must be
+prepared and **approved before the SPEC is generated**. If an unresolved
+architectural decision emerges during SPEC preparation or a V-Bounce, the
+work stops; the ADR is drafted and approved, then the canonical SPEC is
+revised and re-approved before technical execution resumes.
+
+---
+
+## Scope: Dual design
+
+ADRs cover both design layers (§3.5):
+- **Domain Design** (tactical DDD) — bounded contexts, aggregates,
+  entity boundaries.
+- **Logical Design** (patterns / NFR / platform) — architecture patterns,
+  infrastructure, performance trade-offs.
+
+Modeling the domain is not specifying its behaviour: an ADR decides how the
+domain is structured, never what the system does for the user. Functional
+behaviour and its acceptance criteria live in the feature User Story and its
+ACs.
+
+---
+
+## Naming convention
 
 ```
-ADR-NNN-descripcion-breve-en-kebab-case.md              (aceptado)
-ADR-NNN-Deprecado-descripcion-breve.md                    (deprecado)
-ADR-NNN-Reemplazado-descripcion-breve.md                  (reemplazado)
+ADR-NNN-short-description-in-kebab-case.md
 ```
 
-- `ADR` — Prefijo fijo.
-- `NNN` — Número secuencial de 3 dígitos.
-- Estado `Deprecado` o `Reemplazado` solo aparece en el nombre si NO es "aceptado".
+- `ADR` — Fixed prefix.
+- `NNN` — 3-digit sequential number (check `INDEX.md` for the next number).
+- Status changes live in the **frontmatter `status` field only** — the
+  filename never changes, and no `Deprecated`/`Superseded` filename suffixes
+  are used (§5.15).
 
 ---
 
-## Inmutabilidad (regla fundamental)
+## Approval and immutability (fundamental rule)
 
-Los ADRs son **READONLY** una vez creados.
+**Approval (§2.8, §3.5):** Every ADR remains a **draft** until an Architect
+or Tech Lead records `AITL-ADR-Approval`. Approval of a User Story, Bolt,
+SPEC, V-Bounce, Review or Adversarial Review **never implies** ADR approval.
+A draft ADR cannot govern a
+SPEC, establish a non-functional constraint, authorize an exception, or be
+treated as an accepted decision. Drafts may be refined in response to
+`AITL-ADR-Approval` feedback.
 
-**✅ Se puede:**
-- Cambiar el nombre del archivo para reflejar un cambio de estado.
-- Actualizar el campo "Estado" en los metadatos.
+**Immutability (§3.5):** Once approved, an ADR is **READONLY**.
 
-**❌ No se puede:**
-- Modificar el contenido sustancial (contexto, alternativas, decisión, consecuencias).
-- Si una decisión necesita cambiar, se crea un **nuevo ADR** que referencia al anterior.
+**✅ Allowed:**
+- Update the `status` field in the frontmatter (`accepted` → `deprecated` /
+  `superseded`).
+- Create a **new ADR** that supersedes the old one when a decision reverses.
+
+**❌ Not allowed:**
+- Modify substantive content (context, alternatives, decision, consequences)
+  after approval.
+- If a decision needs to change, create a **new ADR** that supersedes the
+  previous one; the old ADR stays as-is with status `superseded`.
 
 ---
 
-## Ciclo de vida MADR
+## ADR conflicts (§2.8, §3.5)
+
+Two **active** ADRs may not contradict each other. If ADR-005 says
+"PostgreSQL" and ADR-012 says "MongoDB" for the same use case, neither
+superseding the other, the conflict blocks any SPEC that needs both.
+
+**Detection (at creation):** before requesting `AITL-ADR-Approval`, the
+drafter checks the decision log for active ADRs contradicted by the new
+decision and records them in the `conflicts_with` frontmatter field. The
+approver verifies this check during the approval review.
+
+**Resolution (the rule):** a conflict is always resolved by a **new ADR
+that supersedes the contradicting one(s)** — it states the contradiction
+in its context, lists them in `supersedes`, and the old ADRs are marked
+`superseded`. AREV/REV are not required by default; they remain available
+as stakeholder escalation for high/critical conflicts.
+
+**Enforcement (at use):** the pre-SPEC evidence gate (§2.4.1) blocks any
+SPEC whose `sources` include mutually exclusive active ADRs, with a
+conflict report naming the ADRs and the required superseding ADR.
+
+---
+
+## Lifecycle
 
 ```mermaid
 stateDiagram-v2
-    [*] --> propuesto
-    propuesto --> aceptado
-    propuesto --> rechazado
-    aceptado --> deprecado
-    aceptado --> reemplazado
-    reemplazado --> [*] : Reemplazado por nuevo ADR
-    deprecado --> [*] : Ya no aplica
-    rechazado --> [*] : Descartado
+    [*] --> draft
+    draft --> accepted
+    draft --> rejected
+    accepted --> deprecated
+    accepted --> superseded
+    superseded --> [*] : Replaced by new ADR
+    deprecated --> [*] : No longer applicable
+    rejected --> [*] : Discarded
 ```
 
-| Estado | Significado |
-|--------|-------------|
-| **propuesto** | En evaluación, pendiente de aprobación |
-| **aceptado** | Vigente. Guía autoritativa de arquitectura |
-| **rechazado** | Evaluada y rechazada (registro de alternativas descartadas) |
-| **deprecado** | Completamente implementada o ya no relevante |
-| **reemplazado** | Reemplazada por un ADR más reciente |
+| Status | Meaning |
+|--------|---------|
+| **draft** | Under evaluation, pending `AITL-ADR-Approval` — no governing authority |
+| **accepted** | Active. Authoritative architecture guidance |
+| **rejected** | Evaluated and discarded (record of alternatives not taken) |
+| **deprecated** | Fully implemented or no longer relevant |
+| **superseded** | Replaced by a more recent ADR |
 
 ---
 
-## Estructura recomendada
+## Recommended structure
 
-1. **Título y metadatos** — Número, nombre, fecha, estado, decisores.
-2. **Contexto** — Problema o necesidad que motivó la decisión.
-3. **Alternativas consideradas** — Opciones evaluadas con pros y contras.
-4. **Decisión** — Declaración clara de lo decidido.
-5. **Consecuencias** — Impacto positivo, trade-offs, deuda técnica.
-6. **Referencias** — Links a documentos, estándares, otros ADRs.
+1. **Title & metadata** — Number, name, date, status, decision-makers.
+2. **Context** — Problem or need that motivated the decision.
+3. **Alternatives considered** — Options evaluated with pros and cons.
+4. **Decision** — Clear statement of what was decided.
+5. **Consequences** — Positive impact, trade-offs, technical debt.
+6. **Applicable NFRs** — NFR table when the ADR defines or impacts non-functional requirements (§2.7).
+7. **References** — Links to documents, standards, other ADRs.
 
-### Diagramas y Elementos Visuales
+See [`TEMPLATE-ADR.md`](TEMPLATE-ADR.md) for the complete structure,
+including the `AITL-ADR-Approval` review contract.
 
-Usar **Mermaid** obligatoriamente para todos los diagramas, gráficos y cualquier otro elemento visual (no ASCII art ni imágenes embebidas).
+### Diagrams and visual elements
+
+Use **Mermaid** for all diagrams, charts and any other visual element
+(no ASCII art or embedded images).
 
 ---
 
-## Regla para agentes AI
+## Rule for AI agents
 
-| Estado | Acción | Motivo |
+| Status | Action | Reason |
 |--------|--------|--------|
-| **aceptado** | ✅ **CONSULTAR Y RESPETAR** | Guía autoritativa vigente |
-| **propuesto** | 👁️ **LEER como contexto** | Puede ser relevante pero aún no es obligatorio |
-| **rechazado** | ⛔ **IGNORAR** | Decisión descartada, no aplicar |
-| **deprecado** | ⛔ **IGNORAR** | Ya no aplica al proyecto |
-| **reemplazado** | ⛔ **IGNORAR** | Sustituido por un ADR más reciente |
+| **accepted** | ✅ **CONSULT AND FOLLOW** | Active authoritative guidance |
+| **draft** | 👁️ **READ as context** | Relevant but not binding; cannot govern |
+| **rejected** | ⛔ **IGNORE** | Decision discarded, do not apply |
+| **deprecated** | ⛔ **IGNORE** | No longer applies to the project |
+| **superseded** | ⛔ **IGNORE** | Replaced by a more recent ADR |
 
-> **Regla práctica:** Si el nombre del archivo contiene `Deprecado` o `Reemplazado`, ignorar.
-> Solo seguir instrucciones de ADRs en estado `aceptado`. Los `propuesto` pueden consultarse
-> para entender decisiones en curso, pero no son vinculantes.
-
----
-
-## ¿Qué define un ADR?
-
-**Sí:** Plataforma tecnológica, estructura de capas, patrones de diseño,
-convenciones de código, estrategia de testing, configuración de hardware.
-
-**No:** Reglas de negocio (→ Discovery), pasos de implementación (→ Spec),
-hallazgos de revisión (→ Review), registro de lo implementado (→ Memory).
+> **Rule of thumb:** Only ADRs in `accepted` status are governing. `draft`
+> ADRs may be consulted for context but are not binding and cannot govern a
+> SPEC or authorize an exception.
 
 ---
 
-## Requisitos No Funcionales (NFRs)
+## What does an ADR define?
 
-Los **requisitos no funcionales** (rendimiento, seguridad, disponibilidad,
-escalabilidad, observabilidad, etc.) se documentan **dentro de los ADRs** como
-una sección dedicada cuando la decisión arquitectónica los impacta directamente.
+**Yes:** Technology platform, layer structure, design patterns,
+code conventions, testing strategy, hardware configuration.
 
-### ¿Cómo se registran?
+**No:** Functional specifications and functional requirements (→ the feature
+User Story and its Acceptance Criteria), business rules (→ Discovery / analysis),
+implementation steps (→ Spec), review findings (→ Review), record of what was
+implemented (→ Memory).
 
-| Escenario | Dónde documentar |
-|-----------|-----------------|
-| Un ADR **define** un NFR (ej. "elegimos Redis para lograr < 50ms p99") | Sección "NFRs aplicables" del ADR |
-| Un NFR **motiva** una decisión (ej. "necesitamos 99.9% uptime") | Campo "Contexto" del ADR + sección NFRs |
-| Un NFR es **transversal** a varias decisiones (ej. política de seguridad) | ADR dedicado tipo "ADR-NNN-nfr-politica-seguridad" |
+---
 
-### Estructura de la sección NFRs
+## Non-Functional Requirements (NFRs)
+
+**Non-functional requirements** (performance, security, availability,
+scalability, observability, etc.) are **defined and governed inside approved
+ADRs** (§2.7). They are not independent DevFlow artifacts and must not be
+defined in User Stories, Acceptance Criteria, Bolts or SPECs.
+
+### How are they recorded?
+
+| Scenario | Where to document |
+|----------|------------------|
+| An ADR **defines** an NFR (e.g. "we chose Redis to achieve < 50ms p99") | "Applicable NFRs" section of the ADR |
+| An NFR **motivates** a decision (e.g. "we need 99.9% uptime") | "Context" field of the ADR + NFRs section |
+| An NFR is **cross-cutting** across several decisions (e.g. security policy) | Dedicated ADR such as "ADR-NNN-nfr-security-policy" |
+
+### NFRs section structure
 
 ```markdown
-## NFRs aplicables
+## Applicable NFRs
 
-| NFR | Descripción | Umbral | Cómo se mide |
-|-----|-------------|--------|--------------|
-| Latencia | Respuesta del endpoint /api/x | < 200ms p95 | Métricas APM |
-| Disponibilidad | Servicio principal | 99.9% mensual | Health checks |
+| NFR | Description | Threshold | How it is measured |
+|-----|-------------|-----------|-------------------|
+| Latency | /api/x endpoint response | < 200ms p95 | APM metrics |
+| Availability | Main service | 99.9% monthly | Health checks |
 ```
 
-> **Regla:** Todo ADR que impacte un NFR **debe** incluir esta tabla. Si un
-> NFR no tiene ADR asociado, es una señal de que falta una decisión
-> arquitectónica documentada.
+> **Rule:** Every ADR that impacts an NFR **must** include this table. If an
+> NFR has no associated approved ADR, it is a sign that a documented
+> architectural decision is missing.
 
 ---
 
-## Índice de documentos
+## Document index
 
-Ver **[INDEX.md](INDEX.md)** para el listado de ADRs vigentes y reemplazados.
+See **[INDEX.md](INDEX.md)** for the list of draft, active, rejected,
+superseded and deprecated ADRs.
+
+---
+
+## Language
+
+YAML keys, status enums, IDs, and template section headings stay in **English**
+(the schema). ADR titles and all prose — context, decision,
+consequences — go in the project's `content_language`, declared in
+[`../LANGUAGE`](../LANGUAGE) (see §3.15).

@@ -1,15 +1,19 @@
-# Glossary — Índice
+# Glossary — Index
 
-Ubiquitous language: términos de negocio con definiciones consensuadas.
+**Methodology version:** 5.2
 
----
-
-## Archivos del glosario
-
-| Archivo | Alcance | Términos |
-|---------|---------|----------|
-| — | — | — |
+Ubiquitous language: business terms with agreed-on definitions.
 
 ---
 
-**Última actualización:** Mayo 2026
+## Glossary files
+
+| File | Scope (bounded context / module) | Terms | Status |
+|------|-----------------------------------|:-----:|--------|
+| —    | —                                 | —     | —      |
+
+> Status: `draft` | `stable` | `deprecated`.
+
+---
+
+**Last updated:** August 2026

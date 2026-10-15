@@ -1,0 +1,22 @@
+# roster.yaml — the team list (the single membership authority)
+#
+# One entry per actor, referencing its file (`actors/<actor-id>.yaml`).
+# An actor file NOT listed here is not in the team — drafts and retired
+# actors carry no authority. Listing an actor (and writing its authority
+# fields, `modes: [approver]` + `approves`) is a HUMAN configuration act:
+# the git history is the record — and the record materializes when you
+# COMMIT it: an uncommitted grant has no audit trail, and an agent never
+# commits it for you. An agent never enables its own approval either.
+#
+# The schema-valid, human-authored roster entry IS the explicit
+# configuration that lets a DevFlow Agent occupy the AITL checkpoint
+# classes its `approves` grants — exactly like a human, under the
+# independence rules. No entry (or an invalid one) → the safe default:
+# every checkpoint resolves to humans.
+#
+# The kit ships this list EMPTY — your team is yours. See README.md for
+# the rules and examples/ for a worked actor file.
+
+actors: []
+# actors:
+#   - example-qa        # → actors/example-qa.yaml (created from TEMPLATE-ACTOR.yaml)

@@ -1,0 +1,129 @@
+# roster.schema.yaml — validates an ACTOR file (actors/<actor-id>.yaml)
+# JSON Schema (draft 2020-12) in YAML form. A malformed actor file fails
+# fast and the safe default (humans) applies until fixed.
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: "Avenga DevFlow actor file"
+type: "object"
+additionalProperties: false
+required: [id, name, role, modes, approves]   # model is AGENT-required and
+                                              # user is HUMAN-required (see the
+                                              # allOf) — a human actor omits
+                                              # model (human:<user> → model
+                                              # null, §3.0.1), an agent actor
+                                              # omits user
+properties:
+  id:
+    type: "string"
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"      # kebab-case — the file/roster
+                                             # handle (the file name, the
+                                             # roster.yaml listing); never the
+                                             # value compared against records
+  user:
+    type: "string"
+    pattern: "^[A-Za-z0-9._+-]+$"            # HUMAN actors only (agents omit
+                                             # it): the git config user.email
+                                             # local part, verbatim — the
+                                             # person's identity in every
+                                             # record is human:<user>
+  name:
+    type: "string"
+    minLength: 1                               # project-chosen free label
+  role:
+    type: "string"
+    minLength: 1                               # open archetype
+  model:
+    type: "string"
+    minLength: 1                               # per-instance, authoritative —
+                                               # DevFlow Agent actors only
+                                               # (humans omit it)
+  modes:
+    type: "array"
+    minItems: 1
+    uniqueItems: true
+    items: { "enum": [executor, approver] }
+  approves:
+    type: "array"
+    # The grant is the team's configuration decision: the checkpoint
+    # table's owner designation (including "Qualified humans" for
+    # DISC/REV/AREV-*) is routing guidance, never a hard boundary — any
+    # actor may be granted any class the team decides; only the
+    # critical/regulatory ceiling is fixed (see README.md).
+    # A HUMAN's approves is the go-to approver list — guidance, never a
+    # restriction; only an AGENT's approves is a hard grant.
+    uniqueItems: true
+    items:
+      enum: [US, BUG, TC, BOLT-READY, BOLT-DONE, ADR, SPEC, MEM, DISC, REV,
+             AREV-CRITIQUE, AREV-DEFENSE, AREV-VERDICT]
+  # DevFlow Agent actors only (humans omit this block):
+  definition:
+    type: "string"
+    minLength: 1                               # the reusable blueprint (N:1) —
+                                               # a live agent in agents/squad/
+    pattern: "^agents/squad/[a-z0-9]+(-[a-z0-9]+)*/agent\\.yaml$"
+                                               # agents/squad/<agent-id>/agent.yaml
+                                               # — never agents/examples/, which
+                                               # an upgrade refreshes
+  capabilities:                                # OPTIONAL in v1 — the template
+    type: "object"                             # defers this block; it returns
+    additionalProperties: false                # (and becomes required again for
+    required: [tier, tools, mcp_servers]       # agents) with the v2 hardening.
+    properties:                                # A file that declares it still
+      tier:                                    # validates.
+        enum: [T0, T1, T2, T3]
+      tools:
+        type: "array"
+        items: { "type": "string" }
+      mcp_servers:
+        type: "array"
+        items: { "type": "string" }
+  escalation:
+    type: "array"
+    items: { "type": "string" }
+  write_paths:
+    type: "array"
+    items: { "type": "string" }
+allOf:
+  # v1 rule — the roster entry is the enablement: an approver-mode actor
+  # MUST say what it may sign. `approver` in `modes` ⇒ non-empty `approves`.
+  - if:
+      properties:
+        modes:
+          contains: { "const": approver }
+      required: [modes]
+    then:
+      properties:
+        approves:
+          minItems: 1
+  # The converse — a non-empty `approves` REQUIRES `approver` in `modes`:
+  # an executor-only actor signs nothing, whatever its `approves` lists.
+  - if:
+      properties:
+        approves:
+          minItems: 1
+      required: [approves]
+    then:
+      properties:
+        modes:
+          contains: { "const": approver }
+  # Agent discriminator — every DevFlow Agent actor carries `definition`
+  # AND `model` (the model matters for the record and for model-level
+  # independence); every human omits both.
+  - if:
+      required: [definition]
+    then:
+      required: [model]
+  # The human identity join — on the same discriminator: an actor with
+  # neither `definition` nor `model` is a human and MUST carry `user`
+  # (human:<user> in every record); a DevFlow Agent actor never does.
+  - if:
+      anyOf:
+        - required: [definition]
+        - required: [model]
+    then:
+      not:
+        required: [user]
+    else:
+      required: [user]
+  # v2 (deferred): `definition` ⇒ required `capabilities` returns with the
+  # v2 hardening (the capability fields left the v1 template; the T0/T1
+  # approver ceiling governs as a methodology rule meanwhile).

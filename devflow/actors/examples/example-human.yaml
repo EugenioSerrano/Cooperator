@@ -1,0 +1,22 @@
+# Example actor — a HUMAN team member (worked example of TEMPLATE-ACTOR)
+#
+# Demonstrates the human shape: NO `model` and NO `definition` — those two
+# fields belong to DevFlow Agent actors only (a human is recorded as
+# `human:<user>` with model null, §3.0.1) — and a `user` instead: the
+# person's `git config user.email` local part, verbatim, through which
+# every record (`human:<user>`) joins this file; the kebab `id` is the
+# file/roster handle. Humans approve by default:
+# `modes` carries `approver` and `approves` lists the checkpoint classes
+# this person is the team's go-to approver for (role routing stays
+# guidance — any qualified human may still approve). To be in the team,
+# an actor file must also be listed in ../roster.yaml.
+
+id: arq-juan
+user: juan.perez
+name: "Arq Juan"
+role: architect
+modes: [executor, approver]
+approves: [ADR, BOLT-READY]
+escalation:
+  - "an ADR-class decision without an approved ADR"
+write_paths: ["devflow/adrs/"]

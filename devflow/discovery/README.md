@@ -1,107 +1,199 @@
-﻿# Discovery
+# Discovery (Need-driven Investigation)
 
-## Propósito
+**Methodology version:** 5.2
 
-Esta carpeta almacena los documentos de **descubrimiento (Discovery)** del proyecto.
-Un documento de Discovery captura los hallazgos, investigaciones y conocimiento
-obtenido durante la exploración de sistemas existentes, tecnologías, dominios de
-negocio, código legado, bases de datos, integraciones, o cualquier otro aspecto
-que requiera ser comprendido antes de poder diseñar e implementar la solución.
+## Purpose
 
-El Discovery es la fase de **investigación exploratoria**. Es el equivalente a
-"hacer arqueología" del sistema o dominio: se excava, se documenta lo que se
-encuentra, se mapean relaciones, se identifican brechas y se genera el
-conocimiento base que alimentará las decisiones de arquitectura (ADRs) y las
-especificaciones de implementación (Specs).
+This folder stores **focused, traceable investigations** (`DISC-NNN`) used to
+reduce an **important uncertainty before a User Story or Bolt is created or
+materially refined** (§2.13).
 
----
+Typical Discoveries examine an external API, an unfamiliar library or
+framework, a legacy-system behavior, an integration constraint, a technology
+option, data availability, or another question that must be understood before
+the team can define the right work.
 
-## ¿Qué tipo de documentos van aquí?
-
-Cada archivo en esta carpeta es un documento de Discovery que captura los
-hallazgos de una investigación específica. Ejemplos típicos incluyen:
-
-- Análisis de código fuente legado (estructura, procedimientos, lógica de
-  negocio, dependencias entre módulos).
-- Análisis de esquemas de bases de datos (tablas, relaciones, tipos de datos,
-  índices, vistas, stored procedures).
-- Mapeo de entidades del sistema legado al modelo de dominio del sistema nuevo.
-- Análisis de brechas (Gap Analysis) entre el sistema legado y el nuevo.
-- Extracción y documentación de reglas de negocio embebidas en código legado.
-- Historias de usuario derivadas del análisis del sistema existente.
-- Documentación de datos de ejemplo, sets de datos de prueba y su setup.
-- Inventario de integraciones del sistema existente (APIs, archivos, sistemas).
-- Análisis de configuraciones del sistema legado.
-- Documentación de hallazgos de entrevistas con usuarios expertos.
-- Mapeo de flujos de usuario del sistema actual.
-- Análisis de reportes existentes (estructura, campos, filtros, lógica).
-- Documentación de datos de referencia (catálogos, lookups, enumeraciones).
-- **Análisis de hardware**: pinout, clocks, componentes, señales, niveles lógicos.
-- **Especificaciones de dispositivos externos**: datasheets resumidos, análisis eléctricos.
+A Discovery creates **evidence and conclusions for backlog definition** — it
+does **not** inspect an existing project artifact for quality and does
+**not** authorize implementation.
 
 ---
 
-## Convención de nombres
+## Need-driven, not mandatory
 
-```
-DISC-NNN-descripcion-breve-en-kebab-case.md
-```
+A Discovery is **not required for every User Story or Bolt**. Any stakeholder
+or team member may initiate one when a material unknown would otherwise force
+the team to guess.
 
-Donde:
-- `DISC` — Prefijo fijo que identifica el tipo de documento.
-- `NNN` — Número secuencial de 3 dígitos (001, 002, 003...).
-- `descripcion-breve` — Resumen del tema en kebab-case.
-- `.md` — Extensión Markdown.
+**Once initiated, its governance is mandatory:**
 
----
+- It remains a **draft** until a qualified human — **the author included** —
+  records `AITL-DISC-Approval`.
+- Its conclusions **cannot be used as governed input** (analysis, USs,
+  Bolts, ADRs, risks) until approved.
+- `AITL-DISC-Approval` confirms the research question was answered with
+  adequate evidence, the limits and assumptions are explicit, and the
+  conclusions are reliable enough to guide backlog or architecture work.
+- It does **not** approve any downstream artifact — each US, Bolt, ADR or
+  risk created from the Discovery follows its own lifecycle and AITL
+  approval.
+- **No code without a Bolt:** if the research requires executable prototype
+  or spike code, that experiment must be authorized by an **approved
+  non-functional Bolt under `US-000-non-functional.md`** before any code is
+  generated.
 
-## Estructura recomendada de un documento Discovery
-
-1. **Título y metadatos** — Número, nombre descriptivo, fecha, autor, fuentes consultadas.
-2. **Resumen ejecutivo** — Hallazgo principal o conclusión más relevante.
-3. **Inventario / Mapeo** — Listado detallado de lo encontrado: tablas, campos, señales, pines, etc.
-4. **Hallazgos detallados** — Descripción en profundidad con pseudocódigo o fragmentos si es necesario.
-5. **Brechas y pendientes** — Lo que NO se encontró o no se pudo determinar.
-6. **Recomendaciones** — Próximos pasos, ADRs necesarios, impacto estimado.
-7. **Referencias** — Links a datasheets, documentos internos, fuentes externas.
-
-### Diagramas y Elementos Visuales
-
-Usar **Mermaid** obligatoriamente para todos los diagramas, gráficos y cualquier otro elemento visual (no ASCII art ni imágenes embebidas):
-
-```markdown
-` ` `mermaid
-flowchart TB
-    A["Componente A"] --> B["Componente B"]
-` ` `
+```mermaid
+flowchart TD
+    Q["Material unknown before a US or Bolt"] --> D["Run DISC investigation"]
+    D --> F["Document evidence, limits, and conclusions"]
+    F --> H{"AITL-DISC-Approval"}
+    H -->|"Changes requested"| D
+    H -->|"Approved"| A["Update analysis and inform backlog decisions"]
+    A --> U["Create or refine USs, Bolts, ADRs, or risks"]
+    U --> O["Each artifact follows its own approval lifecycle"]
 ```
 
 ---
 
-## Relación con otras carpetas
+## Discovery vs. Review vs. Adversarial Review
 
-| Carpeta | Relación con Discovery |
-|---------|----------------------|
-| `adrs/` | Los Discovery alimentan las decisiones de arquitectura |
-| `memory/` | Los Discovery informan la implementación documentada en Memory |
-| `spec/` | Los Discovery se convierten en especificaciones técnicas |
-| `reviews/` | Las revisiones pueden generar nuevos Discovery |
+| Dimension | Discovery (`DISC`) | Review (`REV`) / Adversarial Review (`AREV`) |
+|-----------|--------------------|----------------------------------------------|
+| Starting point | A material unanswered question **before** a US or Bolt is defined or refined | An existing project artifact, implementation, characteristic, or concern to inspect |
+| Primary purpose | Learn, gather evidence, reduce uncertainty | Evaluate, challenge, identify findings |
+| Typical subjects | External APIs, unfamiliar libraries, legacy behavior, technology options, data or integration constraints | Documentation, code, tests, USs, Bolts, ADRs, SPECs, architecture, security, performance, or process |
+| Governed output | Approved evidence, assumptions, limits, conclusions | Approved findings; AREV exposes them only after its approved Verdict |
+| AITL governance | `AITL-DISC-Approval` | `AITL-REV-Approval`, or the three sequential AREV phase approvals |
+| Downstream effect | Informs analysis and the creation/refinement of governed artifacts | May create or update any governed artifact |
 
----
-
----
-
-## Ciclo de vida de un DISC
-
-| Estado | Significado |
-|--------|-------------|
-| **vigente** | Investigación vigente. Sus hallazgos son relevantes para el desarrollo actual. |
-| **deprecado** | La investigación ya no es relevante (sistema legacy retirado, tecnología descartada). Se mantiene como referencia histórica. |
-
-El INDEX.md refleja el estado: ✅ Vigentes (vigente) / ⛔ Deprecados (deprecado).
+> An AREV is a **specialized adversarial form of Review**, not a Discovery.
+> A Discovery does not create an exception to the rule that no code-related
+> change may exist without an approved Bolt (§2.13).
 
 ---
 
-## Índice de documentos
+## What goes here
 
-Ver **[INDEX.md](INDEX.md)** para el listado completo de documentos vigentes.
+- **Third-party API investigation** — endpoints, auth, rate limits, error
+  handling, SLAs, versioning strategy.
+- **Unfamiliar library / framework evaluation** — how to use it correctly,
+  deprecations, breaking changes, fit for the project.
+- **Legacy-system behavior analysis** — schema analysis, stored procedures,
+  business rules embedded in code, data migration paths.
+- **Integration constraint mapping** — how external systems connect, data
+  formats, protocols, retry/fallback behaviour.
+- **Technology evaluation** — frameworks, libraries, tools under
+  consideration (POC results, benchmarks, trade-offs).
+- **Data availability research** — what data exists, its quality, and
+  whether it is accessible.
+- **Vendor documentation analysis** — summarized datasheets, SDK
+  walkthroughs, configuration guides.
+- **Regulatory / compliance research** — external regulation analysis
+  (the compliance *impact on our project* goes to
+  `analysis/business-context/`).
+
+## What does NOT go here
+
+- **Quality review of existing project artifacts** → `reviews/` (`REV-NNN`).
+- **Adversarial debate** → `adversarial-reviews/` (`AREV-NNN`).
+- **Business analysis** (vision, personas, journeys, domain model)
+  → `analysis/`.
+- **Architectural decisions** → `adrs/` (`ADR-NNN`).
+  A discovery *feeds* an ADR; it is not the decision itself.
+- **Risks** → `risks/` (`RISK-NNN`). A discovery may
+  *surface* a risk, but the risk is tracked in the register.
+- **Bug fixes** → `bugs/` (`BUG-NNN`).
+
+---
+
+## Naming convention
+
+```
+DISC-NNN-short-description-in-kebab-case.md
+```
+
+---
+
+## DISC structure
+
+The authoritative structure is [`TEMPLATE-DISC.md`](TEMPLATE-DISC.md) — its
+**11 numbered sections**, plus the frontmatter:
+
+- **Frontmatter** — ID, descriptive title, date, author, `llm`, status, sources and the `review` block.
+1. **Research question** — What material unknown is being reduced.
+2. **Scope** — What the investigation covers and, explicitly, what it does not.
+3. **Executive summary** — Main finding or most relevant conclusion.
+4. **Inventory / Mapping** — Detailed listing: endpoints, tables, signals, components, configurations.
+5. **Detailed findings** — In-depth description with code snippets, pseudocode or Mermaid diagrams.
+6. **Experiments performed (if any)** — What was run, against what, and the result.
+7. **Assumptions and limits** — What was NOT found or could not be determined; explicit limits of the investigation.
+8. **Conclusions and recommendations** — Next steps, ADRs needed, risks surfaced, estimated impact.
+9. **Sources** — Links to datasheets, external docs, vendor portals.
+10. **History** — Change log.
+11. **`AITL-DISC-Approval`** — The checkpoint that makes the findings actionable.
+
+Diagrams in **Mermaid** (mandatory — no ASCII art or embedded images).
+
+---
+
+## How discovery feeds downstream (only after approval)
+
+```mermaid
+flowchart LR
+    DISC["DISC-NNN<br/>discovery/<br/>(AITL-DISC-Approval)"]
+
+    DISC -->|"Design decision needed"| ADR["ADR-NNN<br/>adrs/ (AITL-ADR-Approval)"]
+    DISC -->|"Risk identified"| RISK["RISK-NNN<br/>risks/"]
+    DISC -->|"Implementation task"| BOLT["BOLT<br/>functional/bolts/ (AITL-BOLT-READY-Approval)"]
+    BOLT -->|"Blueprint"| SPEC["SPEC<br/>spec/ (AITL-SPEC-Approval)"]
+    DISC -->|"Business behavior"| US["US-NNN<br/>functional/user-stories/ (AITL-US-Approval)"]
+    DISC -->|"Needs internal review"| REV["REV-NNN<br/>reviews/ (AITL-REV-Approval)"]
+    DISC -->|"Domain insight"| AN["analysis/<br/>(business-context,<br/>domain-model)"]
+```
+
+Each downstream artifact follows its own lifecycle and *applicable* AITL approval —
+nothing is implied by `AITL-DISC-Approval` (RISK has no AITL checkpoint).
+
+---
+
+## Lifecycle
+
+| Status       | Meaning |
+|--------------|---------|
+| **draft**    | Investigation running; conclusions not yet usable as governed input. |
+| **approved** | `AITL-DISC-Approval` recorded; conclusions may inform analysis and backlog decisions. |
+| **deprecated** | No longer relevant (legacy retired, technology discarded, API decommissioned). Kept as historical reference. |
+
+`INDEX.md` reflects status: Draft / Approved / Deprecated.
+
+---
+
+## Relations to other folders
+
+| Folder | Relation |
+|--------|----------|
+| `adrs/` | Discoveries feed architectural decisions (approved first) |
+| `risks/` | Discoveries surface external risks (dependency, SLA, integration) |
+| `functional/user-stories/` | Approved conclusions may support creation or refinement of feature USs (AITL-US-Approval) |
+| `functional/bolts/` | Discoveries feed Bolts (Bolt-first rule) that produce SPECs |
+| `spec/` | SPECs are created from Bolts triggered by discoveries |
+| `reviews/` | A review may trigger a discovery (unknown external dep found); a discovery may trigger a review (external change requires internal audit) |
+| `adversarial-reviews/` | AREV is a specialized form of Review — never a Discovery |
+| `analysis/` | External findings may enrich business-context or domain-model |
+| `memory/` | Implementation informed by discoveries is documented in MEM |
+| `input/` | Raw external docs (datasheets, vendor manuals) live in `input/documentation/` |
+
+---
+
+## Index
+
+See **[INDEX.md](INDEX.md)** for the full listing.
+
+---
+
+## Language
+
+YAML keys, status enums, IDs, and template section headings stay in **English**
+(the schema). All prose — descriptions, context, rationale, findings — goes in
+the project's `content_language`, declared in [`../LANGUAGE`](../LANGUAGE)
+(see §3.15).

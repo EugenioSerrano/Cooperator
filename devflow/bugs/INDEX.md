@@ -1,21 +1,35 @@
-# Bugs — Índice
+# Bugs — Index
 
-Defectos confirmados con análisis de causa raíz, impacto y propuesta de corrección. Cada bug requiere intervención de código y se corrige siguiendo TDD estricto en dos fases (test skip → fix → test green).
+**Methodology version:** 5.2
 
----
-
-## ✅ Vigentes
-
-| ID | Documento | Severidad | Descripción |
-|----|-----------|-----------|-------------|
-| BUG-001 | [BUG-001-defecto-defaultlazyprovider-mapper-no-registrado.md](BUG-001-defecto-defaultlazyprovider-mapper-no-registrado.md) | 🔴 Crítica | Condición asimétrica entre DefaultLazyProvider.cs y Mapper.Auto.cs: el template exige `GenerateEntity` para registrar el Mapper en `_mappersCache` pero `Mapper.Auto.cs` no lo requiere para generarlo, produciendo Mappers inaccesibles vía `IMapperRepository.Get<T>()` y `NullReferenceException` en sistemas generados |
-
-## ⛔ Resueltos (Archive)
-
-| ID | Documento | Estado |
-|----|-----------|--------|
-| — | — | — |
+Confirmed defects (`BUG-NNN`) with evidence, reproduction conditions,
+expected/actual result, impact and severity. Each BUG has
+**exactly one dedicated Bolt** and is fixed via strict TDD inside ONE
+V-Bounce (red evidence → fix → green; a defect that reproduces only in
+integration tests takes its red and its green from integration test runs).
+Its dedicated Bolt may be drafted
+alongside it; `AITL-BUG-Approval` gates its readiness.
 
 ---
 
-**Última actualización:** Mayo 2026
+## 🟡 Draft (pending AITL-BUG-Approval)
+
+| ID | Document | Severity | Nature | Detected in |
+|----|----------|----------|--------|-------------|
+| —  | —        | —        | —      | —           |
+
+## ✅ Approved / 🔄 In-fix (Bolt created or executing)
+
+| ID | Document | Severity | Nature | Dedicated Bolt | Status |
+|----|----------|----------|--------|----------------|--------|
+| —  | —        | —        | —      | —              | —      |
+
+## 🏁 Fixed / Closed
+
+| ID | Document | Status | Fix MEM | Closed date |
+|----|----------|--------|---------|-------------|
+| —  | —        | —      | —       | —           |
+
+---
+
+**Last updated:** August 2026

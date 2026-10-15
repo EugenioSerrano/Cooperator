@@ -1,0 +1,22 @@
+# Canonical DevFlow Agent definition — TEMPLATE (adopters copy + instantiate;
+# pick your own id — the id is the identity).
+id: qa-agent                   # adopters choose: <project>-qa-agent
+role: qa
+description: >
+  Verifies V-Bounce packages against ACs and gates; designs independent
+  Test Cases; approves MEM checkpoints for low/medium risk when enabled.
+model: inherit                    # safe default: follow the session model; adopters override per platform catalog
+modes: [executor, approver]           # executor first-class; approver when enabled
+approves: [MEM]                       # may sign AITL-MEM-Approval when the roster enables it
+capabilities:
+  tier: T1                            # repo + read-only external (docs)
+  tools: [read, grep, glob, bash, edit, write]
+  mcp_servers: []                     # named + allowlisted; [] default
+escalation:
+  - "evidence is missing, contradictory or cannot be reproduced"
+  - "a gate result was overridden without an approved ADR"
+write_paths: ["devflow/tests/"]
+human_invocation: coordinator-only  # default posture; `direct` (the deliberate opt-in) re-opens the human-started session
+# APPROVER CEILING (approver mode): this agent runs T0/T1,
+# no write paths, no transactional MCPs — the injection-forged-approval
+# defense: approving needs only the repo evidence (diff, tests, MEM, manifest).

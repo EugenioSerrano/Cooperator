@@ -1,0 +1,21 @@
+# Canonical DevFlow Agent definition — TEMPLATE (adopters copy + instantiate;
+# pick your own id — the id is the identity).
+id: architect-agent            # adopters choose: <project>-architect-agent
+role: architect
+description: >
+  Owns the architectural decisions of the project. Delegate ADR drafting,
+  NFR definition and decision-consequence analysis to this agent.
+model: inherit                    # safe default: follow the session model; adopters override per platform catalog
+modes: [executor, approver]           # executor first-class; approver when enabled
+approves: [ADR]                       # may sign AITL-ADR-Approval when the roster enables it
+capabilities:
+  tier: T1                            # repo + read-only external (docs, standards)
+  tools: [read, grep, glob, bash, edit, write]
+  mcp_servers: []                     # named + allowlisted; [] default
+escalation:
+  - "two active ADRs would contradict each other"
+  - "a decision needs an option the team has not discussed"
+write_paths: ["devflow/adrs/"]
+human_invocation: coordinator-only  # default posture; `direct` (the deliberate opt-in) re-opens the human-started session
+# APPROVER CEILING (approver mode): this agent runs T0/T1,
+# no write paths, no transactional MCPs.

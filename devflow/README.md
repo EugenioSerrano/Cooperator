@@ -1,453 +1,458 @@
-# Avenga AI-Native-SDLC Dev Flow
+# Avenga DevFlow — Development Flow
 
-## Propósito
+**Methodology version:** 5.2
 
-Esta carpeta centraliza **toda** la documentación técnica y funcional del proyecto,
-organizada en subcarpetas temáticas que cubren el ciclo de vida completo del
-desarrollo de software: desde la investigación inicial hasta la memoria de lo
-implementado.
+## Purpose
 
-**Principio rector:** *Documentation as Code* — la documentación viaja con el
-código en el mismo repositorio, se versiona con Git, es accesible para todo el
-equipo (incluidos los agentes AI de desarrollo), y se mantiene actualizada como
-parte del flujo de trabajo normal.
+This folder is the **single source of truth** for all project documentation —
+business context, analysis, architecture decisions, implementation specs,
+reviews, and execution memory. It embodies *Documentation as Code*: the docs
+live with the code, are versioned with Git, and are maintained as part of the
+normal workflow.
+
+Everything starts in `input/` (raw material from the client or legacy system)
+and flows through analysis, discovery, functional definition, architecture
+decisions, implementation specs, and finally captured knowledge in `memory/`.
+
+> **Normative hierarchy:** the methodology in
+> [`avenga-devflow/Avenga-DevFlow.md`](avenga-devflow/Avenga-DevFlow.md) is the
+> single source of truth. §2 owns concepts and artifact contracts; §3 owns
+> lifecycle, AITL, gates, autonomy and metrics; §4 is an explanatory
+> walkthrough; §5 owns structure, locations and names. When repeated text
+> appears to diverge, the section that owns that dimension governs.
 
 ---
 
-## Estructura de Carpetas
+## Folder Map
 
 ```
 devflow/
-├── input/          Material crudo de entrada (legacy, esquemas, grabaciones)
-├── analysis/       Análisis de dominio (entrevistas, domain-model, procesos BPMN)
-├── avenga-sdlc/    Metodología de desarrollo (SDLC)
-├── discovery/      Investigación y hallazgos iniciales
-├── functional/     Análisis funcional (user stories, bolts, reglas de negocio)
-├── adrs/           Decisiones arquitectónicas (Architecture Decision Records)
-├── spec/           Especificaciones de implementación (Spec-Kits)
-├── reviews/        Revisiones de código y arquitectura
-├── bugs/           Defectos confirmados con causa raíz
-├── risks/          Registro de riesgos del proyecto
-├── other-docs/     Documentación externa de terceros
-├── memory/         Memoria del proyecto (registro de lo implementado)
-├── ONBOARDING.md   Guía de onboarding para nuevos integrantes
-└── CHANGELOG.md    Registro de cambios al propio framework
+├── input/              ← Raw entry material (read-only, as received)
+│   ├── business/           RFPs, BRDs, SOWs, compliance, regulations
+│   ├── databases/          Legacy DB schemas, DDL, ER diagrams
+│   ├── documentation/      Third-party docs: API manuals, datasheets, vendor PDFs
+│   ├── interviews/         Stakeholder conversation transcriptions (INT-NNN)
+│   ├── source-code/        Legacy source code and configs
+│   └── ui-ux/              Screenshots, mockups, brand guidelines, UX research
+│
+├── analysis/           ← Domain analysis
+│   ├── introduction/       Plain-language feature narratives (derivative, non-governed)
+│   ├── vision/             Product vision and strategy
+│   ├── business-context/   Business objectives, constraints, market context
+│   ├── business-risks/     Pre-execution business risks (BR-NNN)
+│   ├── scope/              Scope and phasing decisions per milestone
+│   ├── personas/           User archetypes
+│   ├── user-journeys/      End-to-end user experience maps
+│   ├── glossary/           Ubiquitous language terms
+│   ├── domain-model/       Entity definitions, relationships, enums
+│   ├── ui/                 Surfaces, patterns, states and parity contracts
+│   ├── process/            Business processes (BPMN/Mermaid, PROC-NNN)
+│   └── open-questions/     Centralized backlog of analysis questions (OQ-NNN)
+│
+├── discovery/          ← Need-driven investigations (DISC-NNN, AITL-DISC-Approval)
+├── functional/         ← User Stories + Bolts (WHAT to build)
+│   ├── user-stories/       Feature US (US-NNN) + US-000-non-functional.md container
+│   └── bolts/              Functional (US-NNN.BOLT-NNN) · non-functional (US-000.BOLT-NNN) · Test (TC-NNN.BOLT-NNN)
+├── actors/             ← Who is in the team: the roster home (humans + DevFlow Agents as actors; roster.yaml)
+├── agents/             ← DevFlow Agent definitions: examples/ · squad/ (live agents) · TEMPLATE-new-role/ · VERIFICATION.md
+├── skills/             ← Project-level skills (SKILL.md folders, scope shared|role; examples/ = the shipped shelf, never projected until adopted) referenced from the agents' skills: lists
+├── adrs/               ← Architecture Decision Records (ADR-NNN, AITL-ADR-Approval)
+├── spec/               ← One canonical SPEC per Bolt (SPEC-YYMMDD-HHmm, AITL-SPEC-Approval)
+├── memory/             ← One MEM per V-Bounce (MEM-YYMMDD-HHmm, AITL-MEM-Approval)
+├── metrics/            ← Manifest family v5 (bolts/ · user-stories/ · test-cases/) + schemas
+├── sprints/            ← Sprint records (SPRINT-NNN, one planning record per sprint; declared status)
+├── reports/            ← Sprint progress reports (PM; generator planned, tools track)
+├── tests/              ← Human-facing verification
+│   ├── test-cases/         Test Cases (TC-NNN, AITL-TC-Approval)
+│   └── uat/                UAT minutes (UAT-NNN) — dormant/reserved
+├── reviews/            ← Stakeholder-triggered reviews (REV-NNN, AITL-REV-Approval)
+├── adversarial-reviews/← LLM-vs-LLM debates (AREV-NNN: Critique → Defense → Verdict)
+├── bugs/               ← Confirmed defects (BUG-NNN, AITL-BUG-Approval)
+├── incidents/          ← Production incidents & post-mortems (INC-NNN)
+├── risks/              ← Risk register (RISK-NNN)
+├── retros/             ← Weekly retrospectives (RETRO-NNN)
+├── agents-data/        ← Per-agent shared knowledge (each agent creates its own folder)
+├── prompts/            ← Project prompts (PROMPT-NNN, copy-paste ready)
+├── agent-runs/         ← Agent-run records (ARUN-YYMMDD-HHmm, one per agent run; never governed input)
+├── bin/                ← Compiled tooling executables (optional; replaced on upgrade, §5.16)
+├── avenga-devflow/     ← Methodology reference (single source of truth)
+├── ONBOARDING.md       ← Onboarding guide for new team members
+└── GUARDRAILS.md       ← Agent-enforced rules (AITL stops, naming, traceability)
 ```
 
-Cada subcarpeta tiene su propio **README.md** (guía de uso). Leer el README antes de
-crear documentos nuevos. Las carpetas `spec/` y `memory/` no usan INDEX.md.
+Alongside `devflow/`, the repository root also carries **`AGENTS.md`** — the
+cross-tool entry point several agents auto-load — and the **agent definition
+for the tool your team uses**, at the location that tool expects (`CLAUDE.md`
+at the root, `.github/agents/`, `.opencode/agents/`, `.agents/skills/`). Both
+are installed from the Avenga DevFlow distribution (§5.2).
 
 ---
 
-## Tabla de Prefijos y Nomenclaturas
-
-| Carpeta        | Prefijo              | Ejemplo                                              |
-|----------------|----------------------|------------------------------------------------------|
-| `avenga-sdlc/` | (libre)              | `AI-Native-SDLC.md`                                  |
-| `discovery/`   | `DISC-NNN`           | `DISC-001-analisis-codigo-modulo.md`                  |
-| `functional/`  | (libre)              | `historia-usuario-pago-servicios.md`                  |
-| `adrs/`        | `ADR-NNN`            | `ADR-006-estrategia-logging.md` *(aceptado)*          |
-|                |                      | `ADR-001-deprecado-migracion.md`                      |
-|                |                      | `ADR-003-reemplazado-testing.md`                      |
-| `spec/`        | `SPEC-YYMMDD-HHmm`  | `SPEC-YYMMDD-HHmm-descripcion-breve-del-tema.md`       |
-| `reviews/`     | `REV-NNN`            | `REV-001-revision-codigo-vs-adrs.md`                  |
-| `bugs/`        | `BUG-NNN`            | `BUG-001-race-condition-session.md`                    |
-| `risks/`       | `RISK-NNN`           | `RISK-001-dependencia-api-tercero.md`                  |
-| `memory/`      | `MEM-YYMMDD-HHmm`   | `MEM-YYMMDD-HHmm-descripcion-breve-del-trabajo.md`     |
-
-> **Nota sobre SPEC y MEM:** El formato `YYMMDD-HHmm` usa la fecha y hora de
-> creación del documento (año 2 dígitos, mes, día, hora, minutos). Esto reemplaza
-> la numeración secuencial `NNN` anterior y garantiza unicidad sin necesidad de
-> coordinar números entre el equipo.
-
----
-
-## Flujo de Documentación
-
-Los documentos siguen un flujo natural que refleja el ciclo de vida del desarrollo.
-Se compone de dos flujos:
-
-1. **Flujo principal (top-down):** INPUT → ANALYSIS → DISC → FA → ADR → SPEC → IMPL → MEM
-2. **Ciclo iterativo:** REV → SPEC → IMPL → MEM (repite hasta cumplir)
-3. **Flujo de defectos:** REV / QA / Producción → BUG → SPEC (test) → SPEC (fix) → IMPL → MEM
-
-Las **Specs** tienen dos orígenes posibles: desde FA+ADR (funcionalidad nueva)
-o desde REV (correcciones y mejoras). Los **Bugs** son un tercer origen: la
-Review o cualquier otra fuente detecta un defecto, se documenta como BUG, y
-se corrige siguiendo TDD estricto (test primero, fix después).
-
-### Flujo Principal + Ciclo Iterativo + Flujo de Defectos
+## The Complete Flow
 
 ```mermaid
 flowchart TB
 
-    %% FLUJO PRINCIPAL - Funcionalidad Nueva
-    subgraph MAIN["FLUJO PRINCIPAL -- Funcionalidad Nueva"]
-        direction TB
-
-        SDLC["SDLC<br>avenga-sdlc/<br>Define proceso, roles,<br>artefactos y métricas"]
-
-        ANALYSIS["ANALYSIS<br>analysis/<br>Entrevistas, domain-model,<br>procesos BPMN"]
-
-        DISC["DISCOVERY<br>discovery/ · DISC-NNN<br>Investiga sistemas, dominio,<br>tecnologías"]
-
-        FA["FUNCTIONAL ANALYSIS<br>functional/<br>Define QUÉ: user stories,<br>bolts, criterios, reglas de negocio"]
-
-        ADR["ADRs<br>adrs/ · ADR-NNN<br>Decide CÓMO: patrones,<br>librerías, convenciones"]
-
-        SPEC_NEW["SPEC Origen 1<br>spec/ · SPEC-YYMMDD-HHmm<br>Especifica implementación<br>de funcionalidad nueva"]
-
-        IMPL_NEW["IMPLEMENTACIÓN<br>src/<br>Código fuente"]
-
-        MEM_NEW["MEMORY<br>memory/ · MEM-YYMMDD-HHmm<br>Registra qué se hizo,<br>decisiones, estado final"]
-
-        SDLC --> ANALYSIS
-        ANALYSIS --> DISC
-        ANALYSIS --> FA
-        DISC --> FA
-        DISC --> ADR
-        FA --> ADR
-        FA -->|"QUÉ hacer<br>(stories + bolts)"| SPEC_NEW
-        ADR -->|"CÓMO hacerlo"| SPEC_NEW
-        SPEC_NEW --> IMPL_NEW
-        IMPL_NEW --> MEM_NEW
+    subgraph P1["📥 INPUT"]
+        direction LR
+        IN["input/<br>interviews · business · DBs<br>source-code · docs · ui-ux"]
     end
 
-    %% CICLO ITERATIVO - Correcciones y Mejoras
-    subgraph ITER["CICLO ITERATIVO -- Correcciones y Mejoras"]
-        direction TB
-
-        REV["REVIEW<br>reviews/ · REV-NNN<br>Verifica cumplimiento de ADRs,<br>identifica gaps y deuda técnica"]
-
-        SPEC_FIX["SPEC Origen 2<br>spec/ · SPEC-YYMMDD-HHmm<br>Especifica correcciones<br>basadas en hallazgos de REV"]
-
-        IMPL_FIX["IMPLEMENTACIÓN<br>src/<br>Correcciones de código"]
-
-        MEM_FIX["MEMORY<br>memory/ · MEM-YYMMDD-HHmm<br>Registra cambios,<br>decisiones, estado final"]
-
-        CHECK{"¿Cumple con<br>ADRs y estándares?"}
-
-        FIN["FIN DEL CICLO<br>Calidad alcanzada"]
-
-        REV --> SPEC_FIX
-        SPEC_FIX --> IMPL_FIX
-        IMPL_FIX --> MEM_FIX
-        MEM_FIX --> CHECK
-        CHECK -->|"NO"| REV
-        CHECK -->|"SÍ"| FIN
+    subgraph P2["🔍 UNDERSTAND"]
+        direction LR
+        AN["analysis/<br>domain model · ui · personas<br>journeys · processes"]
+        DI["discovery/<br>DISC-NNN"]
     end
 
-    %% FLUJO DE DEFECTOS - TDD estricto
-    subgraph BUGS["FLUJO DE DEFECTOS -- TDD Estricto"]
-        direction TB
-
-        BUG["BUG CONFIRMADO<br>bugs/ · BUG-NNN<br>Defecto con causa raíz,<br>impacto y propuesta"]
-
-        SPEC_TEST["SPEC Fase 1: Tests<br>spec/ · SPEC-YYMMDD-HHmm<br>Tests que describen el<br>comportamiento correcto<br>(quedan ROJO / SKIP)"]
-
-        SPEC_BUGFIX["SPEC Fase 2: Fix<br>spec/ · SPEC-YYMMDD-HHmm<br>Corrección del defecto<br>(remueve SKIP, test en VERDE)"]
-
-        IMPL_BUG["IMPLEMENTACIÓN<br>src/<br>Fix + tests verdes"]
-
-        MEM_BUG["MEMORY<br>memory/ · MEM-YYMMDD-HHmm<br>Registra corrección,<br>tests, estado final"]
-
-        BUG --> SPEC_TEST
-        SPEC_TEST --> SPEC_BUGFIX
-        SPEC_BUGFIX --> IMPL_BUG
-        IMPL_BUG --> MEM_BUG
+    subgraph P3["📐 DEFINE"]
+        direction LR
+        FA["functional/<br>feature US + US-000"]
+        TC["tests/test-cases/<br>TC-NNN"]
+        AD["adrs/<br>ADR-NNN"]
     end
 
-    %% DOCUMENTACIÓN EXTERNA
-    OTHER["DOCS EXTERNOS<br>other-docs/<br>Documentación de terceros,<br>APIs, datasheets, proveedores"]
+    subgraph P4["⚡ V-BOUNCE"]
+        direction LR
+        SP["spec/<br>one canonical SPEC"]
+        CO["src/<br>code + tests"]
+        MM["memory/<br>one MEM per V-Bounce"]
+        MT["metrics/<br>manifest family v5"]
+    end
 
-    %% CONEXIONES ENTRE FLUJOS
-    OTHER -.->|"Referencia técnica"| DISC
-    OTHER -.->|"Restricciones de terceros"| ADR
-    MEM_NEW -->|"Revisión post-implementación"| REV
-    ADR -.->|"Criterios de revisión"| REV
-    MEM_FIX -.->|"Retroalimenta próximo ciclo"| DISC
-    REV -->|"Defecto confirmado"| BUG
-    MEM_BUG -.->|"Verificar corrección"| REV
+    subgraph P5["🛡️ GOVERN"]
+        direction LR
+        RV["reviews/"]
+        AV["adversarial-reviews/"]
+        BG["bugs/"]
+        IC["incidents/"]
+        RK["risks/"]
+        RT["retros/"]
+        TT["tests/uat/"]
+    end
 
-    %% ESTILOS
-    classDef sdlcStyle fill:#e8daef,stroke:#7d3c98,stroke-width:2px,color:#1a1a2e
-    classDef analysisStyle fill:#d6f5f0,stroke:#148f77,stroke-width:2px,color:#1a1a2e
-    classDef discStyle fill:#d5f5e3,stroke:#1e8449,stroke-width:2px,color:#1a1a2e
-    classDef faStyle fill:#d6eaf8,stroke:#2471a3,stroke-width:2px,color:#1a1a2e
-    classDef adrStyle fill:#fdebd0,stroke:#ca6f1e,stroke-width:2px,color:#1a1a2e
-    classDef specStyle fill:#fadbd8,stroke:#c0392b,stroke-width:2px,color:#1a1a2e
-    classDef implStyle fill:#f2f3f4,stroke:#566573,stroke-width:2px,color:#1a1a2e
-    classDef memStyle fill:#d4efdf,stroke:#1e8449,stroke-width:2px,color:#1a1a2e
-    classDef revStyle fill:#fef9e7,stroke:#b7950b,stroke-width:2px,color:#1a1a2e
-    classDef checkStyle fill:#fef9e7,stroke:#b7950b,stroke-width:2px,color:#1a1a2e
-    classDef finStyle fill:#abebc6,stroke:#1e8449,stroke-width:3px,color:#1a1a2e
-    classDef bugStyle fill:#f5b7b1,stroke:#922b21,stroke-width:2px,color:#1a1a2e
-    classDef otherStyle fill:#d5dbdb,stroke:#616a6b,stroke-width:2px,color:#1a1a2e
+    %% FORWARD FLOW (each stop is a AITL checkpoint)
+    IN --> AN
+    IN --> DI
+    AN -->|"AITL-US-Approval"| FA
+    AN --> AD
+    DI --> FA
+    DI --> AD
+    FA -->|"AITL-BOLT-READY-Approval"| SP
+    AD -->|"AITL-ADR-Approval"| SP
+    TC -->|"AITL-TC-Approval"| SP
+    SP -->|"AITL-SPEC-Approval"| CO
+    CO --> MM
+    CO --> MT
+    MM --> MT
 
-    class SDLC sdlcStyle
-    class ANALYSIS analysisStyle
-    class DISC discStyle
-    class FA faStyle
-    class ADR adrStyle
-    class SPEC_NEW,SPEC_FIX,SPEC_TEST,SPEC_BUGFIX specStyle
-    class IMPL_NEW,IMPL_FIX,IMPL_BUG implStyle
-    class MEM_NEW,MEM_FIX,MEM_BUG memStyle
-    class REV revStyle
-    class CHECK checkStyle
-    class FIN finStyle
-    class BUG bugStyle
-    class OTHER otherStyle
+    %% GOVERNANCE
+    MT -->|"audit"| RV
+    RV -->|"finding → BUG/BOLT/DISC/ADR/RISK"| BG
+    AV -->|"approved Verdict findings"| BG
+    BG -->|"AITL-BUG-Approval → dedicated Bolt"| FA
+    IC -->|"root cause"| BG
+    IC -->|"hardening"| FA
+    RT -.->|"reads"| MT
+    RT -.->|"improves"| RV
+    TT -->|"release feedback → new Bolts"| FA
+
+    %% STYLES
+    classDef c1 fill:#fef9e7,stroke:#b7950b,stroke-width:2px
+    classDef c2 fill:#d5f5e3,stroke:#1e8449,stroke-width:2px
+    classDef c3 fill:#d6eaf8,stroke:#2471a3,stroke-width:2px
+    classDef c4 fill:#fadbd8,stroke:#c0392b,stroke-width:2px
+    classDef c5 fill:#e8daef,stroke:#7d3c98,stroke-width:2px
+    class P1 c1
+    class P2 c2
+    class P3 c3
+    class P4 c4
+    class P5 c5
 ```
 
-### Specs: Tres Orígenes
+### How to read it
 
-Las Specs tienen tres caminos posibles:
+Five phases, top to bottom. **Solid arrows** = forward flow. **Dashed arrows** = feedback loops.
+Every forward stop is governed by a named AITL checkpoint (see [AITL Checkpoints](#checkpoints-actor-in-the-loop--aitl)).
 
-- **Origen 1 — Funcionalidad nueva** (flujo principal top-down):
-  FA (user stories + bolts) + ADR (cómo hacerlo) → SPEC → IMPL → MEM
+| Phase | What happens |
+|-------|-------------|
+| **📥 Input** | Raw material lands here. Read-only. Everything starts from this. |
+| **🔍 Understand** | `analysis/` extracts domain knowledge. `discovery/` researches material unknowns (DISC). |
+| **📐 Define** | `functional/` defines WHAT (feature US / US-000 + Bolts). `adrs/` decides HOW. `tests/test-cases/` defines the independent verification contracts (TC). |
+| **⚡ V-Bounce** | One canonical SPEC per Bolt → AI generates the intended-final change + tests → one MEM + manifest v5 entry → human review. |
+| **🛡️ Govern** | Reviews, adversarial reviews, bugs, incidents, risks and retros feed the flow. |
 
-- **Origen 2 — Correcciones y mejoras** (ciclo iterativo):
-  REV (gaps encontrados) → SPEC → IMPL → MEM → ¿nueva REV?
+### One path into V-Bounce
 
-- **Origen 3 — Defectos** (flujo de bugs, TDD estricto):
-  BUG (defecto confirmado) → SPEC test (Skip/Rojo) → SPEC fix → IMPL → MEM
-
-Los tres flujos coexisten y se entrelazan. Un proyecto típico implementa
-funcionalidades nuevas (Origen 1), al revisarlas genera correcciones
-(Origen 2) y defectos confirmados (Origen 3), iterando hasta alcanzar calidad.
-
-### Ejemplo genérico de flujo combinado
+All work follows the **same single path** — regardless of whether it originates
+from a feature, a defect, a review finding, or a QA Automation need:
 
 ```
- 1. DISC-001..003              → Investigación del sistema existente o dominio
- 2. Análisis Funcional          → User stories, bolts, reglas de negocio
- 3. ADR-001..003               → Decisiones arquitectónicas
- 4. SPEC-YYMMDD-HHmm           → Implementación funcionalidad A (origen: FA + ADRs)
- 5. SPEC-YYMMDD-HHmm           → Implementación funcionalidad B (origen: FA + ADRs)
- 6. MEM-YYMMDD-HHmm            → Memoria del SPEC anterior
- 7. MEM-YYMMDD-HHmm            → Memoria del SPEC anterior
- 8. REV-001                    → Revisión post-implementación → hallazgos
- 9. BUG-001                    → Defecto confirmado (origen: REV-001) ← flujo de bugs
-10. SPEC-YYMMDD-HHmm           → Tests para BUG-001 (Skip/Rojo)
-11. SPEC-YYMMDD-HHmm           → Correcciones (origen: REV-001) ← ciclo iterativo
-12. SPEC-YYMMDD-HHmm           → Fix de BUG-001 (test verde)
-13. MEM-YYMMDD-HHmm            → Memoria de correcciones
-14. MEM-YYMMDD-HHmm            → Memoria del fix de BUG-001
-15. REV-002                    → Revisión de correcciones → nuevos hallazgos
-16. SPEC-YYMMDD-HHmm           → Mejoras adicionales (origen: REV-002)
-17. MEM-YYMMDD-HHmm            → Memoria de mejoras
-18. Análisis Funcional (nuevo)  → Nueva funcionalidad C (paralela al ciclo iterativo)
-19. SPEC-YYMMDD-HHmm           → Implementación funcionalidad C (origen: FA + ADRs)
-20. MEM-YYMMDD-HHmm            → Memoria de funcionalidad C
+Trigger (US | BUG | TC | DISC | REV | AREV | ADR)
+  → origin approved (AITL-US | AITL-BUG | AITL-TC | AITL-DISC | AITL-REV |
+                     AITL-AREV-VERDICT | AITL-ADR)
+  → BOLT (AITL-BOLT-READY-Approval — includes DoR)
+  → SPEC (AITL-SPEC-Approval)
+  → V-Bounce → tests/gates
+  → MEM + manifest v5 update
+  → AITL-MEM-Approval
+  → integration test cycle when test_integration is required (or none pending) → Ready for Acceptance
+  → AITL-BOLT-DONE-Approval
 ```
 
-### Claves del ciclo iterativo
+| Step | What happens |
+|------|-------------|
+| **Trigger** | A feature US, a confirmed BUG, an approved TC, or approved DISC/REV/AREV conclusions or ADR evidence identify work to be done. |
+| **Origin approval** | Feature US → `AITL-US-Approval`; BUG → `AITL-BUG-Approval` (gates its dedicated Bolt's readiness); TC → `AITL-TC-Approval` (before it governs); DISC/REV/AREV conclusions and ADRs carry their own approvals before governing a Bolt. |
+| **Bolt** | One of three types: `functional` (feature US), `non-functional` (`US-000`), `test` (`TC-NNN.BOLT-NNN`). Approved individually at `AITL-BOLT-READY-Approval`. |
+| **SPEC** | One canonical SPEC per Bolt (`bolt` field mandatory). The agent runs the pre-SPEC evidence gate; a human approves at `AITL-SPEC-Approval`. |
+| **V-Bounce** | AI generates the intended-final change — its integration tests included — runs the hermetic tests until green (BUGs: strict red→green TDD inside the same V-Bounce; a defect that reproduces only in integration tests takes its red from a failed integration test run before it and its green from a passing covering run in the integration test cycle), then creates exactly one MEM and updates the manifest. |
+| **Review** | The executing Dev-validator approves the MEM at `AITL-MEM-Approval` (one approver, any risk; QA/Sec/domain reviewers optional). |
+| **Integration testing** | When the Bolt's `test_integration` is `required` and the SPEC's plan `applicable`, CI / QA run the integration tests against the approved change and record each run; a human classifies any failure, or waives pending integration testing with a written reason. Skipped only as `not-required` (plan `n/a`) or with a `waived` plan. |
+| **Acceptance** | When the Bolt is `ready-for-acceptance`, `AITL-BOLT-DONE-Approval` makes it `done`; it requires the integration test evidence — a passing run, the `not-required` reason, the `waived` ADR or a late waiver's reason. With no run pending and one human holding both roles, it may be recorded jointly with `AITL-MEM-Approval` (§3.2.2). Release and promotion follow the adopting team's own process (§4.6). |
 
-- Las **Reviews** NUNCA modifican código. Solo identifican problemas.
-- Las **Specs** NUNCA analizan problemas. Solo especifican soluciones.
-- Las **Memories** NUNCA especifican trabajo futuro. Solo registran lo hecho.
-- Los **Bugs** documentan defectos confirmados con causa raíz. Se corrigen con TDD estricto.
-- Cada documento referencia al anterior para mantener trazabilidad.
-- El ciclo se detiene cuando una Review confirma cumplimiento total.
-- Funcionalidades nuevas (desde FA) pueden entrar en cualquier momento.
-- Un defecto confirmado en una Review genera un BUG, no una Spec directamente.
+Every step that changes a Bolt's `status` appends a row to its Status
+timeline (§3.2.3).
+
+**No code change happens without an approved Bolt.** Every SPEC references a
+Bolt; every V-Bounce produces exactly one MEM; previous MEMs are immutable
+history.
 
 ---
 
-## Trazabilidad entre Documentos
+## V-Bounce: The Execution Micro-Cycle
 
-La trazabilidad es uno de los pilares de esta estructura. Cada documento
-debe referenciar explícitamente los documentos relacionados.
-
-**Flujo principal (top-down):**
-- Un DISC referencia las fuentes investigadas.
-- Un FA referencia los DISC que aportaron conocimiento de dominio.
-- Un FA contiene user stories y bolts que alimentan directamente las Specs.
-- Un ADR referencia los DISC y FA que motivaron la decisión.
-- Una SPEC de funcionalidad referencia los FA (stories + bolts) y los ADRs (CÓMO).
-- Una REV referencia los ADRs y SPEC contra los que se revisa.
-- Un MEM referencia la SPEC que implementó y los ADRs aplicados.
-
-**Ciclo iterativo:**
-- Una REV de corrección referencia la REV anterior.
-- Una SPEC de corrección referencia la REV que identificó los gaps.
-- Un MEM de corrección referencia la SPEC y la REV origen.
-
-**Flujo de defectos (TDD estricto):**
-- Un BUG referencia la REV, QA o fuente que lo detectó.
-- Una SPEC de test referencia el BUG que captura (test en Skip/Rojo).
-- Una SPEC de fix referencia el BUG y la SPEC de test (remueve Skip, test en Verde).
-- Un MEM de fix referencia el BUG, las SPECs de test y fix, y confirma tests en verde.
+Every Bolt is executed through **V-Bounce** — the core execution pattern:
 
 ```mermaid
 flowchart LR
-
-    subgraph ORIGEN_1["Origen 1: Funcionalidad Nueva"]
-        direction LR
-        D1[DISC] -->|"alimenta"| F1[FA]
-        D1 -->|"alimenta"| A1[ADR]
-        F1 -->|"alimenta"| A1
-        F1 -->|"stories + bolts"| S1[SPEC]
-        A1 -->|"CÓMO"| S1
-        S1 --> I1[IMPL]
-        I1 --> M1[MEM]
-    end
-
-    subgraph ORIGEN_2["Origen 2: Correcciones"]
-        direction LR
-        R2[REV] -->|"gaps"| S2[SPEC]
-        S2 --> I2[IMPL]
-        I2 --> M2[MEM]
-        M2 -.->|"nueva revisión?"| R2
-    end
-
-    subgraph ORIGEN_3["Origen 3: Defectos (TDD)"]
-        direction LR
-        B3[BUG] -->|"test Skip"| ST3[SPEC test]
-        ST3 -->|"fix"| SF3[SPEC fix]
-        SF3 --> I3[IMPL]
-        I3 --> M3[MEM]
-    end
-
-    M1 -->|"revisión post-impl"| R2
-    R2 -->|"defecto confirmado"| B3
-    M3 -.->|"verificar fix"| R2
-
-    classDef discStyle fill:#d5f5e3,stroke:#1e8449,stroke-width:2px
-    classDef faStyle fill:#d6eaf8,stroke:#2471a3,stroke-width:2px
-    classDef adrStyle fill:#fdebd0,stroke:#ca6f1e,stroke-width:2px
-    classDef specStyle fill:#fadbd8,stroke:#c0392b,stroke-width:2px
-    classDef implStyle fill:#f2f3f4,stroke:#566573,stroke-width:2px
-    classDef memStyle fill:#d4efdf,stroke:#1e8449,stroke-width:2px
-    classDef revStyle fill:#fef9e7,stroke:#b7950b,stroke-width:2px
-    classDef bugStyle fill:#f5b7b1,stroke:#922b21,stroke-width:2px
-    classDef revStyle fill:#fef9e7,stroke:#b7950b,stroke-width:2px
-    classDef bugStyle fill:#f5b7b1,stroke:#922b21,stroke-width:2px
-
-    class D1 discStyle
-    class F1 faStyle
-    class A1 adrStyle
-    class S1,S2,ST3,SF3 specStyle
-    class I1,I2,I3 implStyle
-    class M1,M2,M3 memStyle
-    class R2 revStyle
-    class B3 bugStyle
+    SPEC["📐 SPEC<br>AITL-SPEC-Approval"] --> AI["🤖 AI Agent<br>generates intended-final<br>code + tests<br>& runs hermetic tests"]
+    AI --> GATES["🔒 CI Gates<br>pass | waived (ADR) | n/a"]
+    GATES -->|"fail"| AI
+    GATES -->|"pass"| ARTIFACTS["📝 AI creates exactly one MEM<br>+ appends v_bounces[] entry"]
+    ARTIFACTS --> HUMAN["👤 AITL-MEM-Approval<br>executing Dev-validator reads<br>diff + test evidence + MEM + manifest"]
+    HUMAN -->|"changes requested"| NB["New V-Bounce<br>new MEM"]
+    NB --> SPEC
+    HUMAN -->|"approved"| DONE["✅ V-Bounce approved<br>Development Completed →<br>integration test cycle or none pending<br>→ Ready for Acceptance"]
 ```
 
-### Preguntas de Navegación
+**Key principles:**
+- The AI agent generates the **intended-final** artifacts by default (code, tests, config, docs) and **runs its own hermetic tests** until green or a stop condition; the integration tests it writes run in the Bolt's integration test cycle when its `test_integration` is `required`.
+- After execution, the agent creates **exactly one MEM** and updates the Bolt manifest in `devflow/metrics/bolts/` — **before** human review.
+- The human reviewer receives the **complete package**: code + tests/gates + MEM + manifest.
+- `AITL-MEM-Approval` is recorded by the **Dev-validator who executed the Bolt** (one approver, any risk; QA/Sec/domain reviewers optional); the agent never self-approves.
+- `changes_requested` preserves the MEM as immutable history; the next execution is a new V-Bounce with a new MEM.
+- Every US, Bolt and TC produces a manifest in `devflow/metrics/` that validates against its `manifest-v5*.schema.json`.
+
+---
+
+## Checkpoints (Actor-in-the-Loop — AITL)
+
+An approved checkpoint is **non-negotiable** — the approver is an **actor**, a
+**human by default** and a virtual DevFlow Agent only by explicit, valid
+configuration (with no or invalid config this is pure Human-in-the-Loop; **no
+AI-signed approval is possible**). Checkpoints are named
+`AITL-<CODE>-Approval`; the legacy pre-v5 `HITL-*` prefix is invalid.
+Every approval requires a named reviewer (a human by default), review timestamps
+and review-quality evidence (see [GUARDRAILS.md](GUARDRAILS.md) for the full map).
+
+| Checkpoint | Owner | Validates |
+|-----------|-------|-----------|
+| `AITL-US-Approval` | Functional Analyst | Feature US + ACs approved; gates its Bolts' readiness |
+| `AITL-BUG-Approval` | Functional Analyst (functional) / Architect-TL recommended if `severity: critical` else any team member (non-functional) — guidance, never a gate: any qualified member, the author included, may approve at any severity | BUG confirmed; gates its dedicated Bolt's readiness |
+| `AITL-TC-Approval` | QA + domain owner | TC approved as independent verification contract |
+| `AITL-BOLT-READY-Approval` | Functional Analyst (functional) / Architect-TL (non-functional; except a non-functional BUG's dedicated Bolt, which mirrors its parent BUG's severity routing) / QA Lead · QA Automation Lead · Architect · TL (test) | Bolt approved (includes DoR) |
+| `AITL-ADR-Approval` | Architect / Tech Lead | ADR accepted and immutable |
+| `AITL-SPEC-Approval` | Dev-validator + domain owners | One-Bolt implementation plan approved |
+| `AITL-MEM-Approval` | Dev-validator who executed the Bolt (one approver, any risk; QA/Sec/domain optional) | MEM + V-Bounce approved |
+| `AITL-BOLT-DONE-Approval` | PO/PM (functional) · technical owner (non-functional) · QA Lead / QA Automation Lead (test) | Bolt `done` — once `ready-for-acceptance`, with the integration test evidence |
+| `AITL-DISC-Approval` · `AITL-REV-Approval` · `AITL-AREV-{CRITIQUE,DEFENSE,VERDICT}-Approval` | Qualified humans — **DISC/REV: the author included; AREV: the operator (the human orchestrating it, §3.13) included — G37 excludes a Judge sharing the implementor's or the Challenger's model, not an approver** | Conditional: mandatory once triggered |
+
+No Bolt moves forward without its **required checkpoints signed with
+review-quality evidence** (coverage by Bolt type in GUARDRAILS.md).
+
+---
+
+## Quick Start — Daily Workflow
+
+Already have a configured project? Here's the day-to-day flow:
 
 ```mermaid
 flowchart LR
-    Q1["¿De dónde viene<br>esta decisión?"] --> ADR1[ADR] --> FA1[FA] --> DISC1[DISC]
-    Q2["¿Cómo se implementó<br>este requerimiento?"] --> FA2[FA] --> SPEC1[SPEC] --> MEM1[MEM]
-    Q3["¿Se cumple<br>esta decisión?"] --> ADR2[ADR] --> REV1[REV]
-    Q4["¿Qué motivó<br>esta corrección?"] --> MEM2[MEM] --> SPEC2[SPEC] --> REV2[REV]
-    Q5["¿De dónde vino<br>esta Spec?"] --> SPEC3[SPEC]
-    SPEC3 -->|"si ref. FA"| NEW["Funcionalidad nueva"]
-    SPEC3 -->|"si ref. REV"| FIX["Corrección / mejora"]
-    SPEC3 -->|"si ref. BUG"| BUGFIX["Fix de defecto (TDD)"]
+    A["📋 Pick approved Bolt"] --> B["📐 Prepare SPEC<br>(evidence gate)"]
+    B --> C["✍️ AITL-SPEC-Approval<br>SPEC-YYMMDD-HHmm"]
+    C --> D["🤖 AI Agent<br>V-Bounce"]
+    D --> E["📝 MEM + manifest<br>v_bounces[] entry"]
+    E --> F["✅ AITL-MEM-Approval<br>diff + evidence"]
 ```
 
----
+### Cheat Sheet
 
-## Mapeo SDLC ↔ Carpetas Dev Flow
-
-La siguiente tabla conecta los conceptos definidos en la metodología
-**AI-Native-SDLC** (ver `avenga-sdlc/`) con las carpetas y artefactos
-concretos de `devflow/`.
-
-| Concepto SDLC | Descripción SDLC | Carpeta Dev Flow | Artefacto |
-|---------------|------------------|-----------------|-----------|
-| **Recorded Interviews** | Entrevistas grabadas con stakeholders | `analysis/interviews/` | Transcripciones en Markdown (audio/video crudo en `input/`) |
-| **Intent** | Objetivo de negocio de alto nivel | `functional/` | Documento de contexto y objetivos en el FA |
-| **Unit** | Bloque cohesivo de valor (Epic/Subdominio) | `functional/` | Agrupación de User Stories dentro del FA |
-| **User Stories + AC** | Historias de usuario con criterios de aceptación | `functional/` | Secciones dentro de los documentos FA |
-| **Bolt** | Unidad de trabajo de 2h a 1 día (AI-time) | `functional/` → `spec/` | Un Bolt se define en el FA y se ejecuta como 1+ SPECs |
-| **V-Bounce** | Micro-ciclo: Input → AI → Review → Refinement → Approval | (proceso) | El resultado de cada V-Bounce se refleja en `spec/` + `memory/` |
-| **NFRs** | Requisitos no funcionales | `adrs/` | Documentados como ADRs o secciones dentro de ADRs |
-| **ADR** | Decisión arquitectónica (contexto, alternativas, decisión) | `adrs/` | `ADR-NNN-descripcion.md` |
-| **DoR / DoD** | Definition of Ready / Done | `avenga-sdlc/` | Definidos en el documento de metodología |
-| **Quality Gates** | Verificaciones automáticas en CI/CD | `adrs/` | Gates del proyecto se definen en ADRs técnicos |
-| **Discovery / Inception** | Investigación exploratoria del dominio | `discovery/` | `DISC-NNN-descripcion.md` |
-| **Design (Domain/Logical)** | Diseño de dominio y lógico | `adrs/` + `spec/` | Decisiones en ADRs, detalle en SPECs |
-| **Implementación** | Código fuente generado por AI + validado | `src/` (externo) | Código del proyecto (fuera de devflow/) |
-| **Tests** | Tests auto-generados y validados | `src/` (externo) | Tests junto al código fuente |
-| **Deployment Unit** | Artefacto desplegable | (CI/CD) | Gestionado por pipeline, no por devflow/ |
-| **Project Memory** | Registro de lo implementado | `memory/` | `MEM-YYMMDD-HHmm-descripcion.md` |
-| **Defectos** | Bugs confirmados con causa raíz | `bugs/` | `BUG-NNN-descripcion.md` |
-| **Reviews** | Auditorías técnicas formales | `reviews/` | `REV-NNN-descripcion.md` |
-| **Docs externos** | Datasheets, APIs, manuales de terceros | `other-docs/` | Archivos en formato original por proveedor |
-| **Métricas** | Lead time, throughput, % commit, bounces | (herramienta) | Medidas en la herramienta SDLC, referenciadas en `memory/` |
-
-> **Nota:** `src/` y el pipeline CI/CD son externos a `devflow/`. La documentación
-> en devflow/ describe QUÉ construir y QUÉ se construyó; el código vive en su
-> propia ubicación del repositorio.
+| You need to... | Do this |
+|---------------|---------|
+| Research something unknown | Create `DISC-NNN` in `discovery/` → `AITL-DISC-Approval` |
+| Define business behavior | Create feature US in `functional/user-stories/` → `AITL-US-Approval` |
+| Define a technical outcome | Create non-functional Bolt under `US-000` (no US approval needed) |
+| Make a technical decision | Create `ADR-NNN` in `adrs/` → `AITL-ADR-Approval` |
+| Implement a Bolt | `AITL-BOLT-READY-Approval` → `SPEC-YYMMDD-HHmm` → `AITL-SPEC-Approval` → V-Bounce → MEM + manifest |
+| Verify a Bolt independently | Create `TC-NNN` in `tests/test-cases/` → `AITL-TC-Approval` |
+| Automate QA | Create Test Bolt `TC-NNN.BOLT-NNN` from a TC |
+| Document a defect | Create `BUG-NNN` in `bugs/` → `AITL-BUG-Approval` → dedicated Bolt → TDD in one V-Bounce (a defect that reproduces only in integration tests: red and green from integration test runs, §3.3.1) |
+| Review quality | Create `REV-NNN` in `reviews/` → `AITL-REV-Approval` |
+| Run an adversarial debate | Create `AREV-NNN/` in `adversarial-reviews/` (3 sequential phase approvals) |
+| Log a risk | Create `RISK-NNN` in `risks/` |
+| Store raw material | Drop in `input/` (business, databases, documentation, interviews, source-code, ui-ux) |
 
 ---
 
-## Cómo Empezar en un Proyecto Nuevo
+## Traceability Rules
 
-1. Copiar la carpeta `devflow/` completa (con los README.md de cada subcarpeta).
-2. Renombrar `avenga-sdlc/` al nombre de la metodología del equipo si corresponde.
-3. Documentar la metodología del equipo en `avenga-sdlc/`.
-4. Volcar en `input/` todo el material crudo disponible: código legacy, esquemas de BD,
-   documentación del sistema actual, grabaciones, etc.
-5. Transcribir entrevistas en `analysis/interviews/`, modelar entidades en `analysis/domain-model/`
-   (legible y editable), y definir procesos en `analysis/bpmn/`.
-6. Comenzar con los **Discovery** analizando el material de `input/` y `analysis/`.
-6. Crear los **Análisis Funcionales** (FA) a medida que se definan los requerimientos.
-7. Crear **ADRs** para las decisiones arquitectónicas a medida que se tomen.
-8. Crear **Specs** antes de implementar cada funcionalidad.
-9. Crear **Reviews** periódicamente para verificar la calidad.
-10. Crear **Memories** al completar cada unidad de trabajo.
+Every document references the documents it depends on:
 
----
-
-## Quick Start — Flujo Diario
-
-¿Ya tenés el proyecto configurado? Este es el flujo de trabajo diario:
-
-```mermaid
-flowchart LR
-    A["📋 Tomar Bolt\ndel FA"] --> B["📐 Verificar\nADRs aplicables"]
-    B --> C["✍️ Crear SPEC\nSPEC-YYMMDD-HHmm"]
-    C --> D["🤖 Agente AI\nimplementa (V-Bounce)"]
-    D --> E["✅ Validar\nresultado"]
-    E --> F["📝 Crear MEM\nMEM-YYMMDD-HHmm"]
-```
-
-### Cheat sheet por situación
-
-| Necesitás... | Hacé esto |
-|-------------|-----------|
-| Investigar algo desconocido | Crear `DISC-NNN` en `discovery/` |
-| Definir qué construir | Crear US + Bolts en `functional/` |
-| Tomar una decisión técnica | Crear `ADR-NNN` en `adrs/` |
-| Implementar un Bolt | Crear `SPEC-YYMMDD-HHmm` en `spec/` → V-Bounce → `MEM` en `memory/` |
-| Revisar calidad | Crear `REV-NNN` en `reviews/` |
-| Documentar un bug | Crear `BUG-NNN` en `bugs/` → SPEC test → SPEC fix |
-| Registrar un riesgo | Crear `RISK-NNN` en `risks/` |
-| Guardar docs de terceros | Poner en `other-docs/` organizado por proveedor |
-
-### Reglas de oro
-
-1. **Leer el README** de la carpeta antes de crear cualquier documento.
-2. **Usar el template** (`TEMPLATE-*.md`) como punto de partida.
-3. **Referenciar, no duplicar** — si algo está en un ADR, linkear desde la SPEC.
-4. **Mermaid para todo diagrama** — nunca ASCII art ni imágenes embebidas.
-5. **El agente AI escribe, el humano valida** — 100% código generado por AI.
+- A **DISC** references the `input/` material it analyzed and carries `AITL-DISC-Approval`.
+- A **feature US** references the raw inputs / analysis evidence and carries `AITL-US-Approval`.
+- A **BUG** carries `AITL-BUG-Approval` and references its exactly-one dedicated Bolt; the Bolt references the BUG.
+- A **TC** references exactly one approved source Bolt (+ US/ACs or governing technical sources) and carries `AITL-TC-Approval`.
+- A **Bolt** references its parent (a feature US, `US-000`, or one TC — the parent's approval is part of the Bolt's DoR) and carries `AITL-BOLT-READY-Approval`.
+- A **SPEC** references exactly one approved Bolt; its `sources` lists every governed artifact actually used.
+- An **ADR** references its motivating sources and carries `AITL-ADR-Approval`.
+- A **REV** / **AREV** references the artifacts it audits; findings are governed only after their approvals.
+- A **MEM** references its Bolt, canonical SPEC revision, V-Bounce number and manifest `v_bounces[]` entry.
+- The **manifest family** validates against the `manifest-v5*.schema.json` schemas and records each artifact's lifecycle AITL decisions, its step timings and, for a Bolt, its integration test facts — the `test_integration` confirmed at `AITL-BOLT-READY-Approval`, the integration test runs, their human classifications and a human's late waiver of pending integration testing (minimal projection).
 
 ---
 
-## Lineamientos Generales
+## Golden Rules
 
-- **DOCUMENTAR ES PARTE DEL TRABAJO**, no un extra opcional. Se escribe durante el desarrollo, no después.
-- **MARKDOWN** es el formato estándar. Todos los documentos son `.md` renderizables en GitHub, Azure DevOps, GitLab, o cualquier visor Markdown.
-- **LOS README SON LEY.** Leer `README.md` de cada carpeta antes de crear documentos.
-- **NOMENCLATURA TIMESTAMP PARA SPEC Y MEM.** Usar formato `YYMMDD-HHmm` en lugar de numeración secuencial.
-- **AUTOR.** Todo documento debe incluir el nombre del usuario logueado en GitHub (`git config user.name`) como autor. No usar nombres genéricos como "Equipo de desarrollo".
-- **REFERENCIAS CRUZADAS.** Todo documento debe referenciar los documentos relacionados.
-- **NO DUPLICAR INFORMACIÓN.** Si algo está en un ADR, no repetirlo en una Spec — referenciarlo.
-- **DIAGRAMAS Y ELEMENTOS VISUALES EN MERMAID.** Todos los diagramas, gráficos y cualquier otro elemento visual deben realizarse con Mermaid. No usar ASCII art ni imágenes embebidas.
-- **IDIOMA CONSISTENTE** dentro de cada documento. No mezclar idiomas.
-- **VERSIONADO DE DOCUMENTOS.** Los documentos se editan in-place. El historial de cambios lo da Git. **Excepción:** los ADRs son readonly — si cambia una decisión, se crea un ADR nuevo (ver `adrs/README.md`).
+1. **Read the folder's README** before creating any document.
+2. **Use the template** (`TEMPLATE-*.md`) as your starting point.
+3. **The methodology governs** — `avenga-devflow/Avenga-DevFlow.md` is the single source of truth; §2/§3 own the rules, §4 is a walkthrough, §5 owns locations.
+4. **No code without an approved Bolt** — no exceptions; urgency and size create none (the scope-out, G07: the **living data** of `devflow/agents/` + `devflow/actors/` (the agent lifecycle), `devflow/skills/` and `devflow/prompts/` is operational config — not a code change).
+5. **Every approval is a named human checkpoint** — `AITL-<CODE>-Approval`, with timestamps and review-quality evidence. The agent never self-approves.
+6. **One canonical SPEC per Bolt; exactly one MEM per V-Bounce** — previous MEMs are immutable history.
+7. **An artifact without its manifest does not exist** — every US, Bolt and TC has a manifest in `devflow/metrics/` that validates against its `manifest-v5*.schema.json`.
+8. **A failed gate cannot be overridden without an ADR** approved through `AITL-ADR-Approval` (owner + compensating control + expiry); the gate records `waived`, never `pass`.
+9. **The reviewer reads the diff and the test evidence**, not the agent's self-summary.
+10. **Mermaid for every diagram** (BPMN allowed for business processes); never ASCII art or embedded images as diagram substitutes.
+
+---
+
+## Starting a New Project
+
+1. Install the distribution: the entire `devflow/` folder, `AGENTS.md` at the
+   repository root, and the agent definition for your tool at the location it
+   expects. **Install it at the project root — never nest the project inside
+   another repository**: the platform may resolve the parent repository as
+   the project and load its MainAgent instead of yours.
+2. Drop all raw material into `input/` organized by subfolder.
+3. Process `input/` into `analysis/` (AI-assisted; Functional Analyst governs).
+4. Create feature USs and stop at `AITL-US-Approval`; technical work goes under `US-000`.
+5. Define and approve Bolts (`AITL-BOLT-READY-Approval`) — functional, non-functional, and (from TCs) test.
+6. Draft and approve Test Cases (`AITL-TC-Approval`) before the implementation SPEC.
+7. Create ADRs (`adrs/`) as technical decisions are made (`AITL-ADR-Approval`).
+8. For each Bolt: SPEC → `AITL-SPEC-Approval` → V-Bounce → MEM + manifest → `AITL-MEM-Approval` → its integration test cycle when the Bolt's `test_integration` is `required` (§3.2.2).
+9. Accept Bolts once `ready-for-acceptance` (`AITL-BOLT-DONE-Approval` — jointly with the MEM approval when no run is pending and one human holds both roles); release/promotion follows the team's own process (§4.6).
+10. Conduct reviews (`reviews/`, `adversarial-reviews/`) as stakeholders trigger them.
+
+---
+
+## Optional environment tools
+
+DevFlow needs no external tools to run — the methodology is documentation, and
+the optional first-party tooling ships as self-contained binaries in
+`devflow/bin/`. For **ad-hoc queries** (inspecting JSON, searching text),
+agents work better when two standard, open-source, cross-platform CLIs are
+installed. They return only the data the agent asked for, so less text enters
+the model's context: **lower token cost and a faster process**.
+
+- **[`jq`](https://jqlang.org/)** — JSON query/transform.
+  - Windows: `winget install jqlang.jq` (or `scoop install jq` · `choco install jq`)
+  - macOS: `brew install jq`
+  - Linux: `sudo apt-get install jq` · `sudo dnf install jq` · `sudo pacman -S jq`
+- **[`rg` (ripgrep)](https://github.com/BurntSushi/ripgrep)** — fast recursive
+  text/regex search.
+  - Windows: `winget install BurntSushi.ripgrep.MSVC` (or `scoop install ripgrep` · `choco install ripgrep`)
+  - macOS: `brew install ripgrep`
+  - Linux: `sudo apt-get install ripgrep` · `sudo dnf install ripgrep` · `sudo pacman -S ripgrep`
+
+**No admin rights?** Both ship as a single self-contained executable: download
+it from the project's releases page
+([jq](https://github.com/jqlang/jq/releases) ·
+[ripgrep](https://github.com/BurntSushi/ripgrep/releases)) and put it on your
+`PATH`.
+
+Both are **optional**. Agents use them when present; when one is missing, the
+agent mentions it **once per session** and carries on with native tooling.
+They are never a dependency of the kit or of any governed operation.
+
+---
+
+## Known Limitations & Roadmap
+
+What this version deliberately does **not** cover yet — read before adopting:
+
+| Limitation | Status | Where it is governed |
+|------------|--------|----------------------|
+| **Release and promotion** | Out of scope — the governed flow ends at Bolt acceptance (`AITL-BOLT-DONE-Approval`); deployment, environment promotion and release approval follow the adopting team's own process. A model for this layer is planned for a future release. | §4.6 |
+| **Adversarial reviews need three models** | Capability prerequisite — an AREV requires **at least three distinct models**, because the Judge must be a neutral third model differing from **both** the implementor's and the Challenger's. There is **no human-arbiter fallback**: a team without a third model does not run the AREV, and an initiated one that cannot reach a neutral Verdict is set `cancelled`. AREV is optional for every risk class, so this bounds the practice, never the core flow. | `GUARDRAILS.md` G37, §3.13, §3.15 |
+| **Multi-repo / shared-monorepo `devflow/`** | Out of scope — SPEC, manifest and MEM resolve paths against a single repository baseline. To adapt: relocate `devflow/` and redefine the manifest's repository-relative `ref`/`sources` semantics. | §1 "Repository topology assumption" |
+| **Monetary cost** | Deferred — no price catalog, no cost metric. Manifests keep recording provider/model/token usage in `runs[]`, so when pricing returns, costs are computable retroactively over all historical manifests. | §3.12 — `runs[]` keeps the token model; cost stays computable retroactively |
+| **Validation tooling** | No validator ships with the methodology — G23/G33 schema and lifecycle validation remains procedural (agents and humans). Tooling arrives with the tools track, not with the methodology: optional by contract, with `devflow/bin/` reserved in the canonical tree for when it lands (§5.1). | `GUARDRAILS.md` G23/G33, §5.1 — tools track (arrives with `devflow/bin/`) |
+| **Report generation** | Planned — `reports/TEMPLATE-REPORT.html` ships as a design reference with example data, not a generator. The manifest family already records everything a report needs (§3.12 timing contract), so reports stay computable retroactively once the tooling lands. | `reports/README.md`, §5.12 |
+
+---
+
+## Reporting a defect in DevFlow
+
+DevFlow itself can be wrong — the methodology, a guardrail, a schema, a
+template, a shipped agent definition, a shipped skill or, once one ships, a
+tool.
+When your agent meets such a defect it tells you in three beats — what the
+tool or text said; why it is a DevFlow defect and not your project's; that
+the DevFlow author should be told — works around it visibly or stops when a
+rule would break, and never patches the kit text in your project
+(methodology §3.16).
+
+**Where to send it:** `eugenio.serrano@avenga.com` — the single channel.
+
+**What to send:**
+
+| Piece | Why the author needs it |
+|-------|-------------------------|
+| The agent's report | Self-contained: file and line, the exact quote, expected vs found, the rule it breaks, `devflow/VERSION`, the agent and model, the operating system |
+| The file or files in question | The author reproduces against them; the agent names each one and says why |
+| The tool call and its output | The exact command the agent ran and what it printed |
+
+**The promise:** the agent never sends, and never tries to send, anything —
+no mail, no upload, nothing automatic. Whether to send is your decision,
+and you send it. Before you do, remove any secret or personal data: the
+agent flags what it sees, but you are the one who checks. If you do not
+send it, your work continues.
+
+**How the loop closes:** the author triages the report; the fix ships in a
+later version and reaches your project through the normal upgrade
+(methodology §5.16) — never through
+a local patch of the kit. Until then, a `RISK-NNN` or a retrospective note
+in your project keeps it visible.
+
+---
+
+## Language Policy
+
+The schema (YAML keys, enum values, IDs) is always in **English**; validators
+and INDEX counters require it. The project's `content_language`, declared in
+[`LANGUAGE`](LANGUAGE), governs the prose, the filename `<description>` slugs
+(kebab-case ASCII, no accents), ADR titles, and the section headings of
+`analysis/`, feature User Stories and Test Cases. Headings of every other
+artifact family stay in English, and `AITL-*-Approval` codes are never
+translated (§3.15).
+
+---
+
+## Further Reading
+
+- **`avenga-devflow/Avenga-DevFlow.md`** — The full methodology (normative source): V-Bounce, three Bolt types, named AITL checkpoints, DORA Five metrics, gates, manifest family v5 and governance.
+- **`GUARDRAILS.md`** — Agent-enforced rules: AITL stops, blocking/warning guardrails, naming, traceability.
+- **`ONBOARDING.md`** — Recommended reading order and role-based map.
+- **`metrics/README.md`** — Manifest family v5 schemas and lifecycle.
+- Every subfolder has its own `README.md` — read it before creating documents there.

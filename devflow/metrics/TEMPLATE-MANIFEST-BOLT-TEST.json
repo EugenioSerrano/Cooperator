@@ -1,0 +1,250 @@
+{
+  "schema_version": "5.0",
+  "bolt": {
+    "id": "TC-027.BOLT-001",
+    "type": "test",
+    "test_integration": "not-required",
+    "ref": "devflow/functional/bolts/TC-027.BOLT-001-invoice-download-e2e.md",
+    "sources": [
+      "devflow/tests/test-cases/TC-027-invoice-download.md"
+    ],
+    "generation": {
+      "created_at": "2026-08-04T10:05:00-03:00",
+      "created_by": "human:eugenio.serrano",
+      "runs": [
+        {
+          "tool": "opencode",
+          "provider": "openrouter",
+          "model": "anthropic/claude-sonnet-4.7",
+          "tokens": {
+            "input_uncached": 3800,
+            "input_cached_read": 1100,
+            "input_cache_write": 0,
+            "output": 720
+          },
+          "agent": "avenga-devflow"
+        }
+      ],
+      "duration_seconds": 29
+    },
+    "review_ready_at": "2026-08-04T10:12:00-03:00",
+    "review_started_at": "2026-08-04T10:15:00-03:00",
+    "acceptance": {
+      "review_ready_at": "2026-08-04T12:20:00-03:00",
+      "review_started_at": "2026-08-04T12:30:00-03:00"
+    }
+  },
+  "spec_revisions": [
+    {
+      "revision": 1,
+      "ref": "devflow/spec/SPEC-260804-1030-invoice-download-e2e.md",
+      "sources": [
+        "devflow/functional/bolts/TC-027.BOLT-001-invoice-download-e2e.md",
+        "devflow/tests/test-cases/TC-027-invoice-download.md"
+      ],
+      "git_commit": "9d8e7f6",
+      "generation": {
+        "created_at": "2026-08-04T10:30:00-03:00",
+        "created_by": "human:eugenio.serrano",
+        "runs": [
+          {
+            "tool": "codex",
+            "provider": "openai",
+            "model": "gpt-5.6",
+            "tokens": {
+              "input_uncached": 9700,
+              "input_cached_read": 3600,
+              "input_cache_write": 0,
+              "output": 2100
+            },
+            "agent": "avenga-devflow"
+          }
+        ],
+        "duration_seconds": 118
+      },
+      "review_ready_at": "2026-08-04T10:37:00-03:00",
+      "review_started_at": "2026-08-04T10:40:00-03:00"
+    }
+  ],
+  "v_bounces": [
+    {
+      "number": 1,
+      "spec_revision": 1,
+      "git_commit": "9d8e7f6",
+      "execution_outcome": "ready_for_review",
+      "code_generation": {
+        "created_at": "2026-08-04T11:10:00-03:00",
+        "created_by": "human:dev1",
+        "runs": [
+          {
+            "tool": "opencode",
+            "provider": "anthropic",
+            "model": "claude-sonnet-4.7",
+            "tokens": {
+              "input_uncached": 21900,
+              "input_cached_read": 8200,
+              "input_cache_write": 0,
+              "output": 6100
+            },
+            "agent": "developer-agent"
+          }
+        ],
+        "duration_seconds": 840
+      },
+      "mem": {
+        "ref": "devflow/memory/MEM-260804-1152-invoice-download-e2e.md",
+        "generation": {
+          "created_at": "2026-08-04T11:52:00-03:00",
+          "created_by": "human:dev1",
+          "runs": [
+            {
+              "tool": "opencode",
+              "provider": "anthropic",
+              "model": "claude-sonnet-4.7",
+              "tokens": {
+                "input_uncached": 4700,
+                "input_cached_read": 1500,
+                "input_cache_write": 0,
+                "output": 1100
+              },
+              "agent": "developer-agent"
+            }
+          ],
+          "duration_seconds": 35
+        }
+      },
+      "review_ready_at": "2026-08-04T11:55:00-03:00",
+      "review_started_at": "2026-08-04T12:10:00-03:00"
+    }
+  ],
+  "checkpoint_approvals": [
+    {
+      "checkpoint": "AITL-TC-Approval",
+      "subject": {
+        "ref": "devflow/tests/test-cases/TC-027-invoice-download.md"
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "human:qa.name",
+          "role": "qa",
+          "model": null
+        },
+        {
+          "actor": "human:fa.name",
+          "role": "functional_analyst",
+          "model": null
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "human:qa.name",
+          "role": "qa",
+          "model": null
+        }
+      ],
+      "decided_at": "2026-08-02T10:38:00-03:00",
+      "comment": null
+    },
+    {
+      "checkpoint": "AITL-BOLT-READY-Approval",
+      "subject": {
+        "ref": "devflow/functional/bolts/TC-027.BOLT-001-invoice-download-e2e.md"
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "human:qa.lead",
+          "role": "qa_lead",
+          "model": null
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "human:qa.lead",
+          "role": "qa_lead",
+          "model": null
+        }
+      ],
+      "decided_at": "2026-08-04T10:20:00-03:00",
+      "comment": null
+    },
+    {
+      "checkpoint": "AITL-SPEC-Approval",
+      "subject": {
+        "ref": "devflow/spec/SPEC-260804-1030-invoice-download-e2e.md",
+        "revision": 1
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "human:eugenio.serrano",
+          "role": "dev_validator",
+          "model": null
+        },
+        {
+          "actor": "human:qa.lead",
+          "role": "qa_lead",
+          "model": null
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:avenga-devflow",
+          "role": "coordinator",
+          "model": "gpt-5.6"
+        }
+      ],
+      "decided_at": "2026-08-04T10:55:00-03:00",
+      "comment": null
+    },
+    {
+      "checkpoint": "AITL-MEM-Approval",
+      "subject": {
+        "ref": "devflow/memory/MEM-260804-1152-invoice-download-e2e.md",
+        "v_bounce": 1
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "human:dev1",
+          "role": "dev_validator",
+          "model": null
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:avenga-devflow",
+          "role": "coordinator",
+          "model": "claude-sonnet-4.7"
+        }
+      ],
+      "decided_at": "2026-08-04T12:20:00-03:00",
+      "comment": null
+    },
+    {
+      "checkpoint": "AITL-BOLT-DONE-Approval",
+      "subject": {
+        "ref": "devflow/functional/bolts/TC-027.BOLT-001-invoice-download-e2e.md"
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "human:qa.auto.lead",
+          "role": "qa_automation_lead",
+          "model": null
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "human:qa.auto.lead",
+          "role": "qa_automation_lead",
+          "model": null
+        }
+      ],
+      "decided_at": "2026-08-04T12:40:00-03:00",
+      "comment": null
+    }
+  ],
+  "integration_test_runs": []
+}

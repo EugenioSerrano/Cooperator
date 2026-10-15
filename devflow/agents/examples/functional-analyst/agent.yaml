@@ -1,0 +1,22 @@
+# Canonical DevFlow Agent definition — TEMPLATE (adopters copy + instantiate;
+# pick your own id — the id is the identity, renaming a prompt never changes it).
+id: fa-agent                  # adopters choose: <project>-fa-agent
+role: functional-analyst
+description: >
+  Analyzes business needs and inputs into feature User Stories with
+  verifiable Acceptance Criteria. Delegate US drafting and AC design to
+  this agent.
+model: inherit                    # safe default: follow the session model; adopters override per platform catalog
+modes: [executor, approver]           # executor first-class; approver when enabled
+approves: [US]                        # may sign AITL-US-Approval when the roster enables it
+capabilities:
+  tier: T1                            # repo + read-only external (input/ interviews)
+  tools: [read, grep, glob, bash, edit, write]
+  mcp_servers: []                     # named + allowlisted; [] default
+escalation:
+  - "business intent ambiguous or sources contradictory"
+  - "ACs would need implementation detail (that is the SPEC's job)"
+write_paths: ["devflow/functional/user-stories/", "devflow/analysis/"]
+human_invocation: coordinator-only  # default posture; `direct` (the deliberate opt-in) re-opens the human-started session
+# APPROVER CEILING (approver mode): this agent runs T0/T1,
+# no write paths, no transactional MCPs — the evidence is in the repo.

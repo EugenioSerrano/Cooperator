@@ -1,0 +1,340 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:avenga:devflow:manifest:us:v5",
+  "title": "Avenga DevFlow User Story Manifest v5",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "us",
+    "story_points",
+    "bolts",
+    "checkpoint_approvals"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "5.0"
+    },
+    "us": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "ref",
+        "sources",
+        "generation",
+        "review_ready_at",
+        "review_started_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^US-(?!000)[0-9]{3}$"
+        },
+        "ref": {
+          "$ref": "#/$defs/repositoryRef"
+        },
+        "sources": {
+          "$ref": "#/$defs/sources"
+        },
+        "generation": {
+          "$ref": "#/$defs/generation"
+        },
+        "review_ready_at": {
+          "$ref": "#/$defs/dateTimeOrNull"
+        },
+        "review_started_at": {
+          "$ref": "#/$defs/dateTimeOrNull"
+        }
+      }
+    },
+    "story_points": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "enum": [
+            1,
+            2,
+            3,
+            5,
+            8,
+            13
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "bolts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/repositoryRef"
+      },
+      "uniqueItems": true
+    },
+    "checkpoint_approvals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/checkpointApproval"
+      }
+    }
+  },
+  "$defs": {
+    "repositoryRef": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/repositoryRef"
+      },
+      "uniqueItems": true
+    },
+    "dateTimeOrNull": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tokens": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_uncached",
+        "input_cached_read",
+        "input_cache_write",
+        "output"
+      ],
+      "properties": {
+        "input_uncached": {
+          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+        },
+        "input_cached_read": {
+          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+        },
+        "input_cache_write": {
+          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+        },
+        "output": {
+          "$ref": "#/$defs/nonNegativeIntegerOrNull"
+        }
+      }
+    },
+    "nonNegativeIntegerOrNull": {
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool",
+        "provider",
+        "model",
+        "tokens",
+        "agent"
+      ],
+      "properties": {
+        "tool": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tokens": {
+          "$ref": "#/$defs/tokens"
+        },
+        "agent": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "created_at",
+        "created_by",
+        "runs",
+        "duration_seconds"
+      ],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created_by": {
+          "type": "string",
+          "pattern": "^(human|agent):.+"
+        },
+        "runs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/run"
+          }
+        },
+        "duration_seconds": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "approver": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actor",
+        "role",
+        "model"
+      ],
+      "properties": {
+        "actor": {
+          "type": "string",
+          "pattern": "^(human|agent):.+"
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "actor": {
+                "pattern": "^agent:"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "model": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "model": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "checkpointApproval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checkpoint",
+        "subject",
+        "decision",
+        "decided_by",
+        "decided_at"
+      ],
+      "properties": {
+        "checkpoint": {
+          "enum": ["AITL-US-Approval"]
+        },
+        "subject": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "ref"
+          ],
+          "properties": {
+            "ref": {
+              "$ref": "#/$defs/repositoryRef"
+            }
+          }
+        },
+        "decision": {
+          "enum": [
+            "approved",
+            "changes_requested",
+            "rejected"
+          ]
+        },
+        "decided_by": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/approver"
+          }
+        },
+        "written_by": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/approver"
+          }
+        },
+        "decided_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "comment": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
