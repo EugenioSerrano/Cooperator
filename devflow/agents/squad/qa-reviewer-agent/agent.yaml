@@ -1,0 +1,23 @@
+# Definición de agente DevFlow (devflow/agents/squad/).
+# Rol genérico: sin nombres de personas ni referencias de equipo; la
+# personalización vive en el archivo de actor (actors/<actor-id>.yaml).
+id: qa-reviewer-agent
+role: qa-reviewer
+description: >
+  Revisa Test Cases, evidencia de verificación y cobertura: derivación
+  desde la intención aprobada, reproducibilidad e integridad de la
+  evidencia. Delegar aquí las revisiones (REV) de verificación.
+model: inherit   # por defecto sigue el modelo de la sesión; el modelo por-instancia se declara en el actor
+modes: [executor]   # executor (producción, primer rol) | approver (segundo rol configurable — acto humano en el roster)
+approves: []        # códigos de checkpoint que puede firmar; vacío = solo ejecutor
+capabilities:
+  tier: T1                          # repo + externo de solo lectura
+  tools: [read, grep, glob, bash]
+  mcp_servers: []                   # nombrados y allowlist; vacío por defecto
+escalation:
+  - "evidencia irreproducible, o una clasificación de un run sin justificar"
+  - "un resultado esperado no se puede derivar de la intención aprobada (G06)"
+write_paths: []                     # los revisores no escriben (adyacentes al rol approver)
+human_invocation: coordinator-only  # postura por defecto; `direct` es el opt-in deliberado
+# TECHO DE APROBADOR (si algún día se habilita el modo approver): corre en
+# T0/T1, sin write_paths y sin MCPs transaccionales.

@@ -1,0 +1,16 @@
+# Actor DevFlow (agente)
+# Borrador executor-only: la autoridad de aprobación (modes: [approver] +
+# approves) es un acto de configuración del humano sobre el roster; un
+# agente nunca la habilita.
+# `produces` se DERIVA de `role` (mapeo rol → artefactos, §3.0.1).
+
+id: dotnet-developer-agent
+name: "Desarrollador .NET"
+role: developer
+model: deepseek/deepseek-flash   # por-instancia y autoritativo (independencia por modelo)
+modes: [executor]
+approves: []
+definition: agents/squad/dotnet-developer-agent/agent.yaml
+escalation:
+  - "el SPEC es ambiguo o una fuente gobernada cambia a mitad de ejecución (G15)"
+write_paths: ["devflow/spec/", "devflow/memory/", "devflow/metrics/bolts/", "2.0/"]

@@ -1,0 +1,25 @@
+# Definición de agente DevFlow (devflow/agents/squad/).
+# Rol genérico: sin nombres de personas ni referencias de equipo; la
+# personalización vive en el archivo de actor (actors/<actor-id>.yaml).
+id: qa-agent
+role: qa
+description: >
+  Verifica los paquetes de V-Bounce contra los ACs y los gates; diseña
+  Test Cases independientes; cuando se habilite, aprueba checkpoints de
+  MEM. Delegar aquí la verificación y el diseño de TC.
+model: inherit   # por defecto sigue el modelo de la sesión; el modelo por-instancia se declara en el actor
+modes: [executor]   # executor (producción, primer rol) | approver (segundo rol configurable — acto humano en el roster)
+approves: []        # códigos de checkpoint que puede firmar; vacío = solo ejecutor
+capabilities:
+  tier: T1                          # repo + externo de solo lectura (docs)
+  tools: [read, grep, glob, bash, edit, write]
+  mcp_servers: []                   # nombrados y allowlist; vacío por defecto
+escalation:
+  - "la evidencia falta, se contradice o no puede reproducirse"
+  - "un gate fue sobrescrito sin un ADR aprobado (G21)"
+write_paths: ["devflow/tests/", "devflow/metrics/test-cases/"]
+human_invocation: coordinator-only  # postura por defecto; `direct` es el opt-in deliberado
+# TECHO DE APROBADOR (si algún día se habilita el modo approver): corre en
+# T0/T1, sin write_paths y sin MCPs transaccionales — la defensa contra la
+# aprobación forjada por inyección: aprobar solo necesita la evidencia del
+# repo (diff, tests, MEM, manifiesto).

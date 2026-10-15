@@ -17,6 +17,15 @@
 # The kit ships this list EMPTY — your team is yours. See README.md for
 # the rules and examples/ for a worked actor file.
 
-actors: []
-# actors:
-#   - example-qa        # → actors/example-qa.yaml (created from TEMPLATE-ACTOR.yaml)
+actors:
+  - eugenio-serrano                    # → actors/eugenio-serrano.yaml (humano — tech-lead)
+  - fa-agent                # → actors/fa-agent.yaml (agente — analista funcional)
+  - fa-reviewer-agent       # → actors/fa-reviewer-agent.yaml (agente — revisor de análisis funcional)
+  - dotnet-architect-agent         # → actors/dotnet-architect-agent.yaml (agente — arquitecto .NET)
+  - dotnet-architect-reviewer-agent # → actors/dotnet-architect-reviewer-agent.yaml (agente — revisor de arquitectura .NET)
+  - dotnet-developer-agent         # → actors/dotnet-developer-agent.yaml (agente — desarrollador .NET)
+  - dotnet-developer-reviewer-agent # → actors/dotnet-developer-reviewer-agent.yaml (agente — revisor técnico .NET)
+  - qa-agent                # → actors/qa-agent.yaml (agente — QA)
+  - qa-reviewer-agent       # → actors/qa-reviewer-agent.yaml (agente — revisor de QA)
+  - test-designer-agent     # → actors/test-designer-agent.yaml (agente — diseñador de pruebas)
+  - test-designer-reviewer-agent # → actors/test-designer-reviewer-agent.yaml (agente — revisor de diseño de pruebas)

@@ -35,7 +35,10 @@ platform live in [../agents/VERIFICATION.md](../agents/VERIFICATION.md).
 
 | Skill | Scope | Referenced by | Status |
 |-------|-------|---------------|--------|
-| —     | —     | —             | —      |
+| user-story-analysis | shared | test-designer-agent | adoptada de `examples/` (2026-10-14) |
+| testing-heuristics | shared | test-designer-agent | adoptada de `examples/` (2026-10-14) — 7 referencias |
+| exploratory-scenario-generation | role | test-designer-agent | adoptada de `examples/` (2026-10-14) |
+| test-case-consolidation | role | test-designer-agent | adoptada de `examples/` (2026-10-14) — `references/tc-mapping.md` + `assets/tc-export-projection.csv` |
 
 > Ships empty — the shelf above is not adopted. List every adopted or project
 > skill here with its `metadata.scope` and the agents (by `id`) whose

@@ -1,0 +1,24 @@
+# Definición de agente DevFlow (devflow/agents/squad/).
+# Rol genérico: sin nombres de personas ni referencias de equipo; la
+# personalización vive en el archivo de actor (actors/<actor-id>.yaml).
+id: dotnet-developer-agent
+role: developer
+description: >
+  Ejecuta V-Bounces sobre el stack .NET: implementa el SPEC aprobado
+  (código C#/.NET, tests, configuración) y produce el MEM + la entrada del
+  manifiesto. Delegar aquí la implementación.
+model: inherit   # por defecto sigue el modelo de la sesión; el modelo por-instancia se declara en el actor
+modes: [executor]   # executor (producción, primer rol) | approver (segundo rol configurable — acto humano en el roster)
+approves: []        # códigos de checkpoint que puede firmar; vacío = solo ejecutor
+capabilities:
+  tier: T2                          # repo + externo de solo lectura + MCPs transaccionales nombrados si se habilitan
+  tools: [read, grep, glob, bash, edit, write]
+  mcp_servers: []                   # nombrados y allowlist; vacío por defecto
+escalation:
+  - "el SPEC es ambiguo o una fuente gobernada cambia a mitad de ejecución (G15)"
+  - "los tests no llegan a verde dentro del presupuesto de turnos — parar y escalar con el MEM"
+write_paths: ["devflow/spec/", "devflow/memory/", "devflow/metrics/bolts/", "2.0/"]  # registros gobernados + carpetas de código del proyecto (destino de la migración)
+human_invocation: coordinator-only  # postura por defecto; `direct` es el opt-in deliberado
+# NOTA: como ejecutor puro nunca necesita el modo approver; si el equipo le
+# concede uno, aplica el TECHO DE APROBADOR (T0/T1, sin write_paths, sin
+# MCPs transaccionales).

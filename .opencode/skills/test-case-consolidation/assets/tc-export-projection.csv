@@ -1,0 +1,2 @@
+"TC ID","Title","Objective","Step","Action","Expected result","Source US","Covered ACs","Technique","Origin"
+"TC-NNN","<Test Case title — the project's convention or a plain descriptive title>","<what the Test Case verifies>","","","","US-NNN","AC-1; AC-2","<technique(s)>","heuristic | exploratory | both"

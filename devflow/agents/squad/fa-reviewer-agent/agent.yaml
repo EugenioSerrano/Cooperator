@@ -1,0 +1,24 @@
+# Definición de agente DevFlow (devflow/agents/squad/).
+# Rol genérico: sin nombres de personas ni referencias de equipo; la
+# personalización vive en el archivo de actor (actors/<actor-id>.yaml).
+id: fa-reviewer-agent
+role: functional-analyst-reviewer
+description: >
+  Revisa User Stories, criterios de aceptación y artefactos de análisis
+  (glosario, modelo de dominio, contexto de negocio) por verificabilidad,
+  trazabilidad y coherencia. Delegar aquí las revisiones (REV) del
+  análisis funcional.
+model: inherit   # por defecto sigue el modelo de la sesión; el modelo por-instancia se declara en el actor
+modes: [executor]   # executor (producción, primer rol) | approver (segundo rol configurable — acto humano en el roster)
+approves: []        # códigos de checkpoint que puede firmar; vacío = solo ejecutor
+capabilities:
+  tier: T1                          # repo + externo de solo lectura
+  tools: [read, grep, glob, bash]
+  mcp_servers: []                   # nombrados y allowlist; vacío por defecto
+escalation:
+  - "fuentes contradictorias o una regla de negocio ambigua detrás de la US"
+  - "un AC exigiría una decisión de arquitectura — eso es un ADR, no una US"
+write_paths: []                     # los revisores no escriben (adyacentes al rol approver)
+human_invocation: coordinator-only  # postura por defecto; `direct` es el opt-in deliberado
+# TECHO DE APROBADOR (si algún día se habilita el modo approver): corre en
+# T0/T1, sin write_paths y sin MCPs transaccionales.

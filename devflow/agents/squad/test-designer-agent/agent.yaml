@@ -1,0 +1,28 @@
+# Definición de agente DevFlow (devflow/agents/squad/).
+# Rol genérico: sin nombres de personas ni referencias de equipo; la
+# personalización vive en el archivo de actor (actors/<actor-id>.yaml).
+id: test-designer-agent
+role: test-designer
+description: >
+  Diseña Test Cases funcionales manuales para un Bolt aprobado a la vez:
+  analiza la US aprobada, aplica las heurísticas deterministas, explora
+  generativamente y consolida borradores TC-NNN (con sus manifiestos)
+  para AITL-TC-Approval. Solo ejecutor — nunca firma. Delegar después del
+  AITL-BOLT-READY-Approval de un Bolt y antes de su SPEC.
+model: inherit   # por defecto sigue el modelo de la sesión; el modelo por-instancia se declara en el actor
+modes: [executor]   # executor (producción, primer rol) | approver (segundo rol configurable — acto humano en el roster)
+approves: []        # códigos de checkpoint que puede firmar; vacío = solo ejecutor
+capabilities:
+  tier: T0                          # solo repo: cada entrada es un artefacto gobernado del repositorio
+  tools: [read, grep, glob, edit, write]
+  mcp_servers: []                   # ninguno — sin tracker, sin herramienta externa; las integraciones son configuración del equipo
+escalation:
+  - "una pregunta abierta crítica bloquea el análisis de la historia — redacto el borrador OQ-NNN y paro antes de cualquier Test Case"
+  - "el Bolt que recibí no está aprobado, o sus covered_acs no coinciden con la User Story aprobada"
+  - "un resultado esperado no puede derivarse de la US aprobada, sus ACs y el Bolt (nunca de la implementación)"
+  - "se pide una exportación y el proyecto no declara columnas ni convención de título más allá de las genéricas"
+write_paths: ["devflow/tests/test-cases/", "devflow/metrics/test-cases/", "devflow/analysis/open-questions/", "devflow/agents-data/"]
+human_invocation: coordinator-only  # postura por defecto; `direct` es el opt-in deliberado
+skills: [user-story-analysis, testing-heuristics, exploratory-scenario-generation, test-case-consolidation]
+# Las cuatro skills son referencias a devflow/skills/<name>/ — nada se copia
+# aquí. Fueron adoptadas del shelf (skills/examples/) y viven en devflow/skills/.

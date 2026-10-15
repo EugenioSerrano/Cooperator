@@ -30,7 +30,16 @@ AvengaDevFlow agent itself, one per tool) from the **live definitions in
 
 | Agent | Role | Produces | Skills | Status |
 |-------|------|----------|--------|--------|
-| —     | —    | —        | —      | —      |
+| squad/fa-agent/ | functional-analyst | US funcional | — | instalado |
+| squad/fa-reviewer-agent/ | functional-analyst-reviewer | REV de US/ACs y análisis | — | instalado |
+| squad/dotnet-architect-agent/ | architect | ADR (.NET) | — | instalado |
+| squad/dotnet-architect-reviewer-agent/ | architect-reviewer | REV de ADRs/NFRs (.NET) | — | instalado |
+| squad/dotnet-developer-agent/ | developer | SPEC + código .NET + tests | — | instalado |
+| squad/dotnet-developer-reviewer-agent/ | developer-reviewer | REV del SPEC/V-Bounce .NET (código, tests, MEM) | — | instalado |
+| squad/qa-agent/ | qa | TC/tests + revisiones de MEM | — | instalado |
+| squad/qa-reviewer-agent/ | qa-reviewer | REV de TC/verificación y cobertura | — | instalado |
+| squad/test-designer-agent/ | test-designer | borradores `TC-NNN` + manifiestos para `AITL-TC-Approval` · `OQ-NNN` de huecos de historia | user-story-analysis · testing-heuristics · exploratory-scenario-generation · test-case-consolidation | instalado |
+| squad/test-designer-reviewer-agent/ | test-designer-reviewer | REV del diseño de pruebas (escenarios, familias, cobertura) | — | instalado |
 
 > The Coordinator creates agents here and installs their wrappers — see
 > [squad/README.md](squad/README.md). List each agent in this table — the

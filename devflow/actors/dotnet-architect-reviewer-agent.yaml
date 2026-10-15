@@ -1,0 +1,15 @@
+# Actor DevFlow (agente)
+# Autoridad de aprobación (modes/approves): configurada por el humano
+# sobre el roster — un agente nunca la habilita ni la modifica.
+# `produces` se DERIVA de `role` (mapeo rol → artefactos, §3.0.1).
+
+id: dotnet-architect-reviewer-agent
+name: "Revisor de Arquitectura .NET"
+role: architect-reviewer
+model: deepseek/deepseek-v4-pro   # por-instancia y autoritativo (revisor — pro)
+modes: [executor, approver]
+approves: [ADR, BOLT-READY]            # dueño: ADR; readiness no-funcional (US-000)
+definition: agents/squad/dotnet-architect-reviewer-agent/agent.yaml
+escalation:
+  - "dos ADRs activos se contradicen entre sí"
+write_paths: []

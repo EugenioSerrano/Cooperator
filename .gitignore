@@ -263,13 +263,9 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # =============================================================================
-# VS Code directories
+# VS Code directories (local — ignorado completo)
 # =============================================================================
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/
 
 # =============================================================================
 # JetBrains Rider

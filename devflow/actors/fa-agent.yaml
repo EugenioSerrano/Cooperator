@@ -1,0 +1,16 @@
+# Actor DevFlow (agente)
+# Borrador executor-only: la autoridad de aprobación (modes: [approver] +
+# approves) es un acto de configuración del humano sobre el roster; un
+# agente nunca la habilita.
+# `produces` se DERIVA de `role` (mapeo rol → artefactos, §3.0.1).
+
+id: fa-agent
+name: "Analista Funcional (FA)"
+role: functional-analyst
+model: deepseek/deepseek-flash   # por-instancia y autoritativo (independencia por modelo)
+modes: [executor]
+approves: []
+definition: agents/squad/fa-agent/agent.yaml
+escalation:
+  - "intención de negocio ambigua o fuentes contradictorias"
+write_paths: ["devflow/functional/user-stories/", "devflow/metrics/user-stories/", "devflow/analysis/"]

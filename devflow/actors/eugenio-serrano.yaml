@@ -1,0 +1,13 @@
+# Actor HUMANO — Eugenio Serrano (responsable del proyecto)
+# Los humanos aprueban por defecto: `modes`/`approves` son su lista de
+# aprobaciones de referencia (guía, nunca restricción) y los escribe el
+# propio humano. Este archivo se creó como borrador executor-only; el
+# techo critical/regulatory es siempre humano (§3.0.1).
+# Identidad en registros: human:eugenioserrano (vía `user`, verbatim).
+
+id: eugenio-serrano
+user: eugenioserrano
+name: "Eugenio Serrano"
+role: tech-lead
+modes: [executor]
+approves: []

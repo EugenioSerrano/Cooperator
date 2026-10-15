@@ -1,0 +1,16 @@
+# Actor DevFlow (agente)
+# Borrador executor-only: la autoridad de aprobación (modes: [approver] +
+# approves) es un acto de configuración del humano sobre el roster; un
+# agente nunca la habilita.
+# `produces` se DERIVA de `role` (mapeo rol → artefactos, §3.0.1).
+
+id: qa-agent
+name: "QA"
+role: qa
+model: deepseek/deepseek-flash   # ejecutor → flash (regla del equipo); distinto del qa-reviewer (pro) para riesgo alto
+modes: [executor]
+approves: []
+definition: agents/squad/qa-agent/agent.yaml
+escalation:
+  - "la evidencia falta, se contradice o no puede reproducirse"
+write_paths: ["devflow/tests/", "devflow/metrics/test-cases/"]

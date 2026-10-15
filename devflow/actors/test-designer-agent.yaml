@@ -1,0 +1,16 @@
+# Actor DevFlow (agente)
+# Borrador executor-only: la autoridad de aprobación (modes: [approver] +
+# approves) es un acto de configuración del humano sobre el roster; un
+# agente nunca la habilita.
+# `produces` se DERIVA de `role` (mapeo rol → artefactos, §3.0.1).
+
+id: test-designer-agent
+name: "Diseñador de Pruebas"
+role: test-designer
+model: deepseek/deepseek-flash   # por-instancia y autoritativo (independencia por modelo)
+modes: [executor]
+approves: []
+definition: agents/squad/test-designer-agent/agent.yaml
+escalation:
+  - "una pregunta abierta crítica bloquea el análisis de la historia (el gate)"
+write_paths: ["devflow/tests/test-cases/", "devflow/metrics/test-cases/", "devflow/analysis/open-questions/", "devflow/agents-data/"]
