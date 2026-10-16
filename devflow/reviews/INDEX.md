@@ -19,7 +19,7 @@ BUG / BOLT→SPEC / DISC / ADR / RISK — reviews never fix, only classify.
 
 | ID | Document | Scope | Findings | Status |
 |----|----------|-------|----------|--------|
-| —  | —        | —     | —        | approved |
+| REV-001 | [REV-001-analisis-migracion-cooperator.md](REV-001-analisis-migracion-cooperator.md) | Migración 1.4 → .NET Standard 2.1 (4 librerías + 2 tools) | F-01..F-50 — 6 Compliant · 17 Minor gap · 27 Major gap | approved |
 
 ## 🏁 Closed (all findings routed)
 
@@ -29,4 +29,4 @@ BUG / BOLT→SPEC / DISC / ADR / RISK — reviews never fix, only classify.
 
 ---
 
-**Last updated:** August 2026
+**Last updated:** 2026-10-15
