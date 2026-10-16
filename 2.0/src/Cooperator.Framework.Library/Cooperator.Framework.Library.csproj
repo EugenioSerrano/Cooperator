@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    ADR-001 §3.1 — mapa de paquetes: nombre, TFM único (netstandard2.1), firma.
+    ADR-001 §3.4: Library queda con CERO dependencias de terceros.
+    ADR-001 §3.1 — direcciones permitidas: Library a Core (arco L:C del diagrama).
+    SPEC-261016-0018 §3.2/§6/C.3: el contrato de configuración vive en Core y lo CONSUME Library.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Cooperator.Framework.Library</AssemblyName>
+    <RootNamespace>Cooperator.Framework.Library</RootNamespace>
+    <PackageId>Cooperator.Framework.Library</PackageId>
+    <IsPackable>true</IsPackable>
+    <Description>Utilidades transversales de Cooperator (cifrado, validación de identificación fiscal, ayuda).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cooperator.Framework.Core\Cooperator.Framework.Core.csproj" />
+  </ItemGroup>
+
+</Project>

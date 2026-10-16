@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC-261016-0034 §6/B.1, §6/D y §6/E: pruebas del camino filas→objetos de Core (identificación de tipos
+    calificada, diagnóstico de la propiedad y su gemelo, control de resolución implícita y valores reales).
+    Las versiones de los paquetes son centrales (Directory.Packages.props, ADR-001 §3.4).
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Cooperator.Framework.Core.Mapping.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Cooperator.Framework.Core\Cooperator.Framework.Core.csproj" />
+  </ItemGroup>
+
+</Project>

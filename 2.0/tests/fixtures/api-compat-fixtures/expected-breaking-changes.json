@@ -1,0 +1,15 @@
+{
+  "description": "Resultado esperado del gate para la corrida roja sobre el par de fixtures sintéticos (SPEC §6.D.2.2 y §6.D.3). El gate debe FALLAR (código de salida ≠ 0) e IDENTIFICAR ambas rupturas: el miembro público retirado y la firma alterada. Las cadenas de `required_in_report` son subcadenas que el reporte del comparador debe contener; están tomadas del formato real del comparador fijado (Microsoft.DotNet.ApiCompat 10.0.402), verificado en el V-Bounce N°1.",
+  "contract_fixture": "BaselineFixture/bin/Release/netstandard2.1/Cooperator.ApiCompatFixture.dll",
+  "implementation_fixture": "BrokenFixture/bin/Release/netstandard2.1/Cooperator.ApiCompatFixture.dll",
+  "expected_exit_code": 2,
+  "expected_tool_exit_code_nonzero": true,
+  "required_in_report": [
+    "Cooperator.ApiCompatFixture.Sample.RemovedMethod",
+    "Cooperator.ApiCompatFixture.Sample.ChangedSignature(int)",
+    "Cooperator.ApiCompatFixture.Sample.ChangedSignature(string)"
+  ],
+  "expected_rules": [
+    "CP0002"
+  ]
+}

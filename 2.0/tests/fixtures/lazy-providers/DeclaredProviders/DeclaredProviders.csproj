@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC-261016-0015 §8.1: proyecto de soporte de test con los providers del CASO NORMAL.
+    Es una dependencia DECLARADA del proyecto de pruebas (su referencia lo copia al
+    directorio de salida y lo deja en el deps.json), que es exactamente el escenario real
+    del provider: la plantilla `DefaultLazyProvider` se genera en el proyecto de reglas
+    del cliente. La resolución por defecto del host debe resolverlo sin que el framework
+    cargue nada a mano.
+
+    Contiene además los tipos de prueba de las causas de tipo (no implementa el contrato,
+    abstracto, sin constructor público sin parámetros, constructor estático que falla).
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Cooperator.LazyFixtures.Declared</AssemblyName>
+    <RootNamespace>Cooperator.LazyFixtures.Declared</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <EnablePackageValidation>false</EnablePackageValidation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Cooperator.Framework.Core\Cooperator.Framework.Core.csproj" />
+  </ItemGroup>
+
+</Project>

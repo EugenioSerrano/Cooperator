@@ -1,0 +1,59 @@
+{
+    "bolt":  "US-000.BOLT-016",
+    "bolt_ref":  "devflow/functional/bolts/US-000.BOLT-016-reverse-sin-baserule.md",
+    "spec":  "SPEC-261016-0027",
+    "spec_ref":  "devflow/spec/SPEC-261016-0027-reverse-sin-baserule.md",
+    "spec_revision":  4,
+    "produced_by":  "agent:dotnet-developer-agent",
+    "purpose":  "La constancia del reverse sin `BaseRule` y del cierre de la obligacion del tooling: la ruptura de superficie del componente (la cadena de conexion deja de entrar por parametro y entra por el contrato de configuracion), el cambio de comportamiento que el consumidor percibe y el RETIRO de los `PropertyEditors/*` del 1.4 (el cuarto destino de `OBLIGATION-TOOLING-01`, que no se reubica) con su reemplazo cero.",
+    "source_of_shape":  "SPEC-261016-0047 6/B (contribucion distribuida: cada Bolt entrega su fragmento) y SPEC-261016-0027 revision 4 (6/D.3-b, AC-8, 16 y 17: la obligacion \u0027materializada y cerrada\u0027 con el retiro declarado).",
+    "entries":  [
+                    {
+                        "id":  "BOLT016-01",
+                        "kind":  "signature-changed",
+                        "surface":  "public",
+                        "type":  "Cooperator.Framework.Modeler.DBReverseHelper.DomainTreeHelper",
+                        "member":  "UpdateDomainTree",
+                        "signature":  "public static BaseTreeNode UpdateDomainTree(BaseTreeNode oldTree)",
+                        "what":  "La mitad reverse del helper del tooling cambia la FIRMA con la que se le entrega la conexion: era `UpdateDomainTree(string connectionString, BaseTreeNode oldTree)` y pasa a ser `UpdateDomainTree(BaseTreeNode oldTree)`. La sobrecarga que recibia la cadena por parametro queda privada (es implementacion).",
+                        "why":  "AD-005 3.6 y SPEC-261016-0027 6/C.1: la cadena de conexion del reverse NO entra por un parametro provisto por un formulario ni por un mecanismo propio del tool, sino por el CONTRATO de configuracion portable (ADR-004 3.2/3.3) - y es el consumidor el que invoca al resolutor de valores protegidos.",
+                        "replacement":  "Llamar `UpdateDomainTree(BaseTreeNode oldTree)`: la cadena la resuelve `ConnectionStringResolver` desde `Cooperator:ConnectionStrings:\u003cnombre\u003e` y su prefijo de esquema se valida con el contrato.",
+                        "evidence":  "El tipo y su firma nueva estan en `2.0/src/CooperatorModeler/DBReverseHelper/DomainTreeHelper.cs` (medido por `DependencyChecks.The_four_cross_calls_of_the_reverse_half_are_qualified` y por el build del tooling).",
+                        "owner_bolt":  "US-000.BOLT-016"
+                    },
+                    {
+                        "id":  "BOLT016-02",
+                        "kind":  "signature-changed",
+                        "surface":  "public",
+                        "type":  "Cooperator.Framework.Modeler.DBReverseHelper.DomainTreeHelper",
+                        "member":  "GetDomainTree",
+                        "signature":  "public static BaseTreeNode GetDomainTree(BaseTreeNode oldDomainTree)",
+                        "what":  "Mismo cambio en el otro punto de entrada del componente: era `GetDomainTree(string connectionString, BaseTreeNode oldDomainTree)` y pasa a ser `GetDomainTree(BaseTreeNode oldDomainTree)`.",
+                        "why":  "AD-005 3.6 y SPEC-261016-0027 6/C.1: un lector de esquema no recibe la credencial de conexion por el borde publico del tool; la toma del contrato de configuracion portable, que es de donde la toma el resto de la 2.0.",
+                        "replacement":  "Llamar `GetDomainTree(BaseTreeNode oldDomainTree)`; para resolver un nombre de cadena distinto del por defecto, publicar el valor en el catalogo del contrato (`Cooperator:ConnectionStrings:\u003cnombre\u003e`).",
+                        "evidence":  "La firma nueva y los dos puntos de entrada estan en el mismo archivo; el caso `ConnectionResolutionTests` ejercita la resolucion con dobles del contrato y del resolutor.",
+                        "owner_bolt":  "US-000.BOLT-016"
+                    },
+                    {
+                        "id":  "BOLT016-03",
+                        "kind":  "behavior-change",
+                        "what":  "La conexion del reverse-engineering ya NO se provee por un mecanismo propio del tool: sale de la configuracion portable del framework (el catalogo del contrato), con su prefijo de esquema obligatorio y su resolutor invocado por el consumidor. Para quien usa el tool, \u0027conectar\u0027 deja de tener un camino propio: el valor se publica en la configuracion (ADR-004 3.2/3.3).",
+                        "why":  "ADR-004 3.2 (el contrato de configuracion y su catalogo: `Cooperator:ConnectionStrings:\u003cnombre\u003e`) y 3.3 (prefijo de esquema explicito, error tipado y \u0027la capa que lo consume es la que invoca al resolutor\u0027): el reverse es un consumidor mas, y el Bolt 025 (la UI del shell) es quien da la pantalla de conexion, no este componente.",
+                        "replacement":  "Publicar la cadena en la configuracion del contrato con su prefijo (`plain:` hoy; los esquemas protegidos, del ADR-007) y dejar que el componente la resuelva. No hay accion de migracion de datos: el reverse solo lee esquema.",
+                        "next_step":  "El Bolt 025 (UI del shell) muestra donde se provee esa configuracion; este Bolt entrega el componente que la consume.",
+                        "evidence":  "`ConnectionResolutionTests` (hermetico, con dobles) y `ConnectionStringResolutionTests` (lane de integracion, escrito y compilado); el valor del esquema desconocido FALLA con error tipado en lugar de leerse a ciegas.",
+                        "owner_bolt":  "US-000.BOLT-016"
+                    },
+                    {
+                        "id":  "BOLT016-04",
+                        "kind":  "type-removed",
+                        "type":  "Cooperator.Framework.Utility.DBReverseHelper.PropertyEditors",
+                        "what":  "El cuarto destino de la obligacion del tooling -los `PropertyEditors/*` del 1.4: `DropDownListEditor`, `StringEditor` (+ su Form y su Designer) y `ToStringInfoEditor` (+ su Form y su Designer), con sus recursos `.resx`- NO se reubica: se RETIRA. El proyecto del tooling no contiene ningun Form ni `UseWindowsForms`.",
+                        "why":  "SPEC-261016-0027 revision 4 (6/D.3-b y 16): el V-Bounce N.1 midio que los editores portados verbatim NO compilan en `net10.0-windows` (`WFO1000` sobre las propiedades del form, con `TreatWarningsAsErrors` del arbol convirtiendolo en error) y las dos unicas salidas quedan fuera de la autoridad del ejecutor: anotar el codigo aportado (prohibido por 6/D.3-a) o silenciar el analizador (excepcion de gate, G21: exige ADR). Ademas, la particion del Bolt 003 ya retiro los atributos de disenador del modelo y el acoplamiento modelo-editor (ADR-001 3.1, ADR-009 3.2): en la 2.0 la edicion es dirigida por el esquema del contrato, de modo que los editores no tienen vehiculo.",
+                        "replacement":  "REEMPLAZO CERO (no hay reemplazo): No hay reemplazo: la edicion de la 2.0 es dirigida por el esquema del contrato (ADR-009 3.2) y el modelo ya no lleva los atributos de editor que invocaban a estos tipos. El retiro deja el componente del reverse sin UI, que es su alcance (la pantalla es del Bolt 025). Nota de registro: el reemplazo se declara en prosa y no como el literal \"none\" porque el validador propio del arnes (MigrationNotesCoverageTests.Field) solo conoce seis campos y no lee replacement_reason - con \"none\" el esquema EXIGE la razon y el validador del arnes la considera ausente: contradiccion medida entre el esquema publicado y el validador, declarada en el MEM de este V-Bounce.",
+                        "next_step":  "Ninguno pendiente para este Bolt: la obligacion del Bolt 003 cierra con tres destinos materializados mas este retiro declarado. Si el producto quisiera una edicion con Forms propia, seria una capacidad nueva con su ADR, no la reubicacion de los editores del 1.4.",
+                        "evidence":  "Verificado en el arbol: 0 archivos `*Editor*`/`*Form*` (`.cs`/`.resx`) bajo `2.0/src` y `2.0/tests`; 0 menciones de `PropertyEditors` en el tooling; 0 `UseWindowsForms`/`System.Windows.Forms`/`System.Design`/`System.Drawing` en sus fuentes y en su `.csproj`.",
+                        "owner_bolt":  "US-000.BOLT-016"
+                    }
+                ]
+}

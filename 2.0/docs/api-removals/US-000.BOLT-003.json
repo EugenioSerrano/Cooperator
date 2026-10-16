@@ -1,0 +1,133 @@
+{
+  "bolt": "US-000.BOLT-003",
+  "bolt_ref": "devflow/functional/bolts/US-000.BOLT-003-particion-modeling.md",
+  "spec": "SPEC-261016-0004",
+  "spec_ref": "devflow/spec/SPEC-261016-0004-particion-modeling.md",
+  "spec_revision": 4,
+  "produced_by": "agent:dotnet-developer-agent",
+  "produced_at": "2026-10-16T01:44:00-03:00",
+  "purpose": "Constancia de la partición de Cooperator.Framework.Utility: las rupturas que introduce este Bolt (ADR-008 §3.1: qué desaparece, por qué decisión y con qué se reemplaza) y la obligación registrada de la fase D diferida. Es el insumo de las notas de migración del consumidor, cuyo documento es del Bolt 028. Convención de fragmento por Bolt (SPECs 002/003/011): la constancia vive versionada junto al código y su mapa completo —tipo → destino, criterio de la partición y recordatorios— está en 2.0/src/Cooperator.Framework.Modeling/MIGRATION-PARTITION.md.",
+  "source_of_shape": "Cooperator.Framework.Utility.DBReverseHelper (modelo, reverse y helper) y Cooperator.Framework.Utility.Exceptions, del 1.4 congelado (1.4/Cooperator.Framework.Utility/**)",
+  "entries": [
+    {
+      "id": "BOLT003-01",
+      "kind": "namespace-and-assembly-move",
+      "what": "Los tipos del grafo y del reverse-engineering dejan el ensamblado y el namespace `Cooperator.Framework.Utility`: pasan a `Cooperator.Framework.Modeling` (netstandard2.1) con namespace = ensamblado = paquete — `…Utility.DBReverseHelper` → `Cooperator.Framework.Modeling.Model` / `.Reverse`; `…Utility.Exceptions` → `Cooperator.Framework.Modeling.Exceptions`.",
+      "why": "ADR-001 §3.1/§3.3: el paquete nuevo `Cooperator.Framework.Modeling` es portable y su namespace sigue la regla de ADR-001 §3.3; `Cooperator.Framework.Utility` no existe en la 2.0.",
+      "replacement": "Usar el paquete `Cooperator.Framework.Modeling` (mismos nombres de tipo, namespace nuevo). `Cooperator.Framework.Utility` desaparece como ensamblado y como namespace; no hay shim ni type-forwarder (ADR-008 §3.1).",
+      "owner_bolt": "US-000.BOLT-003",
+      "status": "executed-here",
+      "evidence": "2.0/src/Cooperator.Framework.Modeling/ con Model/, Reverse/ y Exceptions/; el ensamblado construido referencia sólo `netstandard 2.1.0.0` (DependencyReportTests)."
+    },
+    {
+      "id": "BOLT003-02",
+      "kind": "attribute-removal",
+      "what": "Desaparecen del modelo los atributos de editor/diseñador —`[EditorAttribute]`, `[DesignerSerializationVisibility]`, `[Description]`, `[Browsable]`, `[DefaultValue]`, `[Category]`— y los `using` de `System.ComponentModel.Design`, `System.Windows.Forms*` y `System.Drawing*`.",
+      "why": "ADR-001 §3.1 y ADR-002 §3.1: el modelo de la 2.0 es POCO, sin atributos de editor ni tipos de UI; la edición es dirigida por el esquema del contrato (ADR-009 §3.2).",
+      "replacement": "El esquema del contrato del Bolt 004 y el editor dirigido por esquema del shell (Bolt 025). Los consumidores que dependían de los atributos para armar formularios deben leer el esquema.",
+      "owner_bolt": "US-000.BOLT-003",
+      "status": "executed-here",
+      "evidence": "ModelPocoTests: inspección por reflexión de la superficie pública de Cooperator.Framework.Modeling.dll (0 atributos de diseñador, 0 tipos de UI)."
+    },
+    {
+      "id": "BOLT003-03",
+      "kind": "coupling-removal",
+      "what": "El modelo deja de escribir en el editor retirado: la sentencia `PropertyEditors.DropDownListEditor.stringList = _ParentCandidates;` (DomainTree.cs L1621, getter `GenerateAsChildOf` de EntityNode) desaparece, junto con el `using` del provider concreto (L35) y el `using` muerto hacia `LazyLoad`.",
+      "why": "ADR-001 §3.1: mientras ese acoplamiento exista, `Modeling` no puede ser portable (es una arista del modelo hacia la UI, y `netstandard2.1` no puede referenciar el tooling `net10.0-windows`). Hallazgo declarado en el V-Bounce N°2 (MEM-261016-0107 §8.6) e incorporado al SPEC en su revisión 3.",
+      "replacement": "Ninguno dentro del modelo: la lista de candidatos la arma quien edita (el tooling/shell), no el modelo.",
+      "owner_bolt": "US-000.BOLT-003",
+      "status": "executed-here",
+      "evidence": "El archivo aportado no contiene la sentencia ni tipos de UI; el build del paquete en netstandard2.1 es la prueba dura (los tipos de UI no existen en ese TFM)."
+    },
+    {
+      "id": "BOLT003-04",
+      "kind": "serialization-removal",
+      "what": "Los tipos del grafo y las excepciones que migran dejan de ser serializables en formato binario: se retiran `[Serializable]`, `SerializationInfo`, `ISerializable` y los constructores `(SerializationInfo, StreamingContext)`.",
+      "why": "ADR-008 §3.2: los tipos que migran nacen POCOs; su persistencia es el `.coop2`, con los derivados recalculados al leer.",
+      "replacement": "El formato `.coop2` (contrato del Bolt 004). El retiro equivalente en el resto de la superficie del framework es del Bolt 007.",
+      "owner_bolt": "US-000.BOLT-003",
+      "status": "executed-here",
+      "evidence": "ModelPocoTests (0 `[Serializable]`/`ISerializable`/`SerializationInfo` en el ensamblado) y el build sin ningún `SYSLIB0051` (ADR-008 §3.4)."
+    },
+    {
+      "id": "BOLT003-05",
+      "kind": "base-type-change",
+      "what": "La base de las excepciones del grafo cambia: `UtilityException` (y con ella `UnknownDBTypeExeception`, `NodeAlreadyExistException` y `CannotAddOrRemoveItemException`) deja de derivar de `Cooperator.Framework.Library.Exceptions.BaseException` y pasa a derivar de `System.Exception`.",
+      "why": "ADR-001 §3.1: `Modeling` no tiene aristas salientes —no puede referenciar `Library`— y es la tensión §14(a) que el SPEC aprobó.",
+      "replacement": "Ninguno: la jerarquía entre las excepciones del grafo se conserva (las tres derivan de `UtilityException`). Un consumidor que atrapara `BaseException` debe atrapar `System.Exception` (o el tipo del grafo).",
+      "owner_bolt": "US-000.BOLT-003",
+      "status": "executed-here",
+      "evidence": "Exceptions/UtilityException.cs (`: Exception`) y el reporte de dependencias por ensamblado: sin aristas hacia Core/Library/Data."
+    },
+    {
+      "id": "BOLT003-06",
+      "kind": "type-split",
+      "what": "`DomainTreeHelper` deja de ser una sola clase: se parte en dos tipos con el MISMO nombre en dos ensamblados —la mitad de árbol (11 métodos + el caché de namespaces) en `Cooperator.Framework.Modeling.Model`, y la mitad reverse (3 métodos: `UpdateDomainTree`, `GetDomainTree`, `ADDNodeFromDBObject`) en el tooling cuando la fase D se materialice—.",
+      "why": "SPEC §6/B.2 (partición por criterio objetivo, aprobada en la revisión 2): la mitad que el modelo invoca en ocho sitios no puede vivir fuera del paquete portable.",
+      "replacement": "Los métodos que el modelo usaba (`CorrectCLRType`, `CorrectSelectedCollections`, `GetFullGenerateAsForEntity`, `FindEntityInTree`) están en `Cooperator.Framework.Modeling.Model.DomainTreeHelper`. La mitad reverse la cierra la fase D (obligación registrada).",
+      "owner_bolt": "US-000.BOLT-003",
+      "status": "executed-here",
+      "evidence": "DomainTreeHelperPartitionTests: los 11 métodos y el caché están en el paquete, los 3 reverse NO, y los ocho sitios del modelo se resuelven dentro (mismo resultado observable)."
+    },
+    {
+      "id": "BOLT003-07",
+      "kind": "type-not-ported",
+      "what": "`CompilerException` no migra a `Modeling` (queda fuera de la partición), junto con `ScriptingHost` y `ScriptsEnvironment`.",
+      "why": "ADR-003: su slot es el motor de generación, no el modelo.",
+      "replacement": "El slot del motor (Bolts 017/018/019/020/021).",
+      "owner_bolt": "US-000.BOLT-003",
+      "status": "executed-here",
+      "evidence": "El paquete no contiene el tipo; Exceptions/UtilityException.cs lo declara como no portado."
+    },
+    {
+      "id": "BOLT003-08",
+      "kind": "build-policy",
+      "what": "Los archivos del 1.4 portados a `Modeling` declaran `#nullable disable` (una línea por archivo, al frente); el código NUEVO de la 2.0 conserva la nulabilidad activa del árbol.",
+      "why": "SPEC §6/A.3 (decisión de la revisión 3): el árbol hereda `Nullable=enable` + `TreatWarningsAsErrors=true` y el código del 1.4 es anterior a las anotaciones (28 diagnósticos medidos).",
+      "replacement": "Ninguno para el consumidor: es una directiva interna del paquete. Queda prohibido `<Nullable>disable</Nullable>` en cualquier `.csproj`.",
+      "owner_bolt": "US-000.BOLT-003",
+      "status": "executed-here",
+      "evidence": "Los 8 archivos portados la llevan y `Reverse/TypeMapping.cs` (código nuevo) no; 0 `.csproj` con `<Nullable>disable</Nullable>`; build del paquete EXIT=0 con 0 advertencias."
+    },
+    {
+      "id": "BOLT003-09",
+      "kind": "deferred-obligation",
+      "what": "La reubicación al tooling NO se entrega en este Bolt: `2.0/src/CooperatorModeler/` no existe todavía y con él quedan pendientes la mitad reverse de `DomainTreeHelper` (`UpdateDomainTree`, `GetDomainTree`, `ADDNodeFromDBObject`), `Providers/MSSQLProvider.cs` (`MSSQLReverseFactory`, `MSSQLProvider`), el resto de `Providers/MSSQLCommon.cs` y los `PropertyEditors/*` con sus recursos.",
+      "why": "SPEC §4/§6/D.3: reubicar el provider tal como está conserva `DataAccess : Cooperator.Framework.Data.BaseRule` —tipo ausente en el árbol 2.0— y `System.Data.SqlClient`, cuya reposición es de ADR-005 §3.1 (Bolt 014). Ni reescribir el reverse (Bolt 016) ni aportar la capa `Data` son decisiones del ejecutor; por eso la ejecución se difiere como obligación registrada en lugar de bloquear.",
+      "replacement": "Los Bolts que aportan la capa `Data` y reescriben el reverse: **US-000.BOLT-014** y **US-000.BOLT-016** (`registered_obligations[0]`, con su especificación tipo por tipo en MIGRATION-PARTITION.md §2.2 y sus tres recordatorios obligatorios). Para el consumidor, el efecto ya es visible: `Cooperator.Framework.Utility` no existe en la 2.0 y todo lo que aporta este Bolt vive en `Cooperator.Framework.Modeling`.",
+      "owner_bolt": "US-000.BOLT-003",
+      "status": "materialized-and-closed",
+      "materialized_by": "US-000.BOLT-016",
+      "evidence": "`2.0/src/CooperatorModeler/` no existe (verificado); el paquete `Modeling` no contiene ningún tipo del tooling ni firma con cadena de conexión (DomainTreeHelperPartitionTests, verde); la obligación está registrada en `registered_obligations[0]` y en MIGRATION-PARTITION.md §2.2/§5."
+    }
+  ],
+  "registered_obligations": [
+    {
+      "id": "OBLIGATION-TOOLING-01",
+      "statement": "La ejecución de la fase D de la partición queda diferida: NO se entrega `2.0/src/CooperatorModeler/` ni la reubicación de sus cuatro destinos —`Providers/MSSQLProvider.cs` (`MSSQLReverseFactory`, `MSSQLProvider`), el resto de `Providers/MSSQLCommon.cs` (`SP_HelpTablesEnum`, `sp_help`/`INFORMATION_SCHEMA`/`sp_fkeys` y los helpers de lectura), la MITAD REVERSE de `DomainTreeHelper` (`UpdateDomainTree`, `GetDomainTree`, `ADDNodeFromDBObject`) y los `PropertyEditors/*` con sus Forms y recursos—. Al materializarse: el provider conserva su acceso a datos TAL COMO ESTÁ (el retiro de la herencia de la capa de datos es del Bolt 016) y su conversor de tipos pasa a ser el de `Modeling`; `MSSQLCommon.cs` se reubica SIN la tabla del mapeo (que ya vive en `Modeling`); y la mitad reverse CALIFICA sus cuatro llamadas cruzadas como `Cooperator.Framework.Modeling.Model.DomainTreeHelper.X` (el tooling tendrá una clase con el mismo nombre).",
+      "why": "SPEC §6/D.3: `MSSQLProvider.cs` conserva `private class DataAccess : Cooperator.Framework.Data.BaseRule` (tipo ausente en el árbol 2.0: `2.0/src` tiene cero fuentes propias de Data) y `System.Data.SqlClient`, cuya reposición exige un paquete que ADR-005 §3.1 retira (con versión y smoke test de conexión real asignados al Bolt 014). Mientras la capa `Data` no exista, la obligación no se puede cumplir — y su incumplimiento no es un defecto de este Bolt: está declarada, medida y acotada.",
+      "owner_bolts": ["US-000.BOLT-014", "US-000.BOLT-016"],
+      "materially_satisfied_by": "US-000.BOLT-014",
+      "closed_by": "US-000.BOLT-016",
+      "cross_references": [
+        "devflow/spec/SPEC-261016-0020-provider-de-datos.md",
+        "devflow/spec/SPEC-261016-0027-reverse-sin-baserule.md",
+        "2.0/docs/api-removals/US-000.BOLT-016.json",
+        "2.0/src/CooperatorModeler/DBReverseHelper"
+      ],
+      "verification_when_satisfied": "Al materializarse: el proyecto del tooling compila (`net10.0-windows`) con sus referencias declaradas y permitidas (`Modeling`, `Core`, `Library`, `Data`); `DependencyReportTests` de `Modeling` sigue midiendo el presupuesto del paquete portable (sin aristas al tooling); y el reporte de dependencias por ensamblado muestra la dirección permitida tooling → `Modeling` (nunca la inversa).",
+      "known_here": "La especificación tipo por tipo está en MIGRATION-PARTITION.md §2.2 y en el SPEC §6/D.1; los tres recordatorios obligatorios para quien la ejecute, en §5 de ese documento y en el §8 del MEM del V-Bounce N°4."
+    }
+  ],
+  "harness_guard_correction": {
+    "file": "2.0/tests/Cooperator.Harness.Tests/BuildInvariantsTests.cs",
+    "line": 198,
+    "before": "Assert.Equal(Portables.Length + 4, projects.Length); // 4 portables + 2 suites + 2 fixtures",
+    "after": "Assert.True(projects.Length >= Portables.Length + 4, $\"El árbol tiene {projects.Length} proyectos: menos de los {Portables.Length + 4} esperados.\");",
+    "why": "SPEC §6/A.4 (única excepción autorizada sobre un archivo del Bolt 001): la aserción exigía EXACTAMENTE 8 proyectos del árbol y esta partición agrega el 9.º (la suite de `Modeling`), de modo que el gate «Unit / component tests: 100 % verdes» no podía cerrar en `pass`. Medido con el proyecto presente y nada más cambiado: `Failed: 1, Passed: 48, Total: 49`; `Expected: 8 / Actual: 9` (V-Bounce N°3, MEM-261016-0125 §8.1 y §9.3). El conteo pasa a ser un MÍNIMO: una guardia contra una enumeración débil, no una igualdad que impida crecer.",
+    "untouched": "El `foreach` que exige `packages.lock.json` versionado en CADA proyecto del árbol (intención de la invariante), la aserción de conteo de `2.0/src` (`Assert.Equal(Portables.Length, projects.Length)`, L181) y ningún otro archivo del Bolt 001.",
+    "provenance_comment": "La línea corregida lleva su comentario de procedencia en el propio archivo (§6/A.4.3).",
+    "authorized_by": "SPEC-261016-0004 §6/A.4 (revisión 4, aprobada 2026-10-16T01:35:00-03:00)",
+    "scope": "Acto único para la ola: los Bolts que agreguen suites o fixtures (004, 013, 017…) ya no se topan con la colisión."
+  }
+}

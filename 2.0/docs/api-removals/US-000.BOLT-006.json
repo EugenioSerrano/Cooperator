@@ -1,0 +1,57 @@
+{
+  "bolt": "US-000.BOLT-006",
+  "bolt_ref": "devflow/functional/bolts/US-000.BOLT-006-retiro-del-export-excel.md",
+  "spec": "SPEC-261016-0012",
+  "spec_ref": "devflow/spec/SPEC-261016-0012-retiro-del-export-excel.md",
+  "spec_revision": 2,
+  "produced_by": "agent:dotnet-developer-agent",
+  "produced_at": "2026-10-16T01:35:17-03:00",
+  "purpose": "Constancia de la superficie retirada por este Bolt (ADR-008 §3.1: qué desaparece —tipo, miembro y firma exacta—, por qué decisión y con qué se reemplaza, más el Bolt que lo ejecuta y la evidencia de su verificación). Es el insumo de las notas de migración del consumidor, cuyo documento es del Bolt 028. Convención de los SPECs 002/003/011: cada Bolt aporta su propio fragmento, la constancia vive versionada junto al código (2.0/docs/api-removals/) y su cobertura se cruza contra el reporte del gate de compatibilidad en ApiRemovalCoverageTests.",
+  "source_of_shape": "Cooperator.Framework.Core.ObjectListHelper<T,T2> (el archivo del núcleo aportado en su forma retirada) y su cierre mínimo (IObject, ObjectState, CoreException, InvalidDataSetException)",
+  "scanned_contract": "El CP0002 del gate (línea base 1.4 ↔ superficie 2.0, modo Current) nombra la firma exacta 'void Cooperator.Framework.Core.ObjectListHelper<T, T2>.CreateExcelFile(T2, string, string)'; los campos 'type' y 'member' de la entrada BOLT006-01 reproducen esa forma para que la cobertura sea verificable por máquina.",
+  "entries": [
+    {
+      "id": "BOLT006-01",
+      "kind": "method-removed",
+      "surface": "public",
+      "type": "Cooperator.Framework.Core.ObjectListHelper<T, T2>",
+      "member": "CreateExcelFile",
+      "signature": "public void CreateExcelFile(T2 rowSet, string spreadsheetName, string targetFileName)",
+      "what": "Desaparece de la superficie pública del núcleo el método de export a Excel del helper de RowSet: escribía un libro .xls abriendo una conexión con un proveedor de datos de plataforma (el de Microsoft para archivos de Access/Excel), con su cadena de conexión 'Excel 8.0' sobre un archivo temporal TMP.xls.",
+      "why": "ADR-001 §3.5 (y OQ-005, que decide lo mismo): el export a Excel «se elimina» del framework — no se reescribe ni se mueve a un paquete -windows; era la única razón por la que el núcleo no podía ser portable (REV-001 F-03, §6 ítem 8).",
+      "replacement": "Ninguno dentro del framework (ADR-008 §3.1: sin type-forwarders, sin dobles superficies, sin capas compat). El export queda del lado del consumidor, que lo resuelve en su propia capa con la biblioteca de hojas de cálculo que elija; un consumidor que lo necesite tal cual puede quedarse en el 1.4 congelado, que es una opción soportada y explícita.",
+      "owner_bolt": "US-000.BOLT-006",
+      "status": "executed-here",
+      "evidence": "2.0/src/Cooperator.Framework.Core/ObjectListHelper.cs se aporta sin el método, sin su auxiliar privado y sin el using del proveedor (119 líneas frente a las 305 del 1.4); el ensamblado 2.0 no expone ningún miembro CreateExcelFile (RetiredSurfaceTests, inspección con MetadataLoadContext) y el gate lo reporta como diferencia de miembro retirado cubierta por esta entrada (ApiRemovalCoverageTests)."
+    },
+    {
+      "id": "BOLT006-02",
+      "kind": "member-removed",
+      "surface": "private",
+      "type": "Cooperator.Framework.Core.ObjectListHelper<T, T2>",
+      "member": "xlsLock",
+      "signature": "private static Object xlsLock",
+      "what": "Desaparece el campo privado estático que serializaba el acceso al archivo .xls: existía únicamente para la capacidad retirada y no participa de la superficie pública del tipo.",
+      "why": "ADR-001 §3.5: sin la capacidad, el campo es rastro de plataforma y de código muerto por arrastre (SPEC-261016-0012 §6/A.1).",
+      "replacement": "Ninguno: el campo no era observable desde fuera del ensamblado.",
+      "owner_bolt": "US-000.BOLT-006",
+      "status": "executed-here",
+      "evidence": "ObjectListHelper.cs aportado sin el campo; la búsqueda de rastro sobre 2.0/src da 0 coincidencias de xlsLock (RetiredSurfaceTests)."
+    },
+    {
+      "id": "BOLT006-03",
+      "kind": "platform-trace-removed",
+      "surface": "internal",
+      "type": "Cooperator.Framework.Core.ObjectListHelper<T, T2>",
+      "member": "using System.Data.OleDb",
+      "signature": "using System.Data.OleDb;",
+      "what": "Desaparece la directiva de importación del espacio de nombres de datos de plataforma que el archivo necesitaba sólo para la capacidad retirada, y con ella el rastro de OLE DB / Jet / ACE en todo el árbol 2.0: sin using, sin tipos, sin referencias ni paquetes, sin versión centralizada y sin cadena de conexión.",
+      "why": "ADR-001 §3.4/§3.5 y SPEC-261016-0012 §4/§6/A.2: la política de dependencias del núcleo es cero dependencias de plataforma; dejarlo sería exactamente el rastro que el Bolt pide eliminar (era código muerto de plataforma).",
+      "replacement": "Ninguno: el núcleo no declara ninguna dependencia y compila sobre netstandard2.1, TFM en el que esos tipos no existen.",
+      "owner_bolt": "US-000.BOLT-006",
+      "status": "executed-here",
+      "evidence": "La búsqueda de rastro sobre el código, los proyectos, los scripts y la documentación propios de 2.0 da 0 ocurrencias (RetiredSurfaceTests), excluyendo por diseño 1.4/** y la evidencia 1.4 congelada de 2.0/tests/fixtures/api-baseline-1.4/** (el contrato del gate); el build del núcleo sobre netstandard2.1 es la prueba dura."
+    }
+  ],
+  "registered_obligations": []
+}

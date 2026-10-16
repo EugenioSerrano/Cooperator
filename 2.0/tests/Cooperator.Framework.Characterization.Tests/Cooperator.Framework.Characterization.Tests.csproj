@@ -1,0 +1,91 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC §6.E / §6.F: suite de caracterización del comportamiento observable de
+    la superficie 1.4 congelada, y suite de integración (Category=Integration).
+
+    TFM net48 y referencias por ProjectReference a los .csproj *classic* del 1.4
+    tal como están — el mismo patrón que ADR-002 §3.2 fija para el migrador:
+    NINGUNA línea de 1.4/** se edita, y no se consumen los binarios vendorizados
+    de Templates/Assemblies (desalineados: Utility 1.3.3.0).
+
+    Los casos se organizan por área en carpetas (Contracts/ Surface/
+    Cryptography/ TaxId/ Generation/) para que un Bolt posterior pueda montar
+    las MISMAS fuentes contra la superficie 2.0 mediante <Compile Include="…"/>.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <!-- xUnit v3 exige OutputType Exe (proyectos ejecutables). -->
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Cooperator.Framework.Characterization.Tests</RootNamespace>
+    <!-- Modo vstest (SPEC §14): es el único modo que xUnit v3 soporta en net472+.
+         La corrida hermética filtra por categoría (filtro «Category!=Integration»). -->
+    <UseMicrosoftTestingPlatformRunner>false</UseMicrosoftTestingPlatformRunner>
+    <TestingPlatformDotnetTestSupport>false</TestingPlatformDotnetTestSupport>
+    <!-- El árbol 1.4 es legacy: sus advertencias no se heredan (el Directory.Build.props
+         de 2.0 no alcanza a 1.4), pero el patrón de nombres de los tests de
+         caracterización sí sigue la convención del proyecto. -->
+    <NoWarn>$(NoWarn);CA1707;CA2007;CA1034;CA1031;CA1822;CS0618;SYSLIB0051;CS0612</NoWarn>
+    <!-- Este proyecto NO se firma. No es un artefacto distribuible y referencia
+         el ensamblado `Cooperator.Framework.Utility` y `CooperatorModeler` del 1.4,
+         que NO están firmados (`SignAssembly=false` en su .csproj). Un ensamblado
+         firmado que referencia uno sin nombre seguro produce CS8002, y silenciarlo
+         con NoWarn ocultaría una característica real del árbol congelado. La
+         identidad de firma de ADR-001 §3.3 aplica a los cuatro portables de
+         `2.0/src/`, y eso lo verifica Cooperator.Harness.Tests sobre los
+         ensamblados construidos, no sobre la configuración del proyecto de tests. -->
+    <SignAssembly>false</SignAssembly>
+    <EnablePackageValidation>false</EnablePackageValidation>
+    <!-- 1.4 usa tipos de serialización binaria; el propio árbol 2.0 los retira en
+         su Bolt (ADR-008 §3.2/§3.4). Aquí se OBSERVAN, no se introducen. -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Superficie 1.4 congelada, referenciada tal como está.
+         `AdditionalProperties` fija Configuration=Release de forma explícita: la
+         cadena de ProjectReference no propaga `Configuration` a los .csproj
+         *classic* (default interno = Debug, que activa RunCodeAnalysis con
+         rulesets de Visual Studio 10 y rutas absolutas de aquella instalación).
+         Fijarlo aquí mantiene la observación sobre el build de Release del 1.4,
+         que es el que ADR-002 §3.2 y el SPEC §6.B.2 fijan. -->
+    <ProjectReference Include="..\..\..\1.4\Cooperator.Framework.Core\Cooperator.Framework.Core.csproj">
+      <AdditionalProperties>Configuration=Release</AdditionalProperties>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.4\Cooperator.Framework.Library\Cooperator.Framework.Library.csproj">
+      <AdditionalProperties>Configuration=Release</AdditionalProperties>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.4\Cooperator.Framework.Data\Cooperator.Framework.Data.csproj">
+      <AdditionalProperties>Configuration=Release</AdditionalProperties>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.4\Cooperator.Framework.Utility\Cooperator.Framework.Utility.csproj">
+      <AdditionalProperties>Configuration=Release</AdditionalProperties>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\1.4\Tools\CooperatorModeler\CooperatorModeler.csproj">
+      <AdditionalProperties>Configuration=Release</AdditionalProperties>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <!-- Sólo para LEER los fixtures JSON del arnés. No es una dependencia de
+         producto: los cuatro portables de 2.0/src mantienen su política propia
+         (ADR-001 §3.4) y esa política la verifica Cooperator.Harness.Tests. -->
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Esquema y datos sintéticos del ciclo de integración (SPEC §6.F.1). -->
+    <None Include="..\fixtures\sqlserver\schema.sql" Link="fixtures\sqlserver\schema.sql" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\fixtures\sqlserver\seed.sql" Link="fixtures\sqlserver\seed.sql" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

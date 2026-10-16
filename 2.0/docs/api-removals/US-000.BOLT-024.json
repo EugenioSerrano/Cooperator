@@ -1,0 +1,42 @@
+{
+  "bolt": "US-000.BOLT-024",
+  "bolt_ref": "devflow/functional/bolts/US-000.BOLT-024-encriptor-shell-delgado.md",
+  "spec": "SPEC-261016-0043",
+  "spec_ref": "devflow/spec/SPEC-261016-0043-encriptor-shell-delgado.md",
+  "spec_revision": 1,
+  "produced_by": "agent:dotnet-developer-agent",
+  "purpose": "El cambio de COMPORTAMIENTO y de superficie de usuario de la herramienta de protección de valores: deja de cifrar con una copia propia del algoritmo y una clave embebida en el binario (el defecto de F-23) y pasa a proteger con el motor del framework y la clave activa que aporta el operador (entorno u hook del host). No hay retiro de superficie pública del framework: el vehículo es esta constancia (ADR-008 §3.1) y no el gate de API.",
+  "source_of_shape": "SPEC-261016-0043 §6/E, §7 (AC-7) y §12; ADR-009 §3.6 (el encriptor sobrevive como shell delgado sobre el mismo motor) y ADR-007 §3.5 (protege escribiendo un valor aesgcm: con la clave activa, el comando del CLI es aditivo). Formato publicado por US-000.BOLT-028 (SPEC-261016-0047 §6/A.2).",
+  "entries": [
+    {
+      "id": "BOLT024-01",
+      "kind": "behavior-change",
+      "what": "La herramienta de escritorio de protección de valores cambia de SUPERFICIE DE USUARIO y de ORIGEN DE LA CLAVE: pasa de la aplicación WinForms anterior —que cifraba con la superficie estática de Library y la clave que venía embebida en el framework— a un shell delgado WPF (net10.0-windows) con un único paso: el operador aporta el valor (enmascarado) y el nombre completo de la clave de configuración de destino (que es el AAD del valor), y la clave activa la aporta la provisión del motor desde el entorno (o el hook del host). La herramienta ya no cifra: delega íntegramente en el motor del Bolt 022 y escribe un valor aesgcm:<kid>:<base64>.",
+      "why": "ADR-009 §3.6 (el ConnectionStringEncriptor sobrevive como shell delgado sobre el MISMO motor de protección; no hay dos implementaciones ni dos formatos) y ADR-007 §3.5 (la herramienta protege escribiendo un valor aesgcm: con la clave activa, sin clave embebida). ADR-001 §3.5 retira System.Windows.Forms del tooling y ADR-001 §3.1 lo mantiene entre las aplicaciones Windows-only que sobreviven. El defecto de origen es F-23 (REV-001): clave literal e IV fijo en el binario.",
+      "replacement": "El paso único de la utilidad (ProtectValueStep), que consume la MISMA operación del motor y produce el MISMO formato que el comando del CLI (mismo resolutor, misma composición): el valor que produce se resuelve con el resolutor del framework en la clave de configuración indicada. La clave activa se provee por la variable de entorno del proveedor por defecto (o por el hook del host): la utilidad consume la REFERENCIA (kid), nunca el material.",
+      "next_step": "Quien tenga valores cifrados con el formato viejo (la ofuscación de 1.4) los migra con la herramienta del Bolt 023 —inventario, clasificación, re-protección con respaldo—: la utilidad de escritorio NO lee ni escribe el formato anterior y no ofrece un modo de compatibilidad.",
+      "owner_bolt": "US-000.BOLT-024",
+      "status": "executed-here",
+      "evidence": "ProtectValueCycleTests (ciclo completo: proteger con la clave activa y RESOLVER lo protegido con el resolutor del motor, incluidos valores no ASCII, largos y vacíos) y ProtectionDelegationTests (0 primitivas, 0 claves, 0 composición propia; el formato es el del motor; el cambio de superficie declarado acá)."
+    },
+    {
+      "id": "BOLT024-02",
+      "kind": "behavior-change",
+      "what": "El manejo del valor de entrada cambia de naturaleza: la utilidad anterior pasaba la credencial a una superficie cifradora con clave implícita; la nueva la trata como material sensible transitorio —se captura enmascarada, no se muestra en claro, no se persiste en disco, estado de usuario, historial ni registros, y se limpia al cerrar el paso— y, si el motor no puede proteger (clave activa ausente o mal formada, kid sin clave, proveedor del host que falla), muestra un error accionable con la referencia afectada y NO produce ningún valor.",
+      "why": "ADR-007 §3.5 (las herramientas protegen con el esquema vigente y la clave activa, sin clave embebida, con el kid y el esquema de salida como reproducibilidad) y §3.2 (nada de secretos en logs ni reportes: los reportes identifican por clave de configuración y kid, nunca por contenido). SPEC-261016-0043 §10: el control central de la utilidad es no persistir el valor en claro (AC-3).",
+      "replacement": "El paso único + su diagnóstico (ProtectionDiagnostics): el operador ve qué falta y qué hacer, con la referencia, y nunca el valor ni material de clave; el valor protegido es el único artefacto que se lleva.",
+      "owner_bolt": "US-000.BOLT-024",
+      "status": "executed-here",
+      "evidence": "ProtectValueCycleTests.The_clear_value_never_lands_in_disk_state_or_logs (corrida instrumentada: búsqueda del valor sintético en lo escrito = 0, sin APIs de persistencia ni de registro en la utilidad) y ProtectionDelegationTests.The_three_engine_failures_are_actionable_and_carry_no_value_or_material."
+    }
+  ],
+  "registered_obligations": [
+    {
+      "id": "BOLT024-OBL-01",
+      "obligation": "La pata COMPARTIDA de la verificación de implementación única («la utilidad y el comando del CLI invocan la misma operación del motor») queda verificada contra la superficie del motor, porque el comando del Bolt 023 todavía no está en el árbol.",
+      "owner": "US-000.BOLT-023 (comandos de valores protegidos)",
+      "why": "SPEC-261016-0043 §5 y el AITL-SPEC-Approval de la revisión 1 (adjudicación (c)): la pata estática es concluyente sobre el riesgo principal y la compartida se verifica contra el motor cuando el CLI no existe, sin bloquear el shell.",
+      "evidence": "ProtectionDelegationTests.The_tool_has_no_crypto_primitive_no_key_and_no_own_composition y The_single_format_is_the_engine_format_and_the_legacy_shape_does_not_exist_here (la utilidad consume el motor: engine.Protect) y el MEM del V-Bounce."
+    }
+  ]
+}

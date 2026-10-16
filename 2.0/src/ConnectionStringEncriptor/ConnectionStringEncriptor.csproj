@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC-261016-0043 §6/A.1 (ADR-009 §3.6, ADR-001 §3.1/§3.5): la herramienta de protección de valores SOBREVIVE
+    como shell delgado sobre el motor del Bolt 022. Windows-only explícita, sin ClickOnce, sin System.Windows.Forms
+    (ADR-009 §3.5) y sin dependencias nuevas: sólo consume el motor (Cooperator.Framework.Library).
+  -->
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>false</UseWindowsForms>
+    <RootNamespace>ConnectionStringEncriptor</RootNamespace>
+    <AssemblyName>ConnectionStringEncriptor</AssemblyName>
+    <IsPackable>false</IsPackable>
+    <Description>Shell delgado de protección de valores sobre el motor del framework (aesgcm:, clave activa).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cooperator.Framework.Library\Cooperator.Framework.Library.csproj" />
+  </ItemGroup>
+
+</Project>

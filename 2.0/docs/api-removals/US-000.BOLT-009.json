@@ -1,0 +1,93 @@
+{
+  "bolt": "US-000.BOLT-009",
+  "bolt_ref": "devflow/functional/bolts/US-000.BOLT-009-library-portable.md",
+  "spec": "SPEC-261016-0037",
+  "spec_ref": "devflow/spec/SPEC-261016-0037-library-portable.md",
+  "spec_revision": 3,
+  "produced_by": "agent:dotnet-developer-agent",
+  "produced_at": "2026-10-16T02:42:17-03:00",
+  "purpose": "Constancia de las capacidades de plataforma retiradas de Cooperator.Framework.Library y de la capacidad que SOBREVIVE (el almacén de configuración de usuario) detrás de una abstracción portable (ADR-008 §3.1: qué desaparece, por qué decisión y con qué se reemplaza; ADR-001 §3.5). Insumo de las notas de migración cuyo documento es del Bolt 028. La evaluación de uso real que sostiene cada resolución está en 2.0/docs/library-platform-features-assessment.md (fase A, V-Bounce N°1).",
+  "source_of_shape": "Cooperator.Framework.Library del 1.4 congelado (IO/**, Repository/**, Utility.cs, SmtpMail.cs) y su superficie 2.0 entregada por este Bolt",
+  "entries": [
+    {
+      "id": "BOLT009-01",
+      "kind": "type-removed",
+      "surface": "public",
+      "type": "Cooperator.Framework.Library.IO.CurrentUserInfo",
+      "member": "",
+      "signature": "public static System.Security.Principal.WindowsIdentity GetImpersonatedUser(string userName, string domain, string password)",
+      "what": "Desaparece la invocación nativa de impersonation (DllImport de Advapi32 para GetUserName/LogonUser) y con ella el único camino del framework que suplantaba al usuario.",
+      "why": "ADR-001 §3.5: se elimina por defecto previa verificación del uso real; la evaluación no encontró ningún llamador en el árbol.",
+      "replacement": "Ninguno dentro del framework. Si un consumidor necesitara la identidad del usuario, el reemplazo declarado por la política es Environment.UserName (portable, sin invocación nativa).",
+      "owner_bolt": "US-000.BOLT-009",
+      "status": "executed-here",
+      "evidence": "IO/CurrentUserInfo.cs no existe en 2.0/src; la búsqueda de rastro da 0 DllImport y 0 GetImpersonatedUser en la librería (LibraryPortabilityTests)."
+    },
+    {
+      "id": "BOLT009-02",
+      "kind": "type-removed",
+      "surface": "public",
+      "type": "Cooperator.Framework.Library.IO.Memory",
+      "member": "",
+      "signature": "public static void SaveMemory() + Cooperator.Framework.Library.IO.NativeMethods.SetProcessWorkingSetSize",
+      "what": "Desaparece el ajuste del working set del proceso: la cadena NativeMethods (DllImport de kernel32) + Memory no tenía llamadores.",
+      "why": "ADR-001 §3.5: capacidad de plataforma sin uso; el runtime gestiona su memoria.",
+      "replacement": "Ninguno: no había nada que reemplazar.",
+      "owner_bolt": "US-000.BOLT-009",
+      "status": "executed-here",
+      "evidence": "IO/NativeMethods.cs e IO/Memory.cs no existen en 2.0/src; 0 SetProcessWorkingSetSize en la librería (LibraryPortabilityTests)."
+    },
+    {
+      "id": "BOLT009-03",
+      "kind": "type-removed",
+      "surface": "public",
+      "type": "Cooperator.Framework.Library.IO.EventViewer",
+      "member": "",
+      "signature": "public static void WriteEntry(string message) (System.Diagnostics.EventLog)",
+      "what": "Desaparece el log de eventos del framework: no tenía llamadores.",
+      "why": "ADR-001 §3.5: se elimina por defecto previa verificación del uso real. Una abstracción de logging sería del tooling, no de la librería (SPEC-261016-0037 §4).",
+      "replacement": "Ninguno dentro de la librería: el logging del tooling tiene su dueño y su propio Bolt.",
+      "owner_bolt": "US-000.BOLT-009",
+      "status": "executed-here",
+      "evidence": "IO/EventViewer.cs no existe en 2.0/src; 0 System.Diagnostics.EventLog en la librería (LibraryPortabilityTests)."
+    },
+    {
+      "id": "BOLT009-04",
+      "kind": "method-removed",
+      "surface": "public",
+      "type": "Cooperator.Framework.Library.Utility",
+      "member": "GetDriveSerialNumber",
+      "signature": "public static string GetDriveSerialNumber(string driveLetter)",
+      "what": "Desaparece la identidad de máquina por WMI: el método abría un ManagementObject sobre win32_logicaldisk para leer el número de serie del volumen. Con él se retira el uso de System.Management de la librería y la región que lo agrupaba.",
+      "why": "ADR-001 §3.5: capacidad de plataforma sin uso (0 llamadores fuera de su definición) y WMI no existe en el TFM portable de la librería.",
+      "replacement": "Ninguno dentro de la librería. Si el consumidor la reclamara CON EVIDENCIA, su reemplazo es una abstracción (IMachineIdentity) implementada fuera de la librería, nunca WMI dentro de ella.",
+      "owner_bolt": "US-000.BOLT-009",
+      "status": "executed-here",
+      "evidence": "Utility.cs aportado sin el método y sin su región (512 → 493 líneas) con 0 GetDriveSerialNumber y 0 System.Management; el gate de compatibilidad lo reporta como miembro retirado y esta entrada lo cubre (ApiRemovalCoverageTests, LibraryPortabilityTests)."
+    },
+    {
+      "id": "BOLT009-05",
+      "kind": "method-removed",
+      "surface": "public",
+      "type": "Cooperator.Framework.Library.SmtpMail",
+      "member": "SendMailViaCDONTS",
+      "signature": "public void SendMailViaCDONTS(string from, string to, string subject, string body, System.Web.HttpContext currentHttpContext, params System.IO.FileInfo[] attachments)",
+      "what": "El código muerto de correo (lanzaba NotImplementedException de inmediato) y el System.Web que arrastraba en su firma pública.",
+      "why": "ADR-001 §3.1: código muerto por construcción (REV-001 F-22).",
+      "replacement": "Ninguno: nunca tuvo comportamiento.",
+      "owner_bolt": "US-000.BOLT-009",
+      "status": "already-absent",
+      "note": "En el árbol 2.0 el retiro lo materializó el V-Bounce N°2 del Bolt 011 al aportar SmtpMail.cs (lazy + validado); su diferencia de miembro está cubierta por el fragmento de aquel Bolt (BOLT011-04). Este Bolt lo registra como parte de su inventario: el árbol 2.0 nunca tuvo ese método.",
+      "evidence": "Library/SmtpMail.cs sin el método (Bolt 011); la evaluación de uso real de este Bolt lo declara muerto por construcción."
+    }
+  ],
+  "surviving_capability": {
+    "what": "El almacén de configuración de usuario (leer/escribir/borrar por dueño y parámetro, con el tipo del valor).",
+    "resolution": "Sobrevive detrás de una abstracción portable SIN dependencias, nunca detrás de un TFM Windows (ADR-001 §3.5).",
+    "contract": "2.0/src/Cooperator.Framework.Library/Storage/IUserSettingsStore.cs (el contrato) + Storage/UserSettingsKey.cs (la derivación de clave, byte a byte la del 1.4) + Storage/UserSettingsStore.cs (el punto de fijación del host).",
+    "key_contract": "ownerName.Trim().ToLower() + U+00A1 + parameterName.Trim().ToLower(): el separador es U+00A1 y es el único byte no ASCII de Repository/RepositoryMapper.cs del 1.4 (offset 3222), preservado byte a byte. La limitación de plegado sensible a la cultura se conserva y se declara.",
+    "implementation_owner": "US-000.BOLT-010 (el sustituto: almacén de usuario en %APPDATA% o equivalente). Este Bolt NO lo implementa: declara el contrato y su punto de fijación.",
+    "consumer_consequence": "Un consumidor que usaba el almacén del registro del 1.4 fija la implementación del Bolt 010 al arrancar (UserSettingsStore.Current) y sigue usando las mismas claves: la derivación se conserva, así que los valores ya persistidos se siguen leyendo."
+  },
+  "registered_obligations": []
+}

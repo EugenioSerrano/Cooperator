@@ -1,0 +1,1242 @@
+{
+  "bolt": "US-000.BOLT-012",
+  "spec": "SPEC-261016-0021",
+  "revision": 1,
+  "produced_by": "agent:dotnet-developer-agent",
+  "produced_at": "2026-10-16T02:25:20-03:00",
+  "purpose": "Inventario antes/despues por proyecto y por declaracion (SPEC-261016-0021 §6/A.2). La columna ANTES se produce sobre el arbol 1.4 congelado con busqueda de usos por referencia (comando y numero de coincidencias); la columna DESPUES sobre el arbol 2.0. Clasificacion por declaracion: retirada / en uso, no se toca (con su dueño) / fuera de alcance (con su dueño).",
+  "method": "Barrido de los archivos de proyecto (*.csproj) + busqueda de usos por referencia del namespace/ensamblado declarado sobre los .cs del propio proyecto (excluye bin/obj). El 1.4 es solo lectura: aporta la columna ANTES.",
+  "search_limits": "La busqueda de usos es textual y por namespace/ensamblado declarado, sobre el codigo del PROPIO proyecto (que es el alcance del barrido de REV-001). No hace analisis semantico: un uso indirecto por reflexion o por un tipo reenviado no se detecta, y se declara como limite.",
+  "watched_declarations": [
+    {
+      "name": "System.Web",
+      "owner": ""
+    },
+    {
+      "name": "System.Data.OracleClient",
+      "owner": ""
+    },
+    {
+      "name": "System.Windows.Forms",
+      "owner": ""
+    },
+    {
+      "name": "System.Deployment",
+      "owner": ""
+    },
+    {
+      "name": "System.Management",
+      "owner": "US-000.BOLT-009 (la evalúa; DISC F-34)"
+    },
+    {
+      "name": "System.Data.SqlClient",
+      "owner": "US-000.BOLT-014 / US-000.BOLT-016"
+    },
+    {
+      "name": "System.Configuration",
+      "owner": "US-000.BOLT-011 (es quien causa su desuso)"
+    }
+  ],
+  "before": [
+    {
+      "layer": "1.4 (congelado: solo lectura, evidencia)",
+      "project": "1.4/Cooperator.Framework.Core/Cooperator.Framework.Core.csproj",
+      "target_framework": "v4.8",
+      "references": [
+        {
+          "declaration": "System",
+          "declared_as": "System",
+          "use_search": "busqueda de 'System' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 153,
+          "matches": [
+            "1.4\\Cooperator.Framework.Core\\Exceptions\\CoreException.cs:30",
+            "1.4\\Cooperator.Framework.Core\\Exceptions\\CoreException.cs:31",
+            "1.4\\Cooperator.Framework.Core\\Exceptions\\InvalidDataSetException.cs:30",
+            "1.4\\Cooperator.Framework.Core\\Exceptions\\InvalidDataSetException.cs:31",
+            "1.4\\Cooperator.Framework.Core\\Exceptions\\InvalidDataSetException.cs:32",
+            "1.4\\Cooperator.Framework.Core\\Exceptions\\InvalidDataSetException.cs:33",
+            "1.4\\Cooperator.Framework.Core\\Exceptions\\InvalidFilterArgumentException.cs:30",
+            "1.4\\Cooperator.Framework.Core\\Exceptions\\InvalidFilterArgumentException.cs:31"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.configuration",
+          "declared_as": "System.configuration",
+          "use_search": "busqueda de 'System.configuration' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Data",
+          "declared_as": "System.Data",
+          "use_search": "busqueda de 'System.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 12,
+          "matches": [
+            "1.4\\Cooperator.Framework.Core\\BaseObjectList.cs:369",
+            "1.4\\Cooperator.Framework.Core\\BaseObjectList.cs:372",
+            "1.4\\Cooperator.Framework.Core\\BaseObjectList.cs:404",
+            "1.4\\Cooperator.Framework.Core\\BaseObjectList.cs:416",
+            "1.4\\Cooperator.Framework.Core\\BaseObjectList.cs:432",
+            "1.4\\Cooperator.Framework.Core\\BaseObjectList.cs:435",
+            "1.4\\Cooperator.Framework.Core\\IObjectList.cs:92",
+            "1.4\\Cooperator.Framework.Core\\ObjectListHelper.cs:30"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Web",
+          "declared_as": "System.Web",
+          "use_search": "busqueda de 'System.Web' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": "US-000.BOLT-013 / US-000.BOLT-009 / US-000.BOLT-025 (en Data, Library y el Modeler ESTÁ en uso: retirarla rompería la compilación)"
+        },
+        {
+          "declaration": "System.Xml",
+          "declared_as": "System.Xml",
+          "use_search": "busqueda de 'System.Xml' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 1,
+          "matches": [
+            "1.4\\Cooperator.Framework.Core\\LazyLoad\\LazyProviderFactoryConfigHelper.cs:321"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        }
+      ],
+      "bootstrap_items": 3,
+      "publish_metadata": [
+        "PublishUrl",
+        "Install",
+        "InstallFrom",
+        "UpdateEnabled",
+        "UpdateMode",
+        "MapFileExtensions",
+        "ApplicationRevision",
+        "ApplicationVersion",
+        "IsWebBootstrapper"
+      ],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "1.4 (congelado: solo lectura, evidencia)",
+      "project": "1.4/Cooperator.Framework.Data/Cooperator.Framework.Data.csproj",
+      "target_framework": "v4.8",
+      "references": [
+        {
+          "declaration": "System",
+          "declared_as": "System",
+          "use_search": "busqueda de 'System' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 112,
+          "matches": [
+            "1.4\\Cooperator.Framework.Data\\Exceptions\\ConnectionStringNotFoundException.cs:30",
+            "1.4\\Cooperator.Framework.Data\\Exceptions\\ConnectionStringNotFoundException.cs:31",
+            "1.4\\Cooperator.Framework.Data\\Exceptions\\ConnectionStringNotFoundException.cs:32",
+            "1.4\\Cooperator.Framework.Data\\Exceptions\\ConnectionStringNotFoundException.cs:33",
+            "1.4\\Cooperator.Framework.Data\\Exceptions\\DangerousQueryException.cs:30",
+            "1.4\\Cooperator.Framework.Data\\Exceptions\\DangerousQueryException.cs:31",
+            "1.4\\Cooperator.Framework.Data\\Exceptions\\DangerousQueryException.cs:32",
+            "1.4\\Cooperator.Framework.Data\\Exceptions\\DangerousQueryException.cs:33"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.configuration",
+          "declared_as": "System.configuration",
+          "use_search": "busqueda de 'System.configuration' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Data",
+          "declared_as": "System.Data",
+          "use_search": "busqueda de 'System.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 12,
+          "matches": [
+            "1.4\\Cooperator.Framework.Data\\BaseGateway.cs:32",
+            "1.4\\Cooperator.Framework.Data\\BaseGateway.cs:33",
+            "1.4\\Cooperator.Framework.Data\\BaseLoader.cs:32",
+            "1.4\\Cooperator.Framework.Data\\BaseRule.cs:32",
+            "1.4\\Cooperator.Framework.Data\\BaseRule.cs:33",
+            "1.4\\Cooperator.Framework.Data\\BaseRule.cs:34",
+            "1.4\\Cooperator.Framework.Data\\BaseRule.cs:176",
+            "1.4\\Cooperator.Framework.Data\\IBaseGateway.cs:31"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Data.OracleClient",
+          "declared_as": "System.Data.OracleClient",
+          "use_search": "busqueda de 'System.Data.OracleClient' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Web",
+          "declared_as": "System.Web",
+          "use_search": "busqueda de 'System.Web' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 11,
+          "matches": [
+            "1.4\\Cooperator.Framework.Data\\BaseGateway.cs:36",
+            "1.4\\Cooperator.Framework.Data\\BaseGateway.cs:404",
+            "1.4\\Cooperator.Framework.Data\\BaseGateway.cs:458",
+            "1.4\\Cooperator.Framework.Data\\BaseGateway.cs:459",
+            "1.4\\Cooperator.Framework.Data\\BaseLoader.cs:34",
+            "1.4\\Cooperator.Framework.Data\\BaseLoader.cs:243",
+            "1.4\\Cooperator.Framework.Data\\BaseLoader.cs:287",
+            "1.4\\Cooperator.Framework.Data\\SQLHelper.cs:31"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": "US-000.BOLT-013 / US-000.BOLT-009 / US-000.BOLT-025 (en Data, Library y el Modeler ESTÁ en uso: retirarla rompería la compilación)"
+        },
+        {
+          "declaration": "System.Windows.Forms",
+          "declared_as": "System.Windows.Forms",
+          "use_search": "busqueda de 'System.Windows.Forms' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Xml",
+          "declared_as": "System.Xml",
+          "use_search": "busqueda de 'System.Xml' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 2,
+          "matches": [
+            "1.4\\Cooperator.Framework.Data\\SQLHelper.cs:27",
+            "1.4\\Cooperator.Framework.Data\\SqlHelperParameterCache.cs:27"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        }
+      ],
+      "bootstrap_items": 3,
+      "publish_metadata": [
+        "PublishUrl",
+        "Install",
+        "InstallFrom",
+        "UpdateEnabled",
+        "UpdateMode",
+        "MapFileExtensions",
+        "ApplicationRevision",
+        "ApplicationVersion",
+        "IsWebBootstrapper"
+      ],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "1.4 (congelado: solo lectura, evidencia)",
+      "project": "1.4/Cooperator.Framework.Library/Cooperator.Framework.Library.csproj",
+      "target_framework": "v4.8",
+      "references": [
+        {
+          "declaration": "System",
+          "declared_as": "System",
+          "use_search": "busqueda de 'System' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 132,
+          "matches": [
+            "1.4\\Cooperator.Framework.Library\\Exceptions\\ApplicationErrorException.cs:30",
+            "1.4\\Cooperator.Framework.Library\\Exceptions\\ApplicationErrorException.cs:31",
+            "1.4\\Cooperator.Framework.Library\\Exceptions\\ApplicationErrorException.cs:32",
+            "1.4\\Cooperator.Framework.Library\\Exceptions\\ApplicationErrorException.cs:33",
+            "1.4\\Cooperator.Framework.Library\\Exceptions\\BaseException.cs:30",
+            "1.4\\Cooperator.Framework.Library\\Exceptions\\BaseException.cs:31",
+            "1.4\\Cooperator.Framework.Library\\Exceptions\\BaseException.cs:32",
+            "1.4\\Cooperator.Framework.Library\\Exceptions\\BaseException.cs:33"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.configuration",
+          "declared_as": "System.configuration",
+          "use_search": "busqueda de 'System.configuration' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Data",
+          "declared_as": "System.Data",
+          "use_search": "busqueda de 'System.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Management",
+          "declared_as": "System.Management",
+          "use_search": "busqueda de 'System.Management' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 1,
+          "matches": [
+            "1.4\\Cooperator.Framework.Library\\Utility.cs:500"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": "US-000.BOLT-009 (la evaluación de uso real de la librería)"
+        },
+        {
+          "declaration": "System.Web",
+          "declared_as": "System.Web",
+          "use_search": "busqueda de 'System.Web' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 1,
+          "matches": [
+            "1.4\\Cooperator.Framework.Library\\SmtpMail.cs:106"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": "US-000.BOLT-013 / US-000.BOLT-009 / US-000.BOLT-025 (en Data, Library y el Modeler ESTÁ en uso: retirarla rompería la compilación)"
+        },
+        {
+          "declaration": "System.Windows.Forms",
+          "declared_as": "System.Windows.Forms",
+          "use_search": "busqueda de 'System.Windows.Forms' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 1,
+          "matches": [
+            "1.4\\Cooperator.Framework.Library\\IO\\Registry.cs:43"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Xml",
+          "declared_as": "System.Xml",
+          "use_search": "busqueda de 'System.Xml' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        }
+      ],
+      "bootstrap_items": 3,
+      "publish_metadata": [
+        "PublishUrl",
+        "Install",
+        "InstallFrom",
+        "UpdateEnabled",
+        "UpdateMode",
+        "MapFileExtensions",
+        "ApplicationRevision",
+        "ApplicationVersion",
+        "IsWebBootstrapper"
+      ],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "1.4 (congelado: solo lectura, evidencia)",
+      "project": "1.4/Cooperator.Framework.Utility/Cooperator.Framework.Utility.csproj",
+      "target_framework": "v4.8",
+      "references": [
+        {
+          "declaration": "System",
+          "declared_as": "System",
+          "use_search": "busqueda de 'System' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 198,
+          "matches": [
+            "1.4\\Cooperator.Framework.Utility\\CodeGenerator\\ScriptingHost.cs:30",
+            "1.4\\Cooperator.Framework.Utility\\CodeGenerator\\ScriptingHost.cs:31",
+            "1.4\\Cooperator.Framework.Utility\\CodeGenerator\\ScriptingHost.cs:32",
+            "1.4\\Cooperator.Framework.Utility\\CodeGenerator\\ScriptingHost.cs:35",
+            "1.4\\Cooperator.Framework.Utility\\CodeGenerator\\ScriptingHost.cs:36",
+            "1.4\\Cooperator.Framework.Utility\\CodeGenerator\\ScriptingHost.cs:349",
+            "1.4\\Cooperator.Framework.Utility\\CodeGenerator\\ScriptsEnvironment.cs:30",
+            "1.4\\Cooperator.Framework.Utility\\CodeGenerator\\ScriptsEnvironment.cs:31"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Data",
+          "declared_as": "System.Data",
+          "use_search": "busqueda de 'System.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 5,
+          "matches": [
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\StringEditorForm.cs:4",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\ToStringInfoEditorForm.cs:4",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\Providers\\MSSQLProvider.cs:32",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\Providers\\MSSQLProvider.cs:33",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\Providers\\MSSQLProvider.cs:34"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Design",
+          "declared_as": "System.Design",
+          "use_search": "busqueda de 'System.Design' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Drawing",
+          "declared_as": "System.Drawing",
+          "use_search": "busqueda de 'System.Drawing' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 51,
+          "matches": [
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\DropDownListEditor.cs:5",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\DropDownListEditor.cs:8",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\DropDownListEditor.cs:15",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\DropDownListEditor.cs:41",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\StringEditor.cs:5",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\StringEditor.cs:8",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\StringEditor.cs:15",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\StringEditor.cs:36"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Windows.Forms",
+          "declared_as": "System.Windows.Forms",
+          "use_search": "busqueda de 'System.Windows.Forms' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 47,
+          "matches": [
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\DropDownListEditor.cs:6",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\DropDownListEditor.cs:7",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\StringEditor.cs:6",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\StringEditor.cs:7",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\StringEditorForm.cs:7",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\StringEditorForm.Designer.cs:31",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\StringEditorForm.Designer.cs:32",
+            "1.4\\Cooperator.Framework.Utility\\DBReverseHelper\\PropertyEditors\\StringEditorForm.Designer.cs:33"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Xml",
+          "declared_as": "System.Xml",
+          "use_search": "busqueda de 'System.Xml' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        }
+      ],
+      "bootstrap_items": 3,
+      "publish_metadata": [
+        "PublishUrl",
+        "Install",
+        "InstallFrom",
+        "UpdateEnabled",
+        "UpdateMode",
+        "MapFileExtensions",
+        "ApplicationRevision",
+        "ApplicationVersion",
+        "IsWebBootstrapper"
+      ],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "1.4 (congelado: solo lectura, evidencia)",
+      "project": "1.4/Tools/ConnectionStringEncriptor/ConnectionStringEncriptor.csproj",
+      "target_framework": "v4.8",
+      "references": [
+        {
+          "declaration": "System",
+          "declared_as": "System",
+          "use_search": "busqueda de 'System' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 68,
+          "matches": [
+            "1.4\\Tools\\ConnectionStringEncriptor\\Properties\\AssemblyInfo.cs:1",
+            "1.4\\Tools\\ConnectionStringEncriptor\\Properties\\AssemblyInfo.cs:2",
+            "1.4\\Tools\\ConnectionStringEncriptor\\Properties\\AssemblyInfo.cs:3",
+            "1.4\\Tools\\ConnectionStringEncriptor\\Properties\\Resources.Designer.cs:12",
+            "1.4\\Tools\\ConnectionStringEncriptor\\Properties\\Resources.Designer.cs:22",
+            "1.4\\Tools\\ConnectionStringEncriptor\\Properties\\Resources.Designer.cs:23",
+            "1.4\\Tools\\ConnectionStringEncriptor\\Properties\\Resources.Designer.cs:24",
+            "1.4\\Tools\\ConnectionStringEncriptor\\Properties\\Resources.Designer.cs:27"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Data",
+          "declared_as": "System.Data",
+          "use_search": "busqueda de 'System.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 1,
+          "matches": [
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.cs:4"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Deployment",
+          "declared_as": "System.Deployment",
+          "use_search": "busqueda de 'System.Deployment' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Drawing",
+          "declared_as": "System.Drawing",
+          "use_search": "busqueda de 'System.Drawing' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 16,
+          "matches": [
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.cs:5",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:42",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:45",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:52",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:56",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:62",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:64",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:71"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Windows.Forms",
+          "declared_as": "System.Windows.Forms",
+          "use_search": "busqueda de 'System.Windows.Forms' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 20,
+          "matches": [
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.cs:7",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.cs:26",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:32",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:33",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:34",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:35",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:36",
+            "1.4\\Tools\\ConnectionStringEncriptor\\MainForm.Designer.cs:37"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Xml",
+          "declared_as": "System.Xml",
+          "use_search": "busqueda de 'System.Xml' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        }
+      ],
+      "bootstrap_items": 3,
+      "publish_metadata": [
+        "PublishUrl",
+        "Install",
+        "InstallFrom",
+        "UpdateEnabled",
+        "UpdateMode",
+        "MapFileExtensions",
+        "ApplicationRevision",
+        "ApplicationVersion",
+        "IsWebBootstrapper"
+      ],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "1.4 (congelado: solo lectura, evidencia)",
+      "project": "1.4/Tools/CooperatorModeler/CooperatorModeler.csproj",
+      "target_framework": "v4.8",
+      "references": [
+        {
+          "declaration": "System",
+          "declared_as": "System",
+          "use_search": "busqueda de 'System' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 891,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Properties\\AssemblyInfo.cs:30",
+            "1.4\\Tools\\CooperatorModeler\\Properties\\AssemblyInfo.cs:31",
+            "1.4\\Tools\\CooperatorModeler\\Properties\\AssemblyInfo.cs:32",
+            "1.4\\Tools\\CooperatorModeler\\Properties\\Resources.Designer.cs:12",
+            "1.4\\Tools\\CooperatorModeler\\Properties\\Resources.Designer.cs:22",
+            "1.4\\Tools\\CooperatorModeler\\Properties\\Resources.Designer.cs:23",
+            "1.4\\Tools\\CooperatorModeler\\Properties\\Resources.Designer.cs:24",
+            "1.4\\Tools\\CooperatorModeler\\Properties\\Resources.Designer.cs:27"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Data",
+          "declared_as": "System.Data",
+          "use_search": "busqueda de 'System.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 28,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\ConfigFiles\\App.config.cs:6",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpClasses\\DefaultLazyProvider.cs:8",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpClasses\\Entity.cs:42",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpClasses\\Gateway.Auto.cs:17",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpClasses\\Gateway.Auto.cs:18",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpClasses\\Gateway.cs:16",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpClasses\\Mapper.Auto.cs:18",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpClasses\\Mapper.Auto.cs:21"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Deployment",
+          "declared_as": "System.Deployment",
+          "use_search": "busqueda de 'System.Deployment' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Design",
+          "declared_as": "System.Design",
+          "use_search": "busqueda de 'System.Design' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Drawing",
+          "declared_as": "System.Drawing",
+          "use_search": "busqueda de 'System.Drawing' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 201,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:6",
+            "1.4\\Tools\\CooperatorModeler\\About.cs:33",
+            "1.4\\Tools\\CooperatorModeler\\About.Designer.cs:58",
+            "1.4\\Tools\\CooperatorModeler\\About.Designer.cs:68",
+            "1.4\\Tools\\CooperatorModeler\\About.Designer.cs:74",
+            "1.4\\Tools\\CooperatorModeler\\About.Designer.cs:75",
+            "1.4\\Tools\\CooperatorModeler\\About.Designer.cs:78",
+            "1.4\\Tools\\CooperatorModeler\\About.Designer.cs:85"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Drawing.Design",
+          "declared_as": "System.Drawing.Design",
+          "use_search": "busqueda de 'System.Drawing.Design' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Windows.Forms",
+          "declared_as": "System.Windows.Forms",
+          "use_search": "busqueda de 'System.Windows.Forms' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 282,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:8",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.Designer.cs:33",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Program.cs:4",
+            "1.4\\Tools\\CooperatorModeler\\About.cs:34",
+            "1.4\\Tools\\CooperatorModeler\\About.Designer.cs:31",
+            "1.4\\Tools\\CooperatorModeler\\About.Designer.cs:32",
+            "1.4\\Tools\\CooperatorModeler\\About.Designer.cs:33",
+            "1.4\\Tools\\CooperatorModeler\\About.Designer.cs:34"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Xml",
+          "declared_as": "System.Xml",
+          "use_search": "busqueda de 'System.Xml' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        }
+      ],
+      "bootstrap_items": 3,
+      "publish_metadata": [
+        "PublishUrl",
+        "Install",
+        "InstallFrom",
+        "UpdateEnabled",
+        "UpdateMode",
+        "MapFileExtensions",
+        "ApplicationRevision",
+        "ApplicationVersion",
+        "IsWebBootstrapper"
+      ],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "1.4 (congelado: solo lectura, evidencia)",
+      "project": "1.4/Tools/CooperatorModeler/Templates/CSharpProjects/AppProject.csproj",
+      "target_framework": "v4.0",
+      "references": [
+        {
+          "declaration": "Cooperator.Framework.Core",
+          "declared_as": "Cooperator.Framework.Core, Version=1.4.5.0, Culture=neutral, PublicKeyToken=8f7f403e20325116, processorArchitecture=MSIL",
+          "use_search": "busqueda de 'Cooperator.Framework.Core' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "Cooperator.Framework.Data",
+          "declared_as": "Cooperator.Framework.Data, Version=1.4.5.0, Culture=neutral, PublicKeyToken=8f7f403e20325116, processorArchitecture=MSIL",
+          "use_search": "busqueda de 'Cooperator.Framework.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "Cooperator.Framework.Library",
+          "declared_as": "Cooperator.Framework.Library, Version=1.4.5.0, Culture=neutral, PublicKeyToken=8f7f403e20325116, processorArchitecture=MSIL",
+          "use_search": "busqueda de 'Cooperator.Framework.Library' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System",
+          "declared_as": "System",
+          "use_search": "busqueda de 'System' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 13,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:2",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:3",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:4",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:5",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:6",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:7",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:8",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.Designer.cs:9"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Data",
+          "declared_as": "System.Data",
+          "use_search": "busqueda de 'System.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 1,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:5"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Deployment",
+          "declared_as": "System.Deployment",
+          "use_search": "busqueda de 'System.Deployment' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Drawing",
+          "declared_as": "System.Drawing",
+          "use_search": "busqueda de 'System.Drawing' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 1,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:6"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Windows.Forms",
+          "declared_as": "System.Windows.Forms",
+          "use_search": "busqueda de 'System.Windows.Forms' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 3,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:8",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.Designer.cs:33",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Program.cs:4"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Xml",
+          "declared_as": "System.Xml",
+          "use_search": "busqueda de 'System.Xml' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        }
+      ],
+      "bootstrap_items": 3,
+      "publish_metadata": [
+        "PublishUrl",
+        "Install",
+        "InstallFrom",
+        "UpdateEnabled",
+        "UpdateMode",
+        "MapFileExtensions",
+        "ApplicationRevision",
+        "ApplicationVersion",
+        "IsWebBootstrapper"
+      ],
+      "hint_paths": 3,
+      "specific_version": 3,
+      "packages_config": false
+    },
+    {
+      "layer": "1.4 (congelado: solo lectura, evidencia)",
+      "project": "1.4/Tools/CooperatorModeler/Templates/CSharpProjects/DataProject.csproj",
+      "target_framework": "v4.0",
+      "references": [
+        {
+          "declaration": "Cooperator.Framework.Core",
+          "declared_as": "Cooperator.Framework.Core, Version=1.4.5.0, Culture=neutral, PublicKeyToken=8f7f403e20325116, processorArchitecture=MSIL",
+          "use_search": "busqueda de 'Cooperator.Framework.Core' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "Cooperator.Framework.Data",
+          "declared_as": "Cooperator.Framework.Data, Version=1.4.5.0, Culture=neutral, PublicKeyToken=8f7f403e20325116, processorArchitecture=MSIL",
+          "use_search": "busqueda de 'Cooperator.Framework.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "Cooperator.Framework.Library",
+          "declared_as": "Cooperator.Framework.Library, Version=1.4.5.0, Culture=neutral, PublicKeyToken=8f7f403e20325116, processorArchitecture=MSIL",
+          "use_search": "busqueda de 'Cooperator.Framework.Library' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System",
+          "declared_as": "System",
+          "use_search": "busqueda de 'System' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 13,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:2",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:3",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:4",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:5",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:6",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:7",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:8",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.Designer.cs:9"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.configuration",
+          "declared_as": "System.configuration",
+          "use_search": "busqueda de 'System.configuration' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Data",
+          "declared_as": "System.Data",
+          "use_search": "busqueda de 'System.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 1,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:5"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Web",
+          "declared_as": "System.Web",
+          "use_search": "busqueda de 'System.Web' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": "US-000.BOLT-013 / US-000.BOLT-009 / US-000.BOLT-025 (en Data, Library y el Modeler ESTÁ en uso: retirarla rompería la compilación)"
+        },
+        {
+          "declaration": "System.Xml",
+          "declared_as": "System.Xml",
+          "use_search": "busqueda de 'System.Xml' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        }
+      ],
+      "bootstrap_items": 3,
+      "publish_metadata": [
+        "PublishUrl",
+        "Install",
+        "InstallFrom",
+        "UpdateEnabled",
+        "UpdateMode",
+        "MapFileExtensions",
+        "ApplicationRevision",
+        "ApplicationVersion",
+        "IsWebBootstrapper"
+      ],
+      "hint_paths": 3,
+      "specific_version": 3,
+      "packages_config": false
+    },
+    {
+      "layer": "1.4 (congelado: solo lectura, evidencia)",
+      "project": "1.4/Tools/CooperatorModeler/Templates/CSharpProjects/EntitiesProject.csproj",
+      "target_framework": "v4.0",
+      "references": [
+        {
+          "declaration": "Cooperator.Framework.Core",
+          "declared_as": "Cooperator.Framework.Core, Version=1.4.5.0, Culture=neutral, PublicKeyToken=8f7f403e20325116, processorArchitecture=MSIL",
+          "use_search": "busqueda de 'Cooperator.Framework.Core' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System",
+          "declared_as": "System",
+          "use_search": "busqueda de 'System' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 13,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:2",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:3",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:4",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:5",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:6",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:7",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:8",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.Designer.cs:9"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.configuration",
+          "declared_as": "System.configuration",
+          "use_search": "busqueda de 'System.configuration' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Data",
+          "declared_as": "System.Data",
+          "use_search": "busqueda de 'System.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 1,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:5"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Runtime.Serialization",
+          "declared_as": "System.Runtime.Serialization",
+          "use_search": "busqueda de 'System.Runtime.Serialization' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Xml",
+          "declared_as": "System.Xml",
+          "use_search": "busqueda de 'System.Xml' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        }
+      ],
+      "bootstrap_items": 3,
+      "publish_metadata": [
+        "PublishUrl",
+        "Install",
+        "InstallFrom",
+        "UpdateEnabled",
+        "UpdateMode",
+        "MapFileExtensions",
+        "ApplicationRevision",
+        "ApplicationVersion",
+        "IsWebBootstrapper"
+      ],
+      "hint_paths": 1,
+      "specific_version": 1,
+      "packages_config": false
+    },
+    {
+      "layer": "1.4 (congelado: solo lectura, evidencia)",
+      "project": "1.4/Tools/CooperatorModeler/Templates/CSharpProjects/RulesProject.csproj",
+      "target_framework": "v4.0",
+      "references": [
+        {
+          "declaration": "Cooperator.Framework.Core",
+          "declared_as": "Cooperator.Framework.Core, Version=1.4.5.0, Culture=neutral, PublicKeyToken=8f7f403e20325116, processorArchitecture=MSIL",
+          "use_search": "busqueda de 'Cooperator.Framework.Core' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "Cooperator.Framework.Data",
+          "declared_as": "Cooperator.Framework.Data, Version=1.4.5.0, Culture=neutral, PublicKeyToken=8f7f403e20325116, processorArchitecture=MSIL",
+          "use_search": "busqueda de 'Cooperator.Framework.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "Cooperator.Framework.Library",
+          "declared_as": "Cooperator.Framework.Library, Version=1.4.5.0, Culture=neutral, PublicKeyToken=8f7f403e20325116, processorArchitecture=MSIL",
+          "use_search": "busqueda de 'Cooperator.Framework.Library' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System",
+          "declared_as": "System",
+          "use_search": "busqueda de 'System' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 13,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:2",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:3",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:4",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:5",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:6",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:7",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:8",
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.Designer.cs:9"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.configuration",
+          "declared_as": "System.configuration",
+          "use_search": "busqueda de 'System.configuration' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Data",
+          "declared_as": "System.Data",
+          "use_search": "busqueda de 'System.Data' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 1,
+          "matches": [
+            "1.4\\Tools\\CooperatorModeler\\Templates\\CSharpProjects\\AppProjectFiles\\Form1.cs:5"
+          ],
+          "classification": "EN USO en el código del propio proyecto",
+          "owner": ""
+        },
+        {
+          "declaration": "System.Xml",
+          "declared_as": "System.Xml",
+          "use_search": "busqueda de 'System.Xml' en los .cs del proyecto (excluye bin/obj)",
+          "uses": 0,
+          "matches": [],
+          "classification": "sin uso en el código del propio proyecto",
+          "owner": ""
+        }
+      ],
+      "bootstrap_items": 3,
+      "publish_metadata": [
+        "PublishUrl",
+        "Install",
+        "InstallFrom",
+        "UpdateEnabled",
+        "UpdateMode",
+        "MapFileExtensions",
+        "ApplicationRevision",
+        "ApplicationVersion",
+        "IsWebBootstrapper"
+      ],
+      "hint_paths": 3,
+      "specific_version": 3,
+      "packages_config": false
+    }
+  ],
+  "after": [
+    {
+      "layer": "2.0 (arbol del producto)",
+      "project": "2.0/src/Cooperator.Framework.Core/Cooperator.Framework.Core.csproj",
+      "target_framework": "netstandard2.1",
+      "references": [],
+      "bootstrap_items": 0,
+      "publish_metadata": [],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "2.0 (arbol del producto)",
+      "project": "2.0/src/Cooperator.Framework.Data/Cooperator.Framework.Data.csproj",
+      "target_framework": "netstandard2.1",
+      "references": [],
+      "bootstrap_items": 0,
+      "publish_metadata": [],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "2.0 (arbol del producto)",
+      "project": "2.0/src/Cooperator.Framework.Library/Cooperator.Framework.Library.csproj",
+      "target_framework": "netstandard2.1",
+      "references": [],
+      "bootstrap_items": 0,
+      "publish_metadata": [],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "2.0 (arbol del producto)",
+      "project": "2.0/src/Cooperator.Framework.Modeling/Cooperator.Framework.Modeling.csproj",
+      "target_framework": "netstandard2.1",
+      "references": [],
+      "bootstrap_items": 0,
+      "publish_metadata": [],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "2.0 (arbol del producto)",
+      "project": "2.0/tests/Cooperator.Framework.Characterization.Tests/Cooperator.Framework.Characterization.Tests.csproj",
+      "target_framework": "net48",
+      "references": [],
+      "bootstrap_items": 0,
+      "publish_metadata": [],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "2.0 (arbol del producto)",
+      "project": "2.0/tests/Cooperator.Framework.Modeling.Tests/Cooperator.Framework.Modeling.Tests.csproj",
+      "target_framework": "net10.0",
+      "references": [],
+      "bootstrap_items": 0,
+      "publish_metadata": [],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "2.0 (arbol del producto)",
+      "project": "2.0/tests/Cooperator.Harness.Tests/Cooperator.Harness.Tests.csproj",
+      "target_framework": "net10.0",
+      "references": [],
+      "bootstrap_items": 0,
+      "publish_metadata": [],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "2.0 (arbol del producto)",
+      "project": "2.0/tests/fixtures/api-compat-fixtures/BaselineFixture/BaselineFixture.csproj",
+      "target_framework": "netstandard2.1",
+      "references": [],
+      "bootstrap_items": 0,
+      "publish_metadata": [],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "2.0 (arbol del producto)",
+      "project": "2.0/tests/fixtures/api-compat-fixtures/BrokenFixture/BrokenFixture.csproj",
+      "target_framework": "netstandard2.1",
+      "references": [],
+      "bootstrap_items": 0,
+      "publish_metadata": [],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "2.0 (arbol del producto)",
+      "project": "2.0/tests/fixtures/lazy-providers/DeclaredProviders/DeclaredProviders.csproj",
+      "target_framework": "netstandard2.1",
+      "references": [],
+      "bootstrap_items": 0,
+      "publish_metadata": [],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    },
+    {
+      "layer": "2.0 (arbol del producto)",
+      "project": "2.0/tests/fixtures/lazy-providers/UndeclaredProviders/UndeclaredProviders.csproj",
+      "target_framework": "netstandard2.1",
+      "references": [],
+      "bootstrap_items": 0,
+      "publish_metadata": [],
+      "hint_paths": 0,
+      "specific_version": 0,
+      "packages_config": false
+    }
+  ],
+  "totals": {
+    "projects_before": 10,
+    "projects_after": 11,
+    "references_before": 69.0,
+    "references_after": 0.0,
+    "dead_declarations_found_in_2_0": 0,
+    "bootstrap_items_before": 30.0,
+    "bootstrap_items_after": 0.0,
+    "publish_metadata_before": 90.0,
+    "publish_metadata_after": 0.0,
+    "packages_config_before": 0,
+    "packages_config_after": 0
+  },
+  "after_denylist_hits": [],
+  "f45_registered_with_owner": {
+    "items": [
+      "ComVisible",
+      "ReliabilityContract",
+      "using System.Runtime.ConstrainedExecution"
+    ],
+    "owner": "El Bolt que porte cada AssemblyInfo",
+    "note": "SPEC-261016-0021 §4 (fuera de alcance): ADR-001 §3.3 los incluye en la limpieza, pero NO son alcance de este Bolt (que habla de referencias, metadata de publicacion e importaciones). Se registran con su dueño (F-45), no se retiran aca."
+  }
+}

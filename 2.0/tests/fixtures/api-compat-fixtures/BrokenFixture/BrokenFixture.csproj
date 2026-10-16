@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC §6.D.2 (corrida roja): lado IMPLEMENTATION del par de fixtures.
+    Produce un ensamblado con la misma identidad que `BaselineFixture/`
+    (mismo AssemblyName, versión y token de firma) pero con la ruptura
+    deliberada. Es el insumo que el gate DEBE identificar como fallo.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Cooperator.ApiCompatFixture</AssemblyName>
+    <RootNamespace>Cooperator.ApiCompatFixture</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <EnablePackageValidation>false</EnablePackageValidation>
+    <NoWarn>$(NoWarn);CA1822</NoWarn>
+  </PropertyGroup>
+
+</Project>

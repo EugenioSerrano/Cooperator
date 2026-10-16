@@ -1,0 +1,63 @@
+{
+  "description": "Pin de congelamiento del árbol 1.4 (SPEC-261016-0000 §6.B.1). Es la entrada del inventario de identidad de la fase B y la referencia de lectura del árbol congelado. Todo lo que este archivo declara se VERIFICA en cada corrida de `frozen-1.4.ps1`; nada se asume.",
+  "frozen_commit": "6aa497f793cd3ab9d83c68db7ef2c1d80d3421d4",
+  "frozen_commit_subject": "devflow: ADR-004..009 accepted (routing complete, 9 ADRs) + run 3 record",
+  "protected_paths": [
+    "1.4/"
+  ],
+  "read_only_rule": "1.4/** es sólo lectura en este Bolt. El script aborta con código 3 si el árbol difiere del commit congelado o si hay archivos sin seguimiento bajo 1.4/; nunca restaura ni edita nada por su cuenta. Ninguna salida de build se escribe dentro de 1.4/**.",
+  "solutions": [
+    {
+      "path": "1.4/Framework.sln",
+      "reason": "Los cuatro paquetes del framework (Core, Data, Library, Utility)."
+    },
+    {
+      "path": "1.4/Tools/CooperatorModeler/CooperatorModeler.sln",
+      "reason": "El Snapshot del formato legado vive en CooperatorModeler.exe (ADR-002 §3.2)."
+    },
+    {
+      "path": "1.4/Tools/ConnectionStringEncriptor/ConnectionStringEncriptor.sln",
+      "reason": "Segundo ejecutable del 1.4 congelado; se registra en el inventario de identidad."
+    }
+  ],
+  "toolchain": {
+    "builder": "MSBuild de Visual Studio, resuelto por vswhere con rango de versión explícito (no «el último»).",
+    "vswhere_path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\vswhere.exe",
+    "msbuild_version_range": "[18.11.0,19.0)",
+    "msbuild_version_observed": "18.11.0.47511",
+    "dotnet_sdk_pinned": "10.0.402",
+    "net_framework_targeting_pack": "v4.8",
+    "configuration": "Release",
+    "reason_release": "La configuración Debug de los .csproj del 1.4 activa RunCodeAnalysis con rulesets de Visual Studio 10 y rutas absolutas de aquella instalación: es una fuente de no-determinismo y de fallos de toolchain.",
+    "msbuild_properties": {
+      "Deterministic": "true",
+      "DeterministicSourcePaths": "false",
+      "ContinuousIntegrationBuild": "true",
+      "RunCodeAnalysis": "false",
+      "DebugType": "none",
+      "DebugSymbols": "false",
+      "PathMap": "<repository_root>=/src",
+      "OutputPath": "<artifacts>/<timestamp>/frozen-1.4/run<N>/",
+      "IntermediateOutputPath": "<temp>/cooperator-frozen-1.4/run<N>/obj/"
+    },
+    "debug_information_note": "Los dos proyectos del 1.4 que fijan DebugType=pdbonly en Release (Cooperator.Framework.Utility y ConnectionStringEncriptor) dejan la ÚNICA fuente de no-determinismo: con información de depuración el ensamblado embebe el directorio de depuración con la ruta ABSOLUTA del PDB, que cambia entre corridas (medido: 40 bytes de diferencia — el TimeDateStamp PE, dos GUID, y un único carácter de la ruta del PDB). El vocabulario de identidad que ADR-002 §3.2 usa para el migrador es nombre + versión + token + hash del ENSAMBLADO; el PDB es un artefacto aparte y no forma parte de esa identidad. Por eso la construcción reproducible no emite información de depuración y con eso los ocho artefactos quedan byte-idénticos entre corridas.",
+    "deterministic_source_paths_deviation": "El SPEC §6.B.2 pide ContinuousIntegrationBuild=true, que por defecto activa DeterministicSourcePaths=true. En proyectos *classic* csproj el compilador aborta («SourceRoot items must include at least one top-level (not nested) item when DeterministicSourcePaths is true», Microsoft.Managed.Core.targets) porque esos proyectos no contribuyen ningún ítem SourceRoot. Se fija DeterministicSourcePaths=false, que además PRESERVA el PathMap explícito que el SPEC pide (con DeterministicSourcePaths=true el PathMap se recalcula desde SourceRoot). Deterministic=true y ContinuousIntegrationBuild=true se mantienen. Desviación mecánica registrada en el MEM del V-Bounce N°1."
+  },
+  "baseline": {
+    "scope": [
+      "Cooperator.Framework.Core",
+      "Cooperator.Framework.Data",
+      "Cooperator.Framework.Library",
+      "Cooperator.Framework.Utility"
+    ],
+    "excluded": [
+      "CooperatorModeler.exe",
+      "ConnectionStringEncriptor.exe"
+    ],
+    "reason": "El baseline de API abarca los cuatro ensamblados del framework — la superficie que la 2.0 reemplaza y que las notas de migración deberán cubrir (ADR-008 §5, SPEC §6.C.1). Los ejecutables se registran en el inventario de identidad, que es su uso real (ADR-002 §3.2)."
+  },
+  "vendored_binaries": {
+    "path": "1.4/Tools/CooperatorModeler/Templates/Assemblies/",
+    "note": "Binarios versionados y DESALINEADOS con la fuente. Se registran con su hash en el inventario para que el Bolt del migrador NO los adopte en silencio como lista de identidad (riesgo declarado del SPEC §13)."
+  }
+}

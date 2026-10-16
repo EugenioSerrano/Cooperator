@@ -1,0 +1,10 @@
+<Application x:Class="ConnectionStringEncriptor.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="ProtectValueWindow.xaml">
+    <!--
+      SPEC-261016-0043 §6/A.1: arranque de la aplicación. SIN lógica de protección: la protección vive en el motor
+      (Bolt 022) y el paso único en Protection/ProtectValueStep. Sin selector de algoritmo ni de clave.
+    -->
+    <Application.Resources />
+</Application>

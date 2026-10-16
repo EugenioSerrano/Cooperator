@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- SPEC-261016-0020 8.2: lane de integracion de la capa de datos (contra SQL Server real). La corrida es del
+       CICLO de test de integracion del Bolt (despues de AITL-MEM-Approval); este proyecto se escribe y COMPILA en
+       el V-Bounce. La cadena NUNCA vive en el repositorio: la aporta el entorno. -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Cooperator.Framework.Data.Integration.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Cooperator.Framework.Data\Cooperator.Framework.Data.csproj" />
+    <ProjectReference Include="..\..\src\Cooperator.Framework.Core\Cooperator.Framework.Core.csproj" />
+  </ItemGroup>
+
+</Project>

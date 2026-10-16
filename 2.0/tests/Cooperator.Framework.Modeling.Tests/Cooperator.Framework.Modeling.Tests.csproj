@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC-261016-0004 §6/E.1: proyecto de pruebas del paquete portable
+    `Cooperator.Framework.Modeling` — el 9.º proyecto del árbol.
+
+    Cubre los cuatro frentes que el SPEC mide del lado de las pruebas:
+      1. el reporte de dependencias en los DOS niveles (§E.1): proyecto/lock file
+         (presupuesto = `System.Text.Json` exactamente) y ensamblado (aristas =
+         sólo BCL/`netstandard`);
+      2. el mapa de tipos SQL↔CLR como fuente única y completa (§C.2, AC-5);
+      3. el modelo como POCO — sin atributos de editor/diseñador, sin
+         `[Serializable]`/`ISerializable`/`SerializationInfo` y sin tipos de UI
+         (§B.1, AC-2);
+      4. la partición de `DomainTreeHelper` — la mitad de árbol dentro del
+         paquete, la mitad reverse fuera, y los ocho sitios del modelo
+         resueltos dentro (§B.2, AC-6) — más la paridad observable de los tipos
+         movidos y el consumo del contrato con un doble de prueba (§8.1, AC-3).
+
+    TFM net10.0: nivel del árbol 2.0; el framework y las versiones de los
+    paquetes los fija el Bolt 001 (`Directory.Packages.props`). El proyecto
+    queda bajo `Nullable=enable` + `TreatWarningsAsErrors=true` como el resto
+    del árbol — por eso NO lleva `<Nullable>disable</Nullable>` (§A.3) — y no
+    se firma de forma distinta: hereda la firma de `Directory.Build.props` como
+    los demás proyectos de `2.0/`.
+
+    El proyecto referencia ÚNICAMENTE el paquete portable bajo prueba: las
+    pruebas no arrastran `Data`, `Library` ni `Core` (el paquete no las
+    referencia — §A.1/AC-1).
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <!-- xUnit v3 exige OutputType Exe (proyectos ejecutables). -->
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Cooperator.Framework.Modeling.Tests</RootNamespace>
+    <!-- Modo vstest (SPEC §14): runner de xUnit v3 sobre VSTest. -->
+    <UseMicrosoftTestingPlatformRunner>false</UseMicrosoftTestingPlatformRunner>
+    <TestingPlatformDotnetTestSupport>false</TestingPlatformDotnetTestSupport>
+    <NoWarn>$(NoWarn);CA1707;CA2007</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- El paquete portable bajo prueba. Es el ÚNICO ProjectReference: el
+         proyecto de pruebas no arrastra `Data` ni `Library` ni `Core`. -->
+    <ProjectReference Include="..\..\src\Cooperator.Framework.Modeling\Cooperator.Framework.Modeling.csproj" />
+  </ItemGroup>
+
+</Project>

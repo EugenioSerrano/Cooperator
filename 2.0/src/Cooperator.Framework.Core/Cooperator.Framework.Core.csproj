@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    ADR-001 §3.1 — mapa de paquetes: nombre, TFM único (netstandard2.1), firma.
+    SPEC §4 (out of scope): este proyecto se crea SIN FUENTES. Su propósito en
+    este Bolt es hacer VERIFICABLES las invariantes del ADR (TFM, firma, versión,
+    política de dependencias) y servir de punto de montaje al Bolt de migración.
+    No contiene código de producto.
+    ADR-001 §3.4: Core queda con CERO dependencias de terceros.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Cooperator.Framework.Core</AssemblyName>
+    <RootNamespace>Cooperator.Framework.Core</RootNamespace>
+    <PackageId>Cooperator.Framework.Core</PackageId>
+    <IsPackable>true</IsPackable>
+    <Description>Núcleo del framework Cooperator (contratos de estado, objetos base, seguridad).</Description>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,65 @@
+{
+  "bolt": "US-000.BOLT-022",
+  "bolt_ref": "devflow/functional/bolts/US-000.BOLT-022-resolutor-aesgcm.md",
+  "spec": "SPEC-261016-0035",
+  "spec_ref": "devflow/spec/SPEC-261016-0035-resolutor-aesgcm.md",
+  "spec_revision": 2,
+  "produced_by": "agent:dotnet-developer-agent",
+  "purpose": "La ruptura de superficie que este Bolt ejecuta: el retiro de la API estática de criptografía con clave implícita (y con ella del material de clave embebido en el producto), con su reemplazo (los esquemas con referencia explícita de clave) y el paso siguiente obligatorio del consumidor que tenga valores cifrados con el formato de 1.4.",
+  "source_of_shape": "SPEC-261016-0035 §6/E.1 y §12; ADR-007 §3.1 (el retiro de la superficie estática) y §3.4 (las primitivas prohibidas: 3DES/MD5/IV fijo no viven en un paquete desplegado). El formato del fragmento es el publicado por US-000.BOLT-028 (SPEC-261016-0047 §6/A.2).",
+  "entries": [
+    {
+      "id": "BOLT022-01",
+      "kind": "method-removed",
+      "surface": "public",
+      "type": "Cooperator.Framework.Library.Cryptography",
+      "member": "Encrypt",
+      "signature": "public static string Encrypt(string sourceString)",
+      "what": "Desaparece la sobrecarga de cifrado con clave IMPLÍCITA: la clave vivía dentro del producto (una constante embebida en el IL, derivada por MD5) y el llamador no declaraba con qué clave se protegía el valor. Es la sobrecarga que usaba el encriptador de 1.4 y la que hacía posible cifrar sin referencia de clave.",
+      "why": "ADR-007 §3.1: se retira la API estática con clave implícita (`Cryptography.Encrypt(string)`/`Decrypt(string)`) y con ella el camino por el que una clave vive dentro del producto; proteger y resolver pasan a exigir una referencia explícita de clave (`kid` + proveedor) y el resolutor del esquema. Es la materialización del defecto de F-23 que este Bolt convierte en estándar.",
+      "replacement": "Los esquemas con referencia explícita de clave: `plain:` para lo que no necesita protección, o `aesgcm:<kid>:<base64>` con la clave ACTIVA del registro y su proveedor (entorno u hook del host). Proteger es `AesGcmValueResolver.Protect(claveDeConfiguración, valor)`: la clave de configuración viaja como AAD y ata el valor a su slot.",
+      "next_step": "Quien tenga valores cifrados con el formato de 1.4 los migra con la herramienta del Bolt 023 (inventario, clasificación, `--dry-run`, re-protección con respaldo): el framework ya no lee ese formato ni ofrece un camino de descifrado alternativo.",
+      "owner_bolt": "US-000.BOLT-022",
+      "status": "executed-here",
+      "evidence": "El tipo `Cooperator.Framework.Library.Cryptography` ya no existe en el ensamblado construido (verificado por reflexión en `KeyProvisionTests`), y la búsqueda de la clave del formato legacy sobre el árbol 2.0 da 0 apariciones (`KeyProvisionTests.No_key_material_lives_in_the_tree_and_the_legacy_key_does_not_reappear`)."
+    },
+    {
+      "id": "BOLT022-02",
+      "kind": "method-removed",
+      "surface": "public",
+      "type": "Cooperator.Framework.Library.Cryptography",
+      "member": "Decrypt",
+      "signature": "public static string Decrypt(string encryptedString)",
+      "what": "Desaparece la sobrecarga de descifrado con clave IMPLÍCITA, la contraparte de la anterior: resolvía cualquier valor con la clave embebida del binario, con IV fijo y encoding ASCII. Un valor manipulado devolvía basura silenciosa en lugar de un error.",
+      "why": "ADR-007 §3.1 (mismo retiro) y §3.4 (IV fijo y las primitivas legacy quedan prohibidas en el árbol 2.0; la excepción de descifrado legacy vive sólo en el componente interno de la herramienta del Bolt 023).",
+      "replacement": "Resolver por el resolutor del esquema: `ProtectedValueResolvers.Resolve(claveDeConfiguración, valorCrudo)` para `plain:` y `aesgcm:`, con verificación de integridad ANTES de devolver el valor (un valor manipulado o movido de slot produce error tipado, nunca basura ni texto plano).",
+      "next_step": "Los valores existentes, cifrados con el formato de 1.4, se migran con la herramienta (Bolt 023), que es la única pieza autorizada a descifrar el formato viejo, con bandera explícita y registro de retiro.",
+      "owner_bolt": "US-000.BOLT-022",
+      "status": "executed-here",
+      "evidence": "No existe en el ensamblado construido de `Library` (mismo control que BOLT022-01); el ensamblado conserva únicamente la superficie nueva de valores protegidos.",
+      "note": "El reemplazo no es un descifrado equivalente: el mecanismo nuevo es AEAD con nonce por operación y AAD por clave de configuración, así que un valor del formato viejo NO se resuelve con él — se migra."
+    },
+    {
+      "id": "BOLT022-03",
+      "kind": "type-removed",
+      "surface": "public",
+      "type": "Cooperator.Framework.Library.Cryptography",
+      "what": "Desaparece el tipo completo `Cooperator.Framework.Library.Cryptography` (clase estática pública). Existía únicamente como el mecanismo legacy: la clave embebida y el IV fijo como campos privados, las sobrecargas con clave explícita sobre TripleDES con clave derivada por MD5, el encoding ASCII y los tipos `*CryptoServiceProvider` concretos. Sin las cuatro sobrecargas no quedaba nada que no fuera material de clave y primitivas prohibidas.",
+      "why": "ADR-007 §3.1 (el retiro de la superficie estática y del camino por el que una clave vive dentro del producto) y §3.4 (el estándar de primitivas es el que TODO el árbol 2.0 debe cumplir, y la excepción de descifrado legacy está acotada al componente interno de la herramienta, nunca en `Library`). ADR-008 §5: el gate de compatibilidad reporta la ausencia del tipo y esta entrada la explica.",
+      "replacement": "Ninguno dentro del framework: el framework no conserva ningún mecanismo de cifrado legacy. La superficie nueva de valores protegidos (esquema `aesgcm:` con `System.Security.Cryptography.AesGcm`) es el reemplazo para proteger y resolver, y el descifrado del formato de 1.4 existe sólo en la herramienta de migración (Bolt 023).",
+      "next_step": "Migrar los valores ya cifrados con la herramienta del Bolt 023, y re-proteger con el secreto fuera del producto (entorno u hook del host).",
+      "owner_bolt": "US-000.BOLT-022",
+      "status": "executed-here",
+      "evidence": "`2.0/src/Cooperator.Framework.Library/Cryptography.cs` retirado; 0 apariciones de la clave del formato legacy y de sus derivaciones en el árbol 2.0; el gate de API reporta el tipo ausente y `MigrationNotesCoverageTests` cruza esta entrada contra esa diferencia."
+    }
+  ],
+  "registered_obligations": [
+    {
+      "id": "BOLT022-OBL-01",
+      "obligation": "El catálogo de valores de configuración (`ConnectionStringValue`, Bolt 011) sólo admite hoy el esquema `plain:` en su validación de la FORMA del prefijo: un valor `aesgcm:` no llega al resolutor por esa vía.",
+      "owner": "el Bolt que gobierne el contrato de configuración (Bolt 011 o su sucesor)",
+      "why": "SPEC-261016-0035 §6/A.1 declara la frontera: la forma del prefijo es del contrato (Bolt 011) y `Core` no se toca en este Bolt; el resolutor de `aesgcm:` queda entregado y registrado, y la lista de esquemas del contrato es de su dueño.",
+      "evidence": "`ConnectionStringValue.Parse` rechaza todo prefijo distinto de `plain:`; el punto de registro de este Bolt resuelve `plain:` y `aesgcm:` sin tocar `Core`."
+    }
+  ]
+}

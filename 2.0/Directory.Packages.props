@@ -1,0 +1,44 @@
+<Project>
+
+  <!--
+    ADR-001 §3.1: ninguna versión de paquete se declara en un .csproj.
+    ADR-001 §3.4: dependencias declaradas, versionadas y licenciadas de forma
+    centralizada. Core y Library quedan con CERO dependencias de terceros.
+
+    Las versiones exactas se fijan aquí, en el V-Bounce, junto con los
+    `packages.lock.json` versionados (SPEC §14, fila de versiones exactas);
+    el MECANISMO de reproducibilidad —versión centralizada, sin `Version=` en los
+    .csproj, lock file versionado y restore en modo locked— es lo que el SPEC
+    fija, no el número escrito de memoria.
+  -->
+
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+
+  <ItemGroup Label="Runtime">
+    <!-- ADR-001 §3.4: única dependencia de serialización de Modeling. -->
+    <PackageVersion Include="System.Text.Json" Version="10.0.13" />
+    <!-- SPEC-261016-0020 6/A.1 (ADR-005 3.1): proveedor ADO.NET UNICO de la capa de datos. Linea 6.1+ -->
+    <!-- (la 6.0 retiro el asset netstandard2.0 y la 6.1 lo restauro como stub: 5.x o 6.1+, NUNCA 6.0). -->
+    <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+  </ItemGroup>
+
+  <ItemGroup Label="Test">
+    <!-- xUnit v3 en modo vstest (SPEC §14): la única cadena que documenta
+         soporte de .NET Framework 4.7.2+ y .NET 8+, de modo que la MISMA suite
+         puede montarse sobre la superficie 1.4 (net48) y sobre la 2.0 (net10.0). -->
+    <PackageVersion Include="xunit.v3" Version="3.2.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
+    <!-- SPEC-261016-0012 §6/C.1 y §14: la inspección de la superficie del
+         ensamblado construido (MetadataLoadContext) es dependencia de ALCANCE DE
+         TESTS — inspecciona metadatos sin resolver ni ejecutar dependencias y no
+         requiere que el ensamblado sea cargable en el host del arnés. Ninguna
+         dependencia de producto: los cuatro portables de 2.0/src mantienen su
+         política propia (ADR-001 §3.4) y el arnés la verifica. -->
+    <PackageVersion Include="System.Reflection.MetadataLoadContext" Version="10.0.13" />
+  </ItemGroup>
+
+</Project>

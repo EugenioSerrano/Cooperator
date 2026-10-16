@@ -1,0 +1,115 @@
+{
+  "bolt": "US-000.BOLT-011",
+  "bolt_ref": "devflow/functional/bolts/US-000.BOLT-011-configuracion-portable.md",
+  "spec": "SPEC-261016-0018",
+  "spec_ref": "devflow/spec/SPEC-261016-0018-configuracion-portable.md",
+  "spec_revision": 2,
+  "produced_by": "agent:dotnet-developer-agent",
+  "produced_at": "2026-10-16T01:18:00-03:00",
+  "purpose": "Constancia de la superficie retirada y de los cambios de comportamiento de este Bolt (ADR-008 §3.1: qué desaparece, por qué decisión y con qué se reemplaza). Es el insumo de las notas de migración del consumidor, cuyo documento es del Bolt 028. Las entradas con status 'deferred-to-layer' declaran una ruptura que el consumidor va a ver, y cuyo retiro materializan los Bolts que aportan la capa Data: se registran desde ahora para que las notas no pierdan el aviso.",
+  "source_of_shape": "Cooperator.Framework.Core.Configuration (el contrato y el catálogo) y Cooperator.Framework.Library (SmtpMail)",
+  "entries": [
+    {
+      "id": "BOLT011-01",
+      "kind": "type-removed",
+      "what": "Desaparecen de la superficie de Core los tipos de la sección custom del LazyLoad: ProvidersSection (ConfigurationSection), ProvidersCollection (ConfigurationElementCollection) y Provider (ConfigurationElement).",
+      "why": "ADR-004 §3.2: el framework deja de leer y de escribir la configuración de su host.",
+      "replacement": "Las claves del catálogo: Cooperator:LazyLoad:Providers:<entidad>:Assembly y …:Class (ver 2.0/docs/configuration-keys.md). El mecanismo de carga sigue siendo del Bolt 005 (ADR-006).",
+      "status": "executed-here",
+      "evidence": "2.0/src/Cooperator.Framework.Core no contiene los tipos; el control de ausencia (HostConfigurationAbsenceTests) da 0 usos de ConfigurationManager/ConfigurationSection/ConfigurationElement."
+    },
+    {
+      "id": "BOLT011-02",
+      "kind": "type-removed",
+      "what": "Desaparece LazyConfigurationHelper (Read, Read(fileName) y CreateEmpty/CreateEmpty(fileName)) con su ConfigurationManager.OpenMappedExeConfiguration y su cfg.Save(ConfigurationSaveMode.Full).",
+      "why": "ADR-004 §3.2: era la única ruta del framework que leía y ESCRIBÍA el archivo de configuración del host (REV-001 F-04).",
+      "replacement": "Ninguno dentro del framework: si el host necesita la sección, la crea él. El framework nunca más toca la configuración de su host.",
+      "status": "executed-here",
+      "evidence": "El archivo 1.4/Cooperator.Framework.Core/LazyLoad/LazyProviderFactoryConfigHelper.cs NO se aporta a 2.0 (no queda nada tras el retiro); el control de ausencia da 0 OpenMappedExeConfiguration y 0 escrituras de configuración."
+    },
+    {
+      "id": "BOLT011-03",
+      "kind": "behavior-change",
+      "what": "El servidor SMTP deja de leerse de AppSettings[\"SMTPServerName\"] al cargar el tipo: la lectura pasa a ser perezosa y validada en el punto de uso, y su ausencia produce el error tipado del framework.",
+      "why": "ADR-004 §3.2 (F-22): el inicializador estático lanzaba NullReferenceException en el type-initializer, un error poco diagnosticable.",
+      "replacement": "Cooperator:Mail:SmtpServer (variable de entorno Cooperator__Mail__SmtpServer).",
+      "status": "executed-here",
+      "evidence": "Library/SmtpMail.cs sin inicializador estático; ConfigurationContractTests y HostConfigurationAbsenceTests."
+    },
+    {
+      "id": "BOLT011-04",
+      "kind": "method-removed",
+      "what": "SmtpMail.SendMailViaCDONTS desaparece de la superficie pública (era código muerto: lanzaba NotImplementedException y su firma arrastraba System.Web.HttpContext).",
+      "why": "ADR-004 §3.2 y ADR-001 §3.1 ya lo declaraban saliente.",
+      "replacement": "Ninguno dentro del framework.",
+      "status": "executed-here",
+      "evidence": "Library/SmtpMail.cs sin el método."
+    },
+    {
+      "id": "BOLT011-05",
+      "kind": "behavior-change",
+      "what": "La fuente del timeout de comandos cambia de la entrada AppSettings[\"CooperatorCommandTimeOut\"] a una clave del catálogo. Default documentado: 30 segundos (el de 1.4 cuando la clave no estaba definida).",
+      "why": "ADR-004 §3.2.",
+      "replacement": "Cooperator:Data:CommandTimeoutSeconds (Cooperator__Data__CommandTimeoutSeconds).",
+      "status": "deferred-to-layer",
+      "materialized_by": "El Bolt que aporta Data/SQLHelper.cs",
+      "owner_bolts": ["US-000.BOLT-013", "US-000.BOLT-014"],
+      "cross_references": ["devflow/spec/SPEC-261016-0019-cache-en-data.md", "devflow/spec/SPEC-261016-0020-provider-de-datos.md"],
+      "evidence": "La clave y su default están publicados acá y en ConfigurationKeys/Defaults; el archivo 1.4/Cooperator.Framework.Data/SQLHelper.cs:84 no existe en 2.0 (su forma compilable es el entregable del Bolt 014)."
+    },
+    {
+      "id": "BOLT011-06",
+      "kind": "behavior-change",
+      "what": "La fuente de la cadena de conexión cambia de ConfigurationManager.ConnectionStrings[...] del host a una clave del catálogo. Se retiran con ella la heurística por substrings que decidía a ciegas si el texto estaba cifrado y el Dictionary estático que la cacheaba.",
+      "why": "ADR-004 §3.2/§3.3 (REV-001 F-13).",
+      "replacement": "Cooperator:ConnectionStrings:<nombre> (nombre por defecto CooperatorConnectionString, conservado), con prefijo de esquema obligatorio.",
+      "status": "deferred-to-layer",
+      "materialized_by": "El Bolt que aporta Data/BaseRule.cs",
+      "owner_bolts": ["US-000.BOLT-013", "US-000.BOLT-014"],
+      "cross_references": ["devflow/spec/SPEC-261016-0019-cache-en-data.md", "devflow/spec/SPEC-261016-0020-provider-de-datos.md"],
+      "evidence": "La clave y su forma están publicadas acá y en ConfigurationKeys/ConnectionStringValue; el archivo 1.4/Cooperator.Framework.Data/BaseRule.cs:104-121 no existe en 2.0 (su forma compilable es el entregable del Bolt 014)."
+    },
+    {
+      "id": "BOLT011-07",
+      "kind": "behavior-change",
+      "what": "Desaparece el Dictionary estático de connection strings: la configuración puede cambiar entre lecturas (tests, multi-tenant), cosa que antes era imposible.",
+      "why": "ADR-004 §3.3: la resolución es del proveedor de configuración, con su propio criterio; el reemplazo de la instancia ambiental es la operación documentada.",
+      "replacement": "CooperatorSettings.Current (instancia ambiental reemplazable) y las sobrecargas explícitas que aceptan un ICooperatorConfiguration.",
+      "status": "deferred-to-layer",
+      "materialized_by": "El Bolt que aporta Data/BaseRule.cs",
+      "owner_bolts": ["US-000.BOLT-013", "US-000.BOLT-014"],
+      "cross_references": ["devflow/spec/SPEC-261016-0019-cache-en-data.md", "devflow/spec/SPEC-261016-0020-provider-de-datos.md"],
+      "evidence": "El mecanismo de reemplazo en caliente está entregado y probado en Core (ConfigurationContractTests: se reemplaza la instancia y la lectura siguiente ve el valor nuevo)."
+    },
+    {
+      "id": "BOLT011-08",
+      "kind": "behavior-change",
+      "what": "Un valor de conexión SIN prefijo de esquema deja de funcionar: hay que declarar plain: (o el esquema del resolutor que corresponda). Un prefijo desconocido se rechaza nombrando la clave y el prefijo ofensor.",
+      "why": "ADR-004 §3.3: se elimina la adivinanza de «esto parece plano».",
+      "replacement": "Declarar plain: explícito (identidad). La migración es una línea por valor.",
+      "status": "executed-here",
+      "evidence": "Core/Configuration/ConnectionStringValue.cs y los casos negativos de ConfigurationContractTests."
+    },
+    {
+      "id": "BOLT011-09",
+      "kind": "behavior-change",
+      "what": "Los fallos de configuración lanzan CooperatorConfigurationException (tipo propio del framework, en Core) y no un tipo de System.Configuration ni un NullReferenceException.",
+      "why": "ADR-004 §3.2/§3.3 y §5 (config fail-fast).",
+      "replacement": "CooperatorConfigurationException, con la clave —y el prefijo ofensor cuando aplica— en el mensaje.",
+      "status": "executed-here",
+      "evidence": "Core/Configuration/CooperatorConfigurationException.cs y los cuatro casos negativos canónicos de ConfigurationContractTests."
+    }
+  ],
+  "registered_obligations": [
+    {
+      "id": "OBLIGATION-DATA-01",
+      "statement": "Ninguna lectura de configuración del host en la capa Data: la cadena de conexión llega de ICooperatorConfiguration.GetConnectionString(name) (sin la heurística por substrings y sin el Dictionary estático) y el timeout llega del catálogo (Cooperator:Data:CommandTimeoutSeconds, con su default). Al aportar BaseRule.cs, SQLHelper.cs y SqlHelperParameterCache.cs, ninguno de sus valores de configuración puede provenir de ConfigurationManager ni de AppSettings.",
+      "why": "ADR-004 §3.2/§3.3 y §3.5: el vencimiento de la excepción transitoria de ADR-001 §4/§5. La obligación no se cumple aportando los archivos tal cual (no compilan en netstandard2.1) ni transformándolos acá (es el entregable del Bolt 014): se registra para que su ausencia se verifique EN EL ACTO en que la capa se aporte.",
+      "owner_bolts": ["US-000.BOLT-012", "US-000.BOLT-013", "US-000.BOLT-014"],
+      "materially_satisfied_by": "US-000.BOLT-014",
+      "cross_references": ["devflow/spec/SPEC-261016-0021-limpieza-de-referencias.md", "devflow/spec/SPEC-261016-0019-cache-en-data.md", "devflow/spec/SPEC-261016-0020-provider-de-datos.md"],
+      "verification_when_satisfied": "El control de ausencia (HostConfigurationAbsenceTests) recorre 2.0/src completo y exige 0 usos de ConfigurationManager/OpenMappedExeConfiguration y 0 escrituras de configuración; al aparecer las fuentes de Data, el caso las alcanza automáticamente. Además, el reporte de dependencias por proyecto debe mostrar Data sin System.Configuration.ConfigurationManager.",
+      "known_here": "Hoy la capa Data de 2.0 no tiene fuentes: 2.0/src contiene los cuatro .csproj y las fuentes de Core y Library. La ausencia se mide, por tanto, sobre la capa que existe."
+    }
+  ]
+}

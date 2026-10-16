@@ -1,0 +1,446 @@
+{
+  "schema_version": "5.0",
+  "bolt": {
+    "id": "US-000.BOLT-009",
+    "type": "non-functional",
+    "test_integration": "required",
+    "ref": "devflow/functional/bolts/US-000.BOLT-009-library-portable.md",
+    "sources": [
+      "devflow/functional/user-stories/US-000-non-functional.md",
+      "devflow/reviews/REV-001-analisis-migracion-cooperator.md",
+      "devflow/adrs/ADR-001-layout-y-empaquetado-cooperator-2.md"
+    ],
+    "generation": {
+      "created_at": "2026-10-15T23:30:14-03:00",
+      "created_by": "human:eugenioserrano",
+      "runs": [
+        {
+          "tool": "opencode",
+          "provider": "deepseek",
+          "model": "deepseek/deepseek-flash",
+          "tokens": {
+            "input_uncached": null,
+            "input_cached_read": null,
+            "input_cache_write": null,
+            "output": null
+          },
+          "agent": "dotnet-architect-agent"
+        }
+      ],
+      "duration_seconds": null
+    },
+    "review_ready_at": "2026-10-16T00:00:56-03:00",
+    "review_started_at": "2026-10-16T00:00:56-03:00",
+    "acceptance": {
+      "review_ready_at": null,
+      "review_started_at": null
+    }
+  },
+  "spec_revisions": [
+    {
+      "revision": 1,
+      "ref": "devflow/spec/SPEC-261016-0037-library-portable.md",
+      "sources": [
+        "devflow/functional/bolts/US-000.BOLT-009-library-portable.md",
+        "devflow/reviews/REV-001-analisis-migracion-cooperator.md",
+        "devflow/adrs/ADR-001-layout-y-empaquetado-cooperator-2.md"
+      ],
+      "git_commit": "6aa497f793cd3ab9d83c68db7ef2c1d80d3421d4",
+      "generation": {
+        "created_at": "2026-10-16T00:37:00-03:00",
+        "created_by": "human:eugenioserrano",
+        "runs": [
+          {
+            "tool": "opencode",
+            "provider": "deepseek",
+            "model": "deepseek/deepseek-flash",
+            "tokens": {
+              "input_uncached": null,
+              "input_cached_read": null,
+              "input_cache_write": null,
+              "output": null
+            },
+            "agent": "dotnet-developer-agent"
+          }
+        ],
+        "duration_seconds": null
+      },
+      "review_ready_at": "2026-10-16T00:39:45-03:00",
+      "review_started_at": "2026-10-16T00:39:45-03:00"
+    },
+    {
+      "revision": 2,
+      "ref": "devflow/spec/SPEC-261016-0037-library-portable.md",
+      "sources": [
+        "devflow/functional/bolts/US-000.BOLT-009-library-portable.md",
+        "devflow/reviews/REV-001-analisis-migracion-cooperator.md",
+        "devflow/adrs/ADR-001-layout-y-empaquetado-cooperator-2.md"
+      ],
+      "git_commit": "6aa497f793cd3ab9d83c68db7ef2c1d80d3421d4",
+      "generation": {
+        "created_at": "2026-10-16T02:23:10-03:00",
+        "created_by": "human:eugenioserrano",
+        "runs": [
+          {
+            "tool": "opencode",
+            "provider": "deepseek",
+            "model": "deepseek/deepseek-flash",
+            "tokens": {
+              "input_uncached": null,
+              "input_cached_read": null,
+              "input_cache_write": null,
+              "output": null
+            },
+            "agent": "dotnet-developer-agent"
+          }
+        ],
+        "duration_seconds": null
+      },
+      "review_ready_at": "2026-10-16T02:23:10-03:00",
+      "review_started_at": "2026-10-16T02:23:10-03:00"
+    },
+    {
+      "revision": 3,
+      "ref": "devflow/spec/SPEC-261016-0037-library-portable.md",
+      "sources": [
+        "devflow/functional/bolts/US-000.BOLT-009-library-portable.md",
+        "devflow/reviews/REV-001-analisis-migracion-cooperator.md",
+        "devflow/adrs/ADR-001-layout-y-empaquetado-cooperator-2.md"
+      ],
+      "git_commit": "6aa497f793cd3ab9d83c68db7ef2c1d80d3421d4",
+      "generation": {
+        "created_at": "2026-10-16T02:36:30-03:00",
+        "created_by": "human:eugenioserrano",
+        "runs": [
+          {
+            "tool": "opencode",
+            "provider": "deepseek",
+            "model": "deepseek/deepseek-flash",
+            "tokens": {
+              "input_uncached": null,
+              "input_cached_read": null,
+              "input_cache_write": null,
+              "output": null
+            },
+            "agent": "dotnet-developer-agent"
+          }
+        ],
+        "duration_seconds": null
+      },
+      "review_ready_at": "2026-10-16T02:36:30-03:00",
+      "review_started_at": "2026-10-16T02:36:30-03:00"
+    }
+  ],
+  "v_bounces": [
+    {
+      "number": 1,
+      "spec_revision": 1,
+      "git_commit": "6aa497f793cd3ab9d83c68db7ef2c1d80d3421d4",
+      "execution_outcome": "blocked",
+      "code_generation": {
+        "created_at": "2026-10-16T02:15:57-03:00",
+        "created_by": "human:eugenioserrano",
+        "runs": [
+          {
+            "tool": "opencode",
+            "provider": "deepseek",
+            "model": "deepseek/deepseek-flash",
+            "tokens": {
+              "input_uncached": null,
+              "input_cached_read": null,
+              "input_cache_write": null,
+              "output": null
+            },
+            "agent": "dotnet-developer-agent"
+          }
+        ],
+        "duration_seconds": null
+      },
+      "mem": {
+        "ref": "devflow/memory/MEM-261016-0215-library-portable.md",
+        "generation": {
+          "created_at": "2026-10-16T02:15:57-03:00",
+          "created_by": "human:eugenioserrano",
+          "runs": [
+            {
+              "tool": "opencode",
+              "provider": "deepseek",
+              "model": "deepseek/deepseek-flash",
+              "tokens": {
+                "input_uncached": null,
+                "input_cached_read": null,
+                "input_cache_write": null,
+                "output": null
+              },
+              "agent": "dotnet-developer-agent"
+            }
+          ],
+          "duration_seconds": null
+        }
+      },
+      "review_ready_at": "2026-10-16T02:15:57-03:00",
+      "review_started_at": "2026-10-16T02:21:33-03:00"
+    },
+    {
+      "number": 2,
+      "spec_revision": 2,
+      "git_commit": "6aa497f793cd3ab9d83c68db7ef2c1d80d3421d4",
+      "execution_outcome": "blocked",
+      "code_generation": {
+        "created_at": "2026-10-16T02:27:52-03:00",
+        "created_by": "human:eugenioserrano",
+        "runs": [
+          {
+            "tool": "opencode",
+            "provider": "deepseek",
+            "model": "deepseek/deepseek-flash",
+            "tokens": {
+              "input_uncached": null,
+              "input_cached_read": null,
+              "input_cache_write": null,
+              "output": null
+            },
+            "agent": "dotnet-developer-agent"
+          }
+        ],
+        "duration_seconds": null
+      },
+      "mem": {
+        "ref": "devflow/memory/MEM-261016-0227-library-portable.md",
+        "generation": {
+          "created_at": "2026-10-16T02:27:52-03:00",
+          "created_by": "human:eugenioserrano",
+          "runs": [
+            {
+              "tool": "opencode",
+              "provider": "deepseek",
+              "model": "deepseek/deepseek-flash",
+              "tokens": {
+                "input_uncached": null,
+                "input_cached_read": null,
+                "input_cache_write": null,
+                "output": null
+              },
+              "agent": "dotnet-developer-agent"
+            }
+          ],
+          "duration_seconds": null
+        }
+      },
+      "review_ready_at": "2026-10-16T02:27:52-03:00",
+      "review_started_at": "2026-10-16T02:33:06-03:00"
+    },
+    {
+      "number": 3,
+      "spec_revision": 3,
+      "git_commit": "6aa497f793cd3ab9d83c68db7ef2c1d80d3421d4",
+      "execution_outcome": "ready_for_review",
+      "code_generation": {
+        "created_at": "2026-10-16T02:46:52-03:00",
+        "created_by": "human:eugenioserrano",
+        "runs": [
+          {
+            "tool": "opencode",
+            "provider": "deepseek",
+            "model": "deepseek/deepseek-flash",
+            "tokens": {
+              "input_uncached": null,
+              "input_cached_read": null,
+              "input_cache_write": null,
+              "output": null
+            },
+            "agent": "dotnet-developer-agent"
+          }
+        ],
+        "duration_seconds": null
+      },
+      "mem": {
+        "ref": "devflow/memory/MEM-261016-0246-library-portable.md",
+        "generation": {
+          "created_at": "2026-10-16T02:46:52-03:00",
+          "created_by": "human:eugenioserrano",
+          "runs": [
+            {
+              "tool": "opencode",
+              "provider": "deepseek",
+              "model": "deepseek/deepseek-flash",
+              "tokens": {
+                "input_uncached": null,
+                "input_cached_read": null,
+                "input_cache_write": null,
+                "output": null
+              },
+              "agent": "dotnet-developer-agent"
+            }
+          ],
+          "duration_seconds": null
+        }
+      },
+      "review_ready_at": "2026-10-16T02:46:52-03:00",
+      "review_started_at": "2026-10-16T02:51:28-03:00"
+    }
+  ],
+  "checkpoint_approvals": [
+    {
+      "checkpoint": "AITL-BOLT-READY-Approval",
+      "subject": {
+        "ref": "devflow/functional/bolts/US-000.BOLT-009-library-portable.md"
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "agent:dotnet-architect-reviewer-agent",
+          "role": "architect",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:dotnet-architect-reviewer-agent",
+          "role": "architect",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "decided_at": "2026-10-16T00:00:56-03:00"
+    },
+    {
+      "checkpoint": "AITL-SPEC-Approval",
+      "subject": {
+        "ref": "devflow/spec/SPEC-261016-0037-library-portable.md",
+        "revision": 1
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "decided_at": "2026-10-16T00:39:45-03:00"
+    },
+    {
+      "checkpoint": "AITL-MEM-Approval",
+      "subject": {
+        "ref": "devflow/memory/MEM-261016-0215-library-portable.md",
+        "v_bounce": 1
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "decided_at": "2026-10-16T02:21:33-03:00"
+    },
+    {
+      "checkpoint": "AITL-SPEC-Approval",
+      "subject": {
+        "ref": "devflow/spec/SPEC-261016-0037-library-portable.md",
+        "revision": 2
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "decided_at": "2026-10-16T02:23:10-03:00"
+    },
+    {
+      "checkpoint": "AITL-MEM-Approval",
+      "subject": {
+        "ref": "devflow/memory/MEM-261016-0227-library-portable.md",
+        "v_bounce": 2
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "decided_at": "2026-10-16T02:33:06-03:00"
+    },
+    {
+      "checkpoint": "AITL-SPEC-Approval",
+      "subject": {
+        "ref": "devflow/spec/SPEC-261016-0037-library-portable.md",
+        "revision": 3
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "decided_at": "2026-10-16T02:36:30-03:00"
+    },
+    {
+      "checkpoint": "AITL-MEM-Approval",
+      "subject": {
+        "ref": "devflow/memory/MEM-261016-0246-library-portable.md",
+        "v_bounce": 3
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "decided_at": "2026-10-16T02:51:28-03:00"
+    }
+  ],
+  "integration_test_runs": []
+}

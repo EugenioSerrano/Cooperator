@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC-261016-0015 §8.1 y AC-7: el ensamblado del NFR `no-implicit-assembly-loading`.
+
+    Este proyecto se COMPILA pero NO se referencia (`ReferenceOutputAssembly=false`): su
+    simple name no es una dependencia de la aplicación y su ensamblado NO queda en el
+    directorio de salida del proyecto de pruebas, sino en una SUBCARPETA (`plugins-undeclared/`).
+
+    Es exactamente el despliegue que el producto fomentaba ("copiar DLLs a una carpeta"): el
+    ensamblado existe en el despliegue, y la resolución por defecto del framework —que es la
+    del host, sin sondeo de directorios— DEBE fallar. El hook del host, en cambio, lo obtiene:
+    ésa es la prueba de que la carga por carpeta es del host y no una capacidad implícita.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Cooperator.LazyFixtures.Undeclared</AssemblyName>
+    <RootNamespace>Cooperator.LazyFixtures.Undeclared</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <EnablePackageValidation>false</EnablePackageValidation>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Cooperator.Framework.Core\Cooperator.Framework.Core.csproj" />
+  </ItemGroup>
+
+</Project>

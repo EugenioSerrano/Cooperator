@@ -1,0 +1,56 @@
+﻿{
+    "description":  "Vectores heredados de cifrado producidos UNA VEZ con el build 1.4 congelado (SPEC seccion 6.E.3). El material de clave del 1.4 no se copia a ningun fixture de la 2.0.",
+    "produced_with":  "Cooperator.Framework.Library 1.4.5.0 (build reproducible del commit 6aa497f793cd3ab9d83c68db7ef2c1d80d3421d4)",
+    "plaintexts_are_synthetic":  true,
+    "accent_note":  "Los textos acentuados se construyen con [char]0x00C1 y [char]0x00F1 para que el script generado sea ASCII puro y no dependa de la codificacion del host.",
+    "vectors":  [
+                    {
+                        "plaintext":  "",
+                        "ciphertext":  "/lLYac13koU=",
+                        "round_trip":  "",
+                        "error":  null
+                    },
+                    {
+                        "plaintext":  "A",
+                        "ciphertext":  "6MnFbDeR8EU=",
+                        "round_trip":  "A",
+                        "error":  null
+                    },
+                    {
+                        "plaintext":  "Cooperator",
+                        "ciphertext":  "fVJ4qCz5uyEzD3IFVQpBWA==",
+                        "round_trip":  "Cooperator",
+                        "error":  null
+                    },
+                    {
+                        "plaintext":  "Precio unitario: 1.234,56",
+                        "ciphertext":  "4frpSGgJtrz9UDvWv0RKGay8LbVALc03ns/xCsFsyH0=",
+                        "round_trip":  "Precio unitario: 1.234,56",
+                        "error":  null
+                    },
+                    {
+                        "plaintext":  "acentuado Áñ",
+                        "ciphertext":  "lHXvWjBOVxVKlvSTw5gBvg==",
+                        "round_trip":  "acentuado ??",
+                        "error":  null
+                    },
+                    {
+                        "plaintext":  "0123456789",
+                        "ciphertext":  "JXIV1t6ItK9c6rqHDx6YGA==",
+                        "round_trip":  "0123456789",
+                        "error":  null
+                    },
+                    {
+                        "plaintext":  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "ciphertext":  "QZ9PJbVE7Hs7qGbRlVKUoRFsE+DnxlUD1x1b7OnUi00pqQeRl3SM7otRSET576NWlIUYS6bTaxYvClaUfHG/CjrVSJzW9vul",
+                        "round_trip":  "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "error":  null
+                    },
+                    {
+                        "plaintext":  "linea1\nlinea2",
+                        "ciphertext":  "76mGGFnGyE8N1V0B0aQ7YQ==",
+                        "round_trip":  "linea1\nlinea2",
+                        "error":  null
+                    }
+                ]
+}

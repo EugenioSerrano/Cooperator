@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC-261016-0027 (BOLT-016): el tooling del Modeler. Materializa la reubicacion que el Bolt 003 difirio como
+    obligacion registrada (OBLIGATION-TOOLING-01: "cuando la capa Data sea portada") y le quita al reverse la
+    herencia de la capa de datos.
+
+    ADR-001 3.1: el tooling vive junto al shell y al motor; el modelo (Modeling) NO depende de el. Referencias:
+    Modeling (el modelo y el contrato portable del reverse) y Core (el contrato de configuracion del que sale la
+    cadena). NO hay referencia a Cooperator.Framework.Data: la arista que la herencia necesitaba se retira (AC-1).
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <AssemblyName>CooperatorModeler</AssemblyName>
+    <RootNamespace>Cooperator.Framework.Modeler</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <Description>Tooling del Modeler: el reverse de esquema (acceso propio por el provider unico).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- ADR-005 3.1: el provider unico del framework; el reverse lo consume, no lo decide. -->
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cooperator.Framework.Core\Cooperator.Framework.Core.csproj" />
+    <ProjectReference Include="..\Cooperator.Framework.Modeling\Cooperator.Framework.Modeling.csproj" />
+  </ItemGroup>
+
+</Project>

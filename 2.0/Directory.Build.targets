@@ -1,0 +1,19 @@
+<Project>
+
+  <!--
+    ADR-008 §5 — camino a la línea anterior de la 2.0.
+    SPEC-261016-0000 §6.D.4: el mecanismo queda cableado para los proyectos
+    empaquetables, pero `PackageValidationBaselineVersion` queda SIN VALOR
+    (2.0.0 es la primera versión de la línea 2.0.x: no hay versión anterior que
+    comparar). Su activación es un acto de la primera release 2.0.x.
+
+    Se declara aquí y no en Directory.Build.props porque `IsPackable` lo define
+    el SDK, que se importa después de Directory.Build.props.
+  -->
+
+  <PropertyGroup Condition="'$(IsPackable)' == 'true'">
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <PackageValidationBaselineVersion></PackageValidationBaselineVersion>
+  </PropertyGroup>
+
+</Project>

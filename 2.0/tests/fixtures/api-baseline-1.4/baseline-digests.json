@@ -1,0 +1,21 @@
+{
+  "description": "Digests de la linea base 1.4. El gate los verifica ANTES de comparar: un baseline alterado no se compara, se reporta como bloqueo (3) -- SPEC seccion 10, control anti-manipulacion.",
+  "generated_at": "2026-10-16T00:38:18.3322901-03:00",
+  "frozen_commit": "6aa497f793cd3ab9d83c68db7ef2c1d80d3421d4",
+  "scope": [
+    "Cooperator.Framework.Core",
+    "Cooperator.Framework.Data",
+    "Cooperator.Framework.Library",
+    "Cooperator.Framework.Utility"
+  ],
+  "excluded": [
+    "CooperatorModeler.exe",
+    "ConnectionStringEncriptor.exe"
+  ],
+  "files": {
+    "Cooperator.Framework.Core.dll": "1857309FF7F95DCE1EBE1EADF70F45DC97967771C94353797D3F37D9B2B2D02D",
+    "Cooperator.Framework.Data.dll": "F6F806D6EB8FF794E3781AFD92F42F9E8997D411B474074BEA4D0791AAA1F0CA",
+    "Cooperator.Framework.Library.dll": "D650E9355D8FDBDF97C30D2060E14425A83E14342A43F0CCCC9FC3CE233F7EEC",
+    "Cooperator.Framework.Utility.dll": "62373EF0302620672C399FB3FB15EC5ACBAD48E15F194B4371AF09C475569580"
+  }
+}

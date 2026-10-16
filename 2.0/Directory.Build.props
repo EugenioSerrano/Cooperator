@@ -1,0 +1,64 @@
+<Project>
+
+  <!--
+    ADR-001 §3.1 (build centralizado: Directory.Build.props / Directory.Packages.props)
+    ADR-001 §3.3 (versionado 2.0.0 con AssemblyVersion fijo 2.0.0.0)
+    ADR-001 §3.4 (versiones declaradas y centralizadas)
+    ADR-008 §3.4 (advertencias como error) y §5 (EnablePackageValidation cableado)
+    SPEC-261016-0000 §6.A.1.
+
+    NOTA de propagación: este archivo SÓLO alcanza proyectos bajo 2.0/. El árbol
+    congelado 1.4/** queda fuera del alcance del import automático de MSBuild y por
+    eso no hereda TreatWarningsAsErrors (SPEC §13, fila de advertencias heredadas).
+    La referencia de los proyectos del arnés hacia 1.4 es por ProjectReference,
+    tal como ADR-002 §3.2 fija para el migrador.
+  -->
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+  </PropertyGroup>
+
+  <!-- Determinismo del build. Ver SPEC §6.B.2 y el hallazgo del MEM sobre
+       DeterministicSourcePaths en proyectos classic csproj. -->
+  <PropertyGroup>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(ContinuousIntegrationBuild)' == ''">true</ContinuousIntegrationBuild>
+    <DeterministicSourcePaths Condition="'$(DeterministicSourcePaths)' == ''">false</DeterministicSourcePaths>
+    <PathMap Condition="'$(PathMap)' == ''">$(MSBuildThisFileDirectory)=/src</PathMap>
+  </PropertyGroup>
+
+  <!-- Identidad de firma ADR-001 §3.3: la MISMA clave en todos los ensamblados
+       de la 2.0, copiada byte a byte desde 1.4 (verificado por el test de
+       invariantes AC-6). -->
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)CooperatorFramework.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <!-- Versionado de la línea 2.0.x (ADR-001 §3.3). -->
+  <PropertyGroup>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <InformationalVersion>2.0.0</InformationalVersion>
+  </PropertyGroup>
+
+  <!-- Restore reproducible (ADR-001 §3.1). -->
+  <PropertyGroup>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+  <!-- Camino a la línea anterior de la 2.0 (ADR-008 §5, SPEC §6.D.4):
+       el mecanismo queda CABLEADO y sin valor de baseline — 2.0.0 es la primera
+       versión, así que no hay versión anterior que comparar. Su activación es un
+       acto de la primera release 2.0.x.
+       Se declara en Directory.Build.targets (no aquí) porque `IsPackable` lo
+       define el SDK y todavía no existe cuando se evalúa este archivo. -->
+
+</Project>

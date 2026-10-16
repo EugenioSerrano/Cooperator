@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC §6.A.2 / §8.1: invariantes del arnés y self-test del gate.
+    TFM net10.0: la parte moderna de la cadena fijada (SPEC §14, fila del
+    constructor). No referencia el árbol 1.4 (por eso `dotnet build` basta
+    para este proyecto), y prueba las invariantes que el resto del arnés
+    declara: TFM/firma por proyecto, .snk byte-idéntico, conteo de
+    dependencias por proyecto según ADR-001 §5, ausencia de `Version=` en los
+    .csproj, presencia de global.json y lock files (AC-6).
+    El self-test del gate (AC-5, SPEC §6.D.3) vive en ApiCompatGateTests.cs.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <!-- xUnit v3 exige OutputType Exe (proyectos ejecutables). -->
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Cooperator.Harness.Tests</RootNamespace>
+    <!-- Modo vstest (SPEC §14): runner de xUnit v3 sobre VSTest. -->
+    <UseMicrosoftTestingPlatformRunner>false</UseMicrosoftTestingPlatformRunner>
+    <TestingPlatformDotnetTestSupport>false</TestingPlatformDotnetTestSupport>
+    <NoWarn>$(NoWarn);CA1707;CA2007</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <!-- SPEC-261016-0012 §6/C.1: inspección de la superficie del ensamblado
+         construido sin cargarlo ni ejecutarlo. Alcance de tests; versión fijada
+         centralmente en Directory.Packages.props. -->
+    <PackageReference Include="System.Reflection.MetadataLoadContext" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Cooperator.Framework.Core\Cooperator.Framework.Core.csproj" />
+    <ProjectReference Include="..\..\src\Cooperator.Framework.Library\Cooperator.Framework.Library.csproj" />
+    <!-- SPEC-261016-0015 §8.1: providers del caso normal. DEPENDENCIA DECLARADA del
+         proyecto de pruebas, así que su ensamblado está en el directorio de salida y la
+         resolución por defecto del host lo encuentra (AC-2). -->
+    <ProjectReference Include="..\fixtures\lazy-providers\DeclaredProviders\DeclaredProviders.csproj" />
+    <!-- El ensamblado del NFR (AC-7): se COMPILA pero no se referencia, así que su simple
+         name NO es una dependencia y su ensamblado no entra al directorio de salida; una
+         target de abajo lo copia a una SUBcarpeta (plugins-undeclared/). La resolución por
+         defecto debe fallar y el hook del host debe obtenerlo. -->
+    <ProjectReference Include="..\fixtures\lazy-providers\UndeclaredProviders\UndeclaredProviders.csproj"
+                      ReferenceOutputAssembly="false"
+                      Private="false" />
+  </ItemGroup>
+
+  <!-- Copia el ensamblado NO declarado a una subcarpeta del directorio de salida: es el
+       "plugin en una carpeta" del despliegue que el default ALC no sondea. -->
+  <Target Name="CopyUndeclaredLazyFixture" AfterTargets="Build">
+    <ItemGroup>
+      <UndeclaredLazyFixture Include="..\fixtures\lazy-providers\UndeclaredProviders\bin\$(Configuration)\netstandard2.1\Cooperator.LazyFixtures.Undeclared.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(UndeclaredLazyFixture)"
+          DestinationFolder="$(TargetDir)plugins-undeclared"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

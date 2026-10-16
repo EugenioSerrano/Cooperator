@@ -1,0 +1,217 @@
+{
+  "description": "Inventario de identidad del build reproducible del 1.4 congelado (SPEC 6.B.4). Vocabulario identico al que ADR-002 3.2 usa para la verificacion de identidad del migrador: nombre + AssemblyVersion + FileVersion + PublicKeyToken + SHA-256 de contenido + ruta relativa + configuracion.",
+  "generated_at": "2026-10-16T00:43:03.3652621-03:00",
+  "repository_root": "D:\\Cooperator",
+  "frozen_commit": "6aa497f793cd3ab9d83c68db7ef2c1d80d3421d4",
+  "toolchain": {
+    "builder": "MSBuild (Visual Studio)",
+    "msbuild_version": "18.11.0.47511",
+    "msbuild_path": [
+      "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe"
+    ],
+    "configuration": "Release",
+    "properties": {
+      "Deterministic": "true",
+      "DeterministicSourcePaths": "false",
+      "ContinuousIntegrationBuild": "true",
+      "RunCodeAnalysis": "false",
+      "DebugType": "none",
+      "DebugSymbols": "false",
+      "PathMap": "<repository_root>=/src",
+      "OutputPath": "<artifacts>/<timestamp>/frozen-1.4/run<N>/",
+      "IntermediateOutputPath": "<temp>/cooperator-frozen-1.4/run<N>/obj/"
+    }
+  },
+  "reproducibility": {
+    "method": "doble corrida desde cero en directorios de salida distintos y con obj/ limpio; SHA-256 por artefacto",
+    "byte_identical": true,
+    "comparison": [
+      {
+        "artifact": "ConnectionStringEncriptor.exe",
+        "run1_sha256": "9E576E4021DCB43F6FE2DD64C749B3F87C068A542FE8864EE2562A44A463DFD8",
+        "run2_sha256": "9E576E4021DCB43F6FE2DD64C749B3F87C068A542FE8864EE2562A44A463DFD8",
+        "byte_identical": true
+      },
+      {
+        "artifact": "Cooperator.Framework.Core.dll",
+        "run1_sha256": "CCC57742E497F3C019D390E383B919BB7DDC75E3E0F1273151F5ED1827CDB43E",
+        "run2_sha256": "CCC57742E497F3C019D390E383B919BB7DDC75E3E0F1273151F5ED1827CDB43E",
+        "byte_identical": true
+      },
+      {
+        "artifact": "Cooperator.Framework.Data.dll",
+        "run1_sha256": "D3D6EAC157426D916FA2875394701EC01834E47EC2A216CDE8B054D1C3C1B4E1",
+        "run2_sha256": "D3D6EAC157426D916FA2875394701EC01834E47EC2A216CDE8B054D1C3C1B4E1",
+        "byte_identical": true
+      },
+      {
+        "artifact": "Cooperator.Framework.Library.dll",
+        "run1_sha256": "381C5E8EC3BEB762023DED332F198C814F702670560B9932D19D90E6B6B020E7",
+        "run2_sha256": "381C5E8EC3BEB762023DED332F198C814F702670560B9932D19D90E6B6B020E7",
+        "byte_identical": true
+      },
+      {
+        "artifact": "Cooperator.Framework.Utility.dll",
+        "run1_sha256": "62373EF0302620672C399FB3FB15EC5ACBAD48E15F194B4371AF09C475569580",
+        "run2_sha256": "62373EF0302620672C399FB3FB15EC5ACBAD48E15F194B4371AF09C475569580",
+        "byte_identical": true
+      },
+      {
+        "artifact": "CooperatorModeler.exe",
+        "run1_sha256": "8DD87DBE462C6FD7E2F25B927C8519E9D9DA7A5A10EB2458EB6298FC935AAA3D",
+        "run2_sha256": "8DD87DBE462C6FD7E2F25B927C8519E9D9DA7A5A10EB2458EB6298FC935AAA3D",
+        "byte_identical": true
+      }
+    ],
+    "fallback": ""
+  },
+  "solutions": [
+    {
+      "path": "1.4/Framework.sln",
+      "reason": "Los cuatro paquetes del framework (Core, Data, Library, Utility).",
+      "projects": []
+    },
+    {
+      "path": "1.4/Tools/CooperatorModeler/CooperatorModeler.sln",
+      "reason": "El Snapshot del formato legado vive en CooperatorModeler.exe (ADR-002 §3.2).",
+      "projects": [
+        {
+          "project": "Cooperator.Framework.Core",
+          "target": "D:\\Cooperator\\2.0\\artifacts\\20261016-004258\\frozen-1.4\\run1\\Cooperator.Framework.Core.dll",
+          "relative_target": ".\\Cooperator.Framework.Core.dll"
+        },
+        {
+          "project": "Cooperator.Framework.Data",
+          "target": "D:\\Cooperator\\2.0\\artifacts\\20261016-004258\\frozen-1.4\\run1\\Cooperator.Framework.Data.dll",
+          "relative_target": ".\\Cooperator.Framework.Data.dll"
+        },
+        {
+          "project": "Cooperator.Framework.Utility",
+          "target": "D:\\Cooperator\\2.0\\artifacts\\20261016-004258\\frozen-1.4\\run1\\Cooperator.Framework.Utility.dll",
+          "relative_target": ".\\Cooperator.Framework.Utility.dll"
+        },
+        {
+          "project": "CooperatorModeler",
+          "target": "D:\\Cooperator\\2.0\\artifacts\\20261016-004258\\frozen-1.4\\run1\\CooperatorModeler.exe",
+          "relative_target": ".\\CooperatorModeler.exe"
+        }
+      ]
+    },
+    {
+      "path": "1.4/Tools/ConnectionStringEncriptor/ConnectionStringEncriptor.sln",
+      "reason": "Segundo ejecutable del 1.4 congelado; se registra en el inventario de identidad.",
+      "projects": [
+        {
+          "project": "Cooperator.Framework.Library",
+          "target": "D:\\Cooperator\\2.0\\artifacts\\20261016-004258\\frozen-1.4\\run1\\Cooperator.Framework.Library.dll",
+          "relative_target": ".\\Cooperator.Framework.Library.dll"
+        },
+        {
+          "project": "ConnectionStringEncriptor",
+          "target": "D:\\Cooperator\\2.0\\artifacts\\20261016-004258\\frozen-1.4\\run1\\ConnectionStringEncriptor.exe",
+          "relative_target": ".\\ConnectionStringEncriptor.exe"
+        }
+      ]
+    }
+  ],
+  "assemblies": [
+    {
+      "name": "ConnectionStringEncriptor",
+      "file_name": "ConnectionStringEncriptor.exe",
+      "assembly_version": "1.4.5.0",
+      "file_version": "1.4.5.0",
+      "public_key_token": null,
+      "sha256": "9E576E4021DCB43F6FE2DD64C749B3F87C068A542FE8864EE2562A44A463DFD8",
+      "relative_path": ".\\ConnectionStringEncriptor.exe",
+      "configuration": "Release"
+    },
+    {
+      "name": "Cooperator.Framework.Core",
+      "file_name": "Cooperator.Framework.Core.dll",
+      "assembly_version": "1.4.5.0",
+      "file_version": "1.4.5.0",
+      "public_key_token": "8f7f403e20325116",
+      "sha256": "1857309FF7F95DCE1EBE1EADF70F45DC97967771C94353797D3F37D9B2B2D02D",
+      "relative_path": ".\\Cooperator.Framework.Core.dll",
+      "configuration": "Release"
+    },
+    {
+      "name": "Cooperator.Framework.Data",
+      "file_name": "Cooperator.Framework.Data.dll",
+      "assembly_version": "1.4.5.0",
+      "file_version": "1.4.5.0",
+      "public_key_token": "8f7f403e20325116",
+      "sha256": "F6F806D6EB8FF794E3781AFD92F42F9E8997D411B474074BEA4D0791AAA1F0CA",
+      "relative_path": ".\\Cooperator.Framework.Data.dll",
+      "configuration": "Release"
+    },
+    {
+      "name": "Cooperator.Framework.Library",
+      "file_name": "Cooperator.Framework.Library.dll",
+      "assembly_version": "1.4.5.0",
+      "file_version": "1.4.5.0",
+      "public_key_token": "8f7f403e20325116",
+      "sha256": "D650E9355D8FDBDF97C30D2060E14425A83E14342A43F0CCCC9FC3CE233F7EEC",
+      "relative_path": ".\\Cooperator.Framework.Library.dll",
+      "configuration": "Release"
+    },
+    {
+      "name": "Cooperator.Framework.Utility",
+      "file_name": "Cooperator.Framework.Utility.dll",
+      "assembly_version": "1.4.5.0",
+      "file_version": "1.4.5.0",
+      "public_key_token": null,
+      "sha256": "62373EF0302620672C399FB3FB15EC5ACBAD48E15F194B4371AF09C475569580",
+      "relative_path": ".\\Cooperator.Framework.Utility.dll",
+      "configuration": "Release"
+    },
+    {
+      "name": "CooperatorModeler",
+      "file_name": "CooperatorModeler.exe",
+      "assembly_version": "1.4.5.0",
+      "file_version": "1.4.5.0",
+      "public_key_token": null,
+      "sha256": "8DD87DBE462C6FD7E2F25B927C8519E9D9DA7A5A10EB2458EB6298FC935AAA3D",
+      "relative_path": ".\\CooperatorModeler.exe",
+      "configuration": "Release"
+    }
+  ],
+  "vendored_binaries": [
+    {
+      "file_name": "Cooperator.Framework.Core.dll",
+      "assembly_version": "1.4.5.0",
+      "public_key_token": "8f7f403e20325116",
+      "sha256": "CCC57742E497F3C019D390E383B919BB7DDC75E3E0F1273151F5ED1827CDB43E",
+      "matches_source_build": false,
+      "source_build_version": "1.4.5.0",
+      "note": "Mismo AssemblyVersion (1.4.5.0) que el build de la fuente, pero contenido DISTINTO: no es un artefacto del build reproducible. No adoptarlo como lista de identidad."
+    },
+    {
+      "file_name": "Cooperator.Framework.Data.dll",
+      "assembly_version": "1.4.5.0",
+      "public_key_token": "8f7f403e20325116",
+      "sha256": "D3D6EAC157426D916FA2875394701EC01834E47EC2A216CDE8B054D1C3C1B4E1",
+      "matches_source_build": false,
+      "source_build_version": "1.4.5.0",
+      "note": "Mismo AssemblyVersion (1.4.5.0) que el build de la fuente, pero contenido DISTINTO: no es un artefacto del build reproducible. No adoptarlo como lista de identidad."
+    },
+    {
+      "file_name": "Cooperator.Framework.Library.dll",
+      "assembly_version": "1.4.5.0",
+      "public_key_token": "8f7f403e20325116",
+      "sha256": "381C5E8EC3BEB762023DED332F198C814F702670560B9932D19D90E6B6B020E7",
+      "matches_source_build": false,
+      "source_build_version": "1.4.5.0",
+      "note": "Mismo AssemblyVersion (1.4.5.0) que el build de la fuente, pero contenido DISTINTO: no es un artefacto del build reproducible. No adoptarlo como lista de identidad."
+    },
+    {
+      "file_name": "Cooperator.Framework.Utility.dll",
+      "assembly_version": "1.3.3.0",
+      "public_key_token": null,
+      "sha256": "0BAC0845EA89AA03E769C4D814EFF1831A8A81BE5DFD29F81C0164F149A8FCAD",
+      "matches_source_build": false,
+      "source_build_version": "1.4.5.0",
+      "note": "Mismo AssemblyVersion (1.4.5.0) que el build de la fuente, pero contenido DISTINTO: no es un artefacto del build reproducible. No adoptarlo como lista de identidad."
+    }
+  ]
+}

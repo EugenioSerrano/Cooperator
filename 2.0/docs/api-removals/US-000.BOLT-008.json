@@ -1,0 +1,42 @@
+{
+  "bolt": "US-000.BOLT-008",
+  "bolt_ref": "devflow/functional/bolts/US-000.BOLT-008-resolucion-de-tipos-calificada.md",
+  "spec": "SPEC-261016-0034",
+  "spec_ref": "devflow/spec/SPEC-261016-0034-resolucion-de-tipos-calificada.md",
+  "spec_revision": 2,
+  "produced_by": "agent:dotnet-developer-agent",
+  "purpose": "Las rupturas de COMPORTAMIENTO que este Bolt introduce en el camino filas→objetos de Core: la identificación de un tipo por nombre simple deja de admitirse y un fallo deja de ser un silencio. No hay retiro de superficie pública (la forma del contrato que consume el código generado se preserva, ADR-005 §3.3), así que el vehículo es esta constancia y no el gate de API.",
+  "source_of_shape": "SPEC-261016-0034 §6/E.3 y §12; ADR-006 §3.1 (la unicidad de nombres se declara, no se hereda) y §3.3 (diagnósticos); ADR-008 §3.1 (los tres datos). Formato publicado por US-000.BOLT-028 (SPEC-261016-0047 §6/A.2).",
+  "entries": [
+    {
+      "id": "BOLT008-01",
+      "kind": "behavior-change",
+      "what": "La identificación del tipo de una columna del DataTable deja de reconstruir el nombre del tipo desde el ToString() de la reflexión (Substring(18, len-19) sobre el nombre de un Nullable) y de resolverlo después por NOMBRE SIMPLE con Type.GetType: ahora usa el TIPO DISPONIBLE (el PropertyType de la propiedad) y, para un Nullable<T>, su tipo subyacente resuelto por API (Nullable.GetUnderlyingType). La clasificación de una propiedad como de sistema o de negocio usa Type.Namespace en vez del formato del ToString() del tipo.",
+      "why": "ADR-006 §3.1 sobre el hallazgo F-47 (REV-001 §6 ítem 19): la unicidad del nombre de un tipo se DECLARA, no se hereda; Type.GetType con un nombre simple resuelve sólo contra el ensamblado llamador y el núcleo, de modo que el resultado del mapeo dependía de dónde vive el tipo (y de un Substring que asumía el formato de un nombre de reflexión). ADR-001 §3.2 declara que la resolución de tipos cambia de comportamiento entre runtimes: por eso la unicidad se declara.",
+      "replacement": "Nada que hacer en el consumidor para ENTRADAS VÁLIDAS: el comportamiento observable no cambia (la suite de caracterización corre antes y después sobre el corpus sin diferencias). Cambia el caso que hoy dependía de la casualidad: un Nullable de un tipo de otro ensamblado, que antes producía un DataColumn de tipo nulo (o resolvía si el tipo vivía en el ensamblado llamador), ahora resuelve por construcción con el tipo subyacente correcto.",
+      "next_step": "Si un componente emite nombres de tipo hacia este camino (plantillas/modelo), debe emitirlos CALIFICADOS (con su ensamblado): una forma no calificada es un hallazgo con dueño (Bolts de plantillas/modelo), no una tolerancia del resolutor.",
+      "owner_bolt": "US-000.BOLT-008",
+      "status": "executed-here",
+      "evidence": "TypeIdentificationTests (el Nullable de un tipo del ensamblado de pruebas resuelve por API y su nombre simple NO resuelve con Type.GetType), RealValuesOverCorpusTests (la columna del DataSet se crea con el tipo subyacente del Nullable y admite nulos) y la caracterización del Bolt 001 verde en la misma corrida."
+    },
+    {
+      "id": "BOLT008-02",
+      "kind": "behavior-change",
+      "what": "Un nombre de propiedad o de columna que no corresponde a ninguna propiedad del tipo deja de producir ArgumentException(\"<{0}> property not found.\") —que no nombraba ni el tipo ni el punto— y, en el gemelo del llenado del DataSet, deja de quedar tapado por un InvalidDataSetException genérico proveniente de un catch (Exception). Ahora los DOS puntos fallan con TypeResolutionException, que nombra el valor intentado (la propiedad o la columna), el tipo y el punto que lo pidió, y enumera las propiedades disponibles del tipo.",
+      "why": "ADR-006 §3.3 (diagnósticos) y el objeto del Bolt: el fallo deja de ser un silencio o un mensaje que obliga a depurar. Un nombre de tipo que llega de afuera, además, debe ser CALIFICADO: admitirlo reintroduciría la resolución implícita que ADR-006 §3.1 elimina.",
+      "replacement": "Capturar CoreException (la jerarquía del núcleo se conserva: TypeResolutionException deriva de CoreException) o corregir el nombre. El error genérico InvalidDataSetException queda SÓLO para lo que efectivamente es un desajuste de esquema del DataSet.",
+      "owner_bolt": "US-000.BOLT-008",
+      "status": "executed-here",
+      "evidence": "PropertyLookupDiagnosticsTests verifica los dos puntos (el comparador de orden y el gemelo del llenado del DataSet) con el valor, el tipo y el origen en la excepción; Type.GetType y GetProperty dejaron de usarse en el camino (NoImplicitResolutionTests, control de 0 resolución implícita)."
+    }
+  ],
+  "registered_obligations": [
+    {
+      "id": "BOLT008-OBL-01",
+      "obligation": "El corpus de modelos de prueba (2.0/tests/fixtures/model-corpus/**) que la fase E usa como insumo no está en el árbol: lo dejan los Bolts 002/004, y el Bolt 002 está bloqueado.",
+      "owner": "US-000.BOLT-002 y US-000.BOLT-004",
+      "why": "SPEC-261016-0034 §5 lo declara prerrequisito de la verificación de los valores reales y §15 #9 prohíbe rellenar el hueco con una suposición: el caso RealValuesOverCorpusTests DECLARA su ausencia y verifica sobre los tipos del propio framework.",
+      "evidence": "RealValuesOverCorpusTests.The_model_corpus_state_is_declared_and_the_inventory_carries_the_owner_rule; el inventario registra la regla del hallazgo con dueño."
+    }
+  ]
+}

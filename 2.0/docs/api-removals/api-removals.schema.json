@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cooperator.local/2.0/docs/api-removals/api-removals.schema.json",
+  "title": "Fragmento del registro de rupturas de la 2.0 (api-removals/<BOLT>.json)",
+  "description": "SPEC-261016-0047 §6/A.2 y AC-3. Un archivo por Bolt que rompe superficie; una entrada por ruptura con los tres datos obligatorios de ADR-008 §3.1. El validador del arnés (MigrationNotesCoverageTests) implementa estas mismas reglas y comprueba que las dos definiciones coincidan: este documento es la forma publicada, el validador es su ejecución.",
+  "type": "object",
+  "required": ["bolt", "entries"],
+  "entries": [],
+  "_interop": "SPEC-261016-0047 \u00a76/E: esta clave es inerte (JSON Schema ignora las palabras clave que no conoce) y existe para que los lectores de fragmentos que recorren api-removals/*.json no interpreten ESTE archivo como un fragmento. El esquema es el formato publicado, no un fragmento.",
+  "properties": {
+    "bolt": {
+      "type": "string",
+      "pattern": "^US-[0-9]{3}\\.BOLT-[0-9]{3}$",
+      "description": "El Bolt responsable del fragmento (dueño por defecto de sus entradas)."
+    },
+    "bolt_ref": { "type": "string" },
+    "spec": { "type": "string" },
+    "spec_ref": { "type": "string" },
+    "spec_revision": { "type": "integer", "minimum": 1 },
+    "produced_by": { "type": "string" },
+    "produced_at": { "type": "string" },
+    "purpose": { "type": "string" },
+    "source_of_shape": { "type": "string" },
+    "scanned_contract": { "type": ["string", "array", "object"] },
+    "escape_hatch": {
+      "type": "object",
+      "description": "El registro del escape-hatch de ADR-008 §3.6 (AC-6): las excepciones con sus cinco criterios, o la decisión negativa con su constancia."
+    },
+    "registered_obligations": { "type": ["array", "object", "string"] },
+    "harness_guard_correction": { "type": "object" },
+    "harness_assertion_correction": { "type": "object" },
+    "surviving_capability": { "type": ["array", "object", "string"] },
+    "contract": { "type": "string" },
+    "notes": { "type": ["array", "string"] },
+    "entries": {
+      "type": "array",
+      "description": "Una entrada por ruptura. Un fragmento sin rupturas es válido: entries puede ser vacío.",
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "vocabulary": {
+      "description": "El vocabulario publicado. El validador del arnés compara estas listas con sus propias tablas (caso de esquema): el formato y su validador no pueden derivar.",
+      "kind": {
+        "type": "string",
+        "enum": [
+          "method-removed",
+          "member-removed",
+          "member-added",
+          "signature-changed",
+          "type-removed",
+          "type-not-ported",
+          "namespace-and-assembly-move",
+          "type-split",
+          "base-type-change",
+          "coupling-removal",
+          "attribute-removal",
+          "serialization-removal",
+          "serialization-surface-removed",
+          "platform-trace-removed",
+          "behavior-change",
+          "build-policy",
+          "deferred-obligation",
+          "deprecation"
+        ]
+      },
+      "class": {
+        "type": "string",
+        "enum": ["api_removal", "behavior_change", "deprecation"]
+      },
+      "memberScoped": {
+        "description": "kinds cuyo objeto es un MIEMBRO de un tipo existente: exigen type, member y signature (AC-3: «api_removal sin firma» se rechaza). El corpus fija cuáles: las entradas de serialización declaran el tipo completo (atributo + constructor protegido), no un miembro suelto, y por eso no están acá.",
+        "enum": ["method-removed", "member-removed", "member-added", "signature-changed"]
+      }
+    },
+    "entry": {
+      "type": "object",
+      "required": ["id", "kind", "what", "why", "replacement", "evidence"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^BOLT[0-9]{3}-[0-9]{2}$",
+          "description": "Convención BOLT<NNN>-<NN>."
+        },
+        "kind": { "$ref": "#/$defs/vocabulary/kind" },
+        "class": { "$ref": "#/$defs/vocabulary/class" },
+        "surface": { "type": "string", "enum": ["public", "protected", "internal", "private"] },
+        "type": { "type": "string" },
+        "member": { "type": "string" },
+        "signature": { "type": "string" },
+        "what": {
+          "type": "string",
+          "minLength": 20,
+          "description": "(1) Qué desaparece: tipo, miembro y firma exacta, o el comportamiento que cambia con su alcance."
+        },
+        "why": {
+          "type": "string",
+          "minLength": 20,
+          "description": "(2) Por qué: la decisión que lo ordena (ADR y cláusula)."
+        },
+        "replacement": {
+          "type": "string",
+          "minLength": 1,
+          "description": "(3) Con qué se reemplaza; o \"none\" con replacement_reason."
+        },
+        "replacement_reason": {
+          "type": "string",
+          "minLength": 20,
+          "description": "Obligatoria cuando replacement es \"none\": por qué el escenario no existe en el runtime objetivo (ADR-008 §3.3)."
+        },
+        "evidence": { "type": "string", "minLength": 10 },
+        "owner_bolt": { "type": "string", "pattern": "^US-[0-9]{3}\\.BOLT-[0-9]{3}$" },
+        "owner_bolts": { "type": "array", "items": { "type": "string" } },
+        "materialized_by": { "type": "string" },
+        "next_step": { "type": "string", "minLength": 20 },
+        "announce_window": { "type": "string", "minLength": 5 },
+        "status": { "type": "string" },
+        "note": { "type": "string" },
+        "cross_references": { "type": ["array", "string", "object"] }
+      },
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "$ref": "#/$defs/vocabulary/memberScoped" }, "surface": { "type": "string" } }, "required": ["kind", "surface"] },
+          "then": {
+            "required": ["type", "member", "signature"],
+            "properties": {
+              "type": { "minLength": 3 },
+              "member": { "minLength": 1 },
+              "signature": { "minLength": 10 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "replacement": { "const": "none" } }, "required": ["replacement"] },
+          "then": { "required": ["replacement_reason"] }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    ADR-001 §3.1 — mapa de paquetes: nombre, TFM único (netstandard2.1), firma.
+    SPEC §4 / §6.A.2: proyecto SIN FUENTES (su partición real es el Bolt de
+    ADR-003/ADR-009 y el contrato .coop2 su Bolt propio).
+    ADR-001 §3.4: System.Text.Json es su única dependencia de serialización.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Cooperator.Framework.Modeling</AssemblyName>
+    <RootNamespace>Cooperator.Framework.Modeling</RootNamespace>
+    <PackageId>Cooperator.Framework.Modeling</PackageId>
+    <IsPackable>true</IsPackable>
+    <Description>Modelo de datos y metadatos de Cooperator (contrato .coop2).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+</Project>

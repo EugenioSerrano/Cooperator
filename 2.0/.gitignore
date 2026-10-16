@@ -1,0 +1,18 @@
+# Exclusiones locales del árbol 2.0 (SPEC §6.A.1).
+# Las SALIDAS de build no son evidencia gobernada y no deben ensuciar el árbol;
+# la evidencia versionada vive en tests/fixtures/** (ADR-008 §5, SPEC §14).
+
+bin/
+obj/
+artifacts/
+TestResults/
+.vs/
+*.user
+*.suo
+*.trx
+*.coverage
+*.log
+
+# Restore de herramientas: el manifiesto (2.0/.config/dotnet-tools.json) SÍ se versiona;
+# los paquetes restaurados por él, no.
+.config/dotnet-tools.json.bak

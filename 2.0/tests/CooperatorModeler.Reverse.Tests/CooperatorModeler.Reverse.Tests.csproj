@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC-261016-0027 6/B.1 y 8.1: la suite hermetica del reverse.
+
+    Cubre, sin base de datos: la resolucion de la cadena de conexion desde el contrato de configuracion (con dobles
+    del contrato y del resolutor) y las comprobaciones estaticas del Bolt (0 herencia de la capa de datos, 0
+    referencias para sostenerla, 0 segundas tablas de mapeo, el inventario de consultas de esquema intacto y las
+    cuatro llamadas cruzadas calificadas).
+
+    TFM net10.0-windows: el componente bajo prueba es del tooling (net10.0-windows, SPEC 6/D.1). El resto del marco
+    lo fija el Bolt 001 (Directory.Packages.props) y el proyecto queda bajo Nullable=enable +
+    TreatWarningsAsErrors=true, como el resto del arbol.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>CooperatorModeler.Reverse.Tests</RootNamespace>
+    <UseMicrosoftTestingPlatformRunner>false</UseMicrosoftTestingPlatformRunner>
+    <TestingPlatformDotnetTestSupport>false</TestingPlatformDotnetTestSupport>
+    <NoWarn>$(NoWarn);CA1707;CA2007</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CooperatorModeler\CooperatorModeler.csproj" />
+  </ItemGroup>
+
+</Project>

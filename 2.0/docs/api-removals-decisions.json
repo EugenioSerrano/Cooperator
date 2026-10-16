@@ -1,0 +1,107 @@
+{
+  "kind": "decision-map",
+  "spec": "SPEC-261016-0047",
+  "spec_revision": 1,
+  "produced_by": "agent:dotnet-developer-agent",
+  "purpose": "El mapa del registro: qué cláusula de qué decisión del ciclo ordena un cambio de comportamiento, una deprecación o una ruptura de superficie, y qué la cubre — una entrada de un fragmento, o un Bolt dueño cuando la ruptura está decidida y todavía no ejecutada (la obligación de registrarla vive en el Bolt que la ejecuta, ADR-008 §3.1). Este archivo NO es un fragmento: los fragmentos son `US-*.json`. El arnés verifica que cada cláusula de las decisiones listadas acá exista en su ADR, y que ninguna entrada no atributiva cite una cláusula ausente.",
+  "source_of_shape": "SPEC-261016-0047 §6/A.1 (el mapa área ↔ decisión), verificado contra los ADRs vigentes del proyecto (§6/C.2). El SPEC lista siete áreas y no incluye ADR-006; este registro agrega su área —`carga-de-ensamblados-y-providers-lazy`— porque ADR-006 está `accepted`, declara cambios de comportamiento y sus entradas ya existen (US-000.BOLT-005). No enmienda ningún ADR: agrega el lugar donde sus entradas se leen.",
+  "areas": [
+    {
+      "id": "contenedor-y-empaquetado",
+      "title": "Contenedor y empaquetado: layout, coexistencia, naming/versionado y las features de plataforma",
+      "adrs": ["ADR-001"]
+    },
+    {
+      "id": "formato-del-modelo",
+      "title": "Formato del modelo: lo que el `.coop2` deja de transportar y las deprecaciones del corpus legacy",
+      "adrs": ["ADR-002"]
+    },
+    {
+      "id": "conjuntos-de-plantillas",
+      "title": "Conjuntos de plantillas: lo que el set deja de emitir",
+      "adrs": ["ADR-003"]
+    },
+    {
+      "id": "configuracion-y-cache",
+      "title": "Configuración y caché: catálogo de claves, prefijo de esquema y comportamiento del caché",
+      "adrs": ["ADR-004"]
+    },
+    {
+      "id": "capa-de-datos",
+      "title": "Capa de datos: proveedor único y superficie que pasa a `internal`",
+      "adrs": ["ADR-005"]
+    },
+    {
+      "id": "carga-de-ensamblados-y-providers-lazy",
+      "title": "Carga de ensamblados y providers Lazy: resolución, caché de providers y diagnóstico",
+      "adrs": ["ADR-006"]
+    },
+    {
+      "id": "criptografia",
+      "title": "Criptografía: retiro de la superficie estática y migración de los valores ya cifrados",
+      "adrs": ["ADR-007"]
+    },
+    {
+      "id": "superficie-de-serializacion",
+      "title": "Superficie de serialización: lo que se retira y qué lo reemplaza",
+      "adrs": ["ADR-008"]
+    }
+  ],
+  "clauses": [
+    { "adr": "ADR-001", "clause": "3.1", "declaration": "api_removal", "covered_by": ["US-000.BOLT-003"], "reason": "El layout disuelve `Cooperator.Framework.Utility` y mueve el grafo del modelo y el reverse a `Cooperator.Framework.Modeling`." },
+    { "adr": "ADR-001", "clause": "3.2", "declaration": "api_removal", "covered_by": ["US-000.BOLT-007"], "reason": "Retira `[Serializable]` y los constructores `(SerializationInfo, StreamingContext)` de la superficie pública (F-05)." },
+    { "adr": "ADR-001", "clause": "3.3", "declaration": "api_removal", "pending": { "owner_adr": "ADR-001", "evidence": "El retiro del gate por `PublicKeyToken` (`CheckForToken`, `GetAssemblyToken`, `GetEntryAssemblyTokenString` y su contraparte generada) no está registrado por ningún fragmento: su ejecución pertenece al Bolt que toque esa superficie." }, "reason": "El versionado y la firma no retiran nada por sí solos; lo que retira es el gate por token (F-10/OQ-003)." },
+    { "adr": "ADR-001", "clause": "3.4", "declaration": "none", "reason": "Fija el régimen de dependencias del árbol 2.0; no retira superficie del consumidor." },
+    { "adr": "ADR-001", "clause": "3.5", "declaration": "api_removal", "covered_by": ["US-000.BOLT-006", "US-000.BOLT-009"], "reason": "Elimina el export a Excel del framework y las features Windows-only de `Library` (Registro, P/Invoke de impersonation, EventLog, WMI)." },
+    { "adr": "ADR-001", "clause": "3.5", "declaration": "deprecation", "pending": { "owner_bolt": "US-000.BOLT-002", "evidence": "La deprecación de VB.NET y Oracle se le comunica al consumidor desde el reporte del migrador (ADR-002 §3.3), que todavía no está en el árbol." }, "reason": "VB.NET y Oracle dejan de ser soportados por la 2.0: es una deprecación con su ventana de aviso, no un retiro silencioso." },
+    { "adr": "ADR-001", "clause": "3.6", "declaration": "none", "reason": "Reserva las decisiones posteriores del ciclo; no declara una ruptura por sí misma." },
+
+    { "adr": "ADR-002", "clause": "3.1", "declaration": "behavior_change", "pending": { "owner_bolt": "US-000.BOLT-002", "evidence": "El migrador y el contrato `.coop2` todavía no están en el árbol (BOLT-002 en `blocked`); ningún fragmento registra lo que el modelo deja de transportar." }, "reason": "El `.coop2` deja de transportar el estado derivado, `haveChanges`/`parent`/`FileName` y la connection string: el consumidor deja de encontrarlos en el archivo." },
+    { "adr": "ADR-002", "clause": "3.2", "declaration": "none", "reason": "Define el migrador y su excepción acotada al `BinaryFormatter`; no retira superficie del consumidor." },
+    { "adr": "ADR-002", "clause": "3.3", "declaration": "deprecation", "pending": { "owner_bolt": "US-000.BOLT-002", "evidence": "Las deprecaciones del corpus legacy (VB.NET bloquea el archivo salvo `--allow-vb-to-csharp`; Oracle y el export a Excel se declaran ausentes) se reportan desde el migrador, que no está en el árbol." }, "reason": "Depreca el alcance VB.NET/Oracle/Excel del corpus legacy, con paso siguiente obligatorio: los artefactos VB ya generados se regeneran con el motor 2.0." },
+    { "adr": "ADR-002", "clause": "3.4", "declaration": "none", "reason": "Fija la interlocución con ADR-001 y ADR-003; no declara una ruptura propia." },
+
+    { "adr": "ADR-003", "clause": "3.1", "declaration": "behavior_change", "pending": { "owner_adr": "ADR-003", "evidence": "El motor y su set de plantillas todavía no están en el árbol; ningún fragmento registra sus artefactos." }, "reason": "Las entidades generadas pasan a ser POCOs sin `[Serializable]`/`SerializationInfo` y desaparecen los scriptors: lo que el consumidor recibe generado cambia." },
+    { "adr": "ADR-003", "clause": "3.2", "declaration": "none", "reason": "Define la superficie del CLI; es capacidad nueva, no ruptura." },
+    { "adr": "ADR-003", "clause": "3.3", "declaration": "behavior_change", "pending": { "owner_adr": "ADR-003", "evidence": "Sin motor en el árbol, el cambio no está materializado ni registrado por ningún fragmento." }, "reason": "Los artefactos dejan de llevar la fecha de generación y pasan a escribirse sólo si cambian: el consumidor deja de ver esa cabecera y gana idempotencia." },
+    { "adr": "ADR-003", "clause": "3.4", "declaration": "behavior_change", "pending": { "owner_adr": "ADR-003", "evidence": "Sin motor en el árbol, la regla de propiedad no está materializada ni registrada." }, "reason": "La regla de propiedad pasa a ser incondicional: los archivos editables nunca se sobrescriben (antes el modo completo sí lo hacía)." },
+    { "adr": "ADR-003", "clause": "3.5", "declaration": "none", "reason": "Ubicación, versionado y override de plantillas: capacidad nueva." },
+    { "adr": "ADR-003", "clause": "3.6", "declaration": "none", "reason": "Interplay con ADR-001/ADR-002 y el Modeler; no declara una ruptura propia." },
+
+    { "adr": "ADR-004", "clause": "3.1", "declaration": "behavior_change", "pending": { "owner_adr": "ADR-004", "evidence": "El `ICacheProvider` de `Data` todavía no está en el árbol y ningún fragmento registra el TTL." }, "reason": "El caché de colecciones pasa a tener TTL (antes no expiraba nunca) y, con un adaptador compartido, el alcance pasa a ser entre instancias: el ADR lo declara explícitamente como cambio de comportamiento a documentar." },
+    { "adr": "ADR-004", "clause": "3.2", "declaration": "behavior_change", "covered_by": ["US-000.BOLT-011"], "reason": "El framework deja de leer y de escribir la configuración de su host y el consumo pasa al catálogo de claves." },
+    { "adr": "ADR-004", "clause": "3.3", "declaration": "behavior_change", "covered_by": ["US-000.BOLT-011"], "reason": "La cadena de conexión declara su esquema con un prefijo obligatorio y se elimina la detección por substrings y el `Dictionary` estático." },
+    { "adr": "ADR-004", "clause": "3.4", "declaration": "behavior_change", "pending": { "owner_adr": "ADR-003", "evidence": "El set de plantillas y su bootstrap todavía no están en el árbol; el ADR-004 §3.4 atribuye el lector del archivo al Bolt del set." }, "reason": "Las apps generadas pasan de `App.config` a `appsettings.json` + entorno con precedencia explícita: el arranque de cada app migrada cambia una vez." },
+    { "adr": "ADR-004", "clause": "3.5", "declaration": "none", "reason": "Es el vencimiento de una excepción transitoria de dependencia, no una ruptura del consumidor." },
+    { "adr": "ADR-004", "clause": "3.6", "declaration": "none", "reason": "Interplay con ADR-001/ADR-002/ADR-003; no declara una ruptura propia." },
+
+    { "adr": "ADR-005", "clause": "3.1", "declaration": "behavior_change", "pending": { "owner_adr": "ADR-005", "evidence": "El acceso a datos todavía no está en el árbol (`Data` sólo tiene sus excepciones) y ningún fragmento registra el cambio de proveedor." }, "reason": "Provider único `Microsoft.Data.SqlClient`: `Encrypt=Mandatory` por defecto, cambios en `DbType.Time`/`DbType.Date` y namespace nuevo — comportamientos que la migración debe absorber." },
+    { "adr": "ADR-005", "clause": "3.2", "declaration": "behavior_change", "pending": { "owner_adr": "ADR-005", "evidence": "Sin acceso a datos en el árbol, los casts y las esperas activas siguen sin retirarse y ningún fragmento lo registra." }, "reason": "Se retiran los casts `Db*`→`Sql*` y las esperas activas; la conversión pasa a un punto único con excepción tipada (fallo temprano en vez de `InvalidCastException` a mitad de operación)." },
+    { "adr": "ADR-005", "clause": "3.3", "declaration": "api_removal", "pending": { "owner_adr": "ADR-005", "evidence": "No hay `SqlHelper` en el árbol 2.0 todavía y ningún fragmento registra su paso a `internal`." }, "reason": "`SqlHelper` y `SqlHelperParameterCache` pasan a `internal`: el ADR lo declara ruptura de superficie frente a 1.4." },
+    { "adr": "ADR-005", "clause": "3.4", "declaration": "none", "reason": "Cambios de implementación de la caché de metadata y corrección del cierre de conexiones ajenas: sin ruptura del consumidor." },
+    { "adr": "ADR-005", "clause": "3.5", "declaration": "none", "reason": "Alineación con la decisión de criptografía; no decide por sí misma." },
+    { "adr": "ADR-005", "clause": "3.6", "declaration": "behavior_change", "pending": { "owner_adr": "ADR-005", "evidence": "El reverse y las clases base del consumidor todavía no están en el árbol; ningún fragmento lo registra." }, "reason": "El reverse deja de heredar de `BaseRule` y las excepciones genéricas pasan a tipadas: cambia el lado de datos de `BaseRule`/`BaseGateway`." },
+
+    { "adr": "ADR-006", "clause": "3.1", "declaration": "behavior_change", "covered_by": ["US-000.BOLT-005"], "reason": "La resolución de providers Lazy pasa a nombre calificado con hook explícito del host y sin carga por ruta." },
+    { "adr": "ADR-006", "clause": "3.2", "declaration": "behavior_change", "covered_by": ["US-000.BOLT-005"], "reason": "El caché de providers cambia de forma y de alcance." },
+    { "adr": "ADR-006", "clause": "3.3", "declaration": "behavior_change", "covered_by": ["US-000.BOLT-005"], "reason": "Los errores de resolución pasan de excepciones genéricas a errores tipados con causa concreta." },
+    { "adr": "ADR-006", "clause": "3.4", "declaration": "none", "reason": "Interplay con otros ADRs; no declara una ruptura propia." },
+
+    { "adr": "ADR-007", "clause": "3.1", "declaration": "api_removal", "covered_by": ["US-000.BOLT-022"], "reason": "`Cryptography.Encrypt(string)`/`Decrypt(string)` y el cifrado estático con clave implícita desaparecen de la superficie pública (ejecutado por el Bolt 022, que además retira el tipo completo con su material de clave y sus primitivas legacy)." },
+    { "adr": "ADR-007", "clause": "3.2", "declaration": "none", "reason": "Fija el régimen de claves (provisión y rotación) para la superficie nueva; no retira nada." },
+    { "adr": "ADR-007", "clause": "3.3", "declaration": "behavior_change", "pending": { "owner_bolt": "US-000.BOLT-023", "evidence": "La migración de los valores ya cifrados, la inspección y la rotación como operación son del Bolt 023 (SPEC-261016-0035 §4); el Bolt 022 entregó el estándar y su fragmento lo declara como paso siguiente obligatorio." }, "reason": "Los valores ya cifrados de 1.4 se migran con procedimiento (clasificar, validar, re-proteger, respaldar, registrar) y lo no ASCII queda declarado no migrable: ruptura con reemplazo procedimental." },
+    { "adr": "ADR-007", "clause": "3.4", "declaration": "none", "reason": "Estándar de primitivas del árbol; sus efectos sobre el consumidor están en §3.1 y §3.3." },
+    { "adr": "ADR-007", "clause": "3.5", "declaration": "behavior_change", "covered_by": ["US-000.BOLT-024"], "reason": "Las herramientas protegen escribiendo un valor aesgcm: con la clave activa: el encriptor de escritorio sobrevive como shell delgado sobre el mismo motor y el comando del CLI es aditivo (ejecutado por el Bolt 024 para el shell)." },
+    { "adr": "ADR-007", "clause": "3.6", "declaration": "none", "reason": "Declara alcances excluidos; no retira superficie." },
+
+    { "adr": "ADR-008", "clause": "3.1", "declaration": "none", "reason": "Declara la política y el procedimiento de documentación; las rupturas concretas las ordena §3.2 y las ejecuta cada Bolt." },
+    { "adr": "ADR-008", "clause": "3.2", "declaration": "api_removal", "covered_by": ["US-000.BOLT-007", "US-000.BOLT-003"], "reason": "El `[Serializable]` de `BaseObject` y de las 35 excepciones del framework, y el retiro del estado serializado del grafo al migrarlo como POCOs." },
+    { "adr": "ADR-008", "clause": "3.2", "declaration": "api_removal", "pending": { "owner_bolt": "US-000.BOLT-002", "evidence": "`Snapshot` vive en el Modeler 1.4 y el formato binario en el `.coop`; el migrador no está en el árbol y ningún fragmento lo registra." }, "reason": "`Snapshot` y el formato binario del modelo desaparecen con el `.coop2`." },
+    { "adr": "ADR-008", "clause": "3.3", "declaration": "api_removal", "covered_by": ["US-000.BOLT-007"], "reason": "El framework no expone ningún serializador y no hay payload que reemplazar: la entrada de reemplazo lo declara «sin reemplazo» con su razón." },
+    { "adr": "ADR-008", "clause": "3.4", "declaration": "none", "reason": "Regla de la línea 2.0 en adelante; su efecto 1.4→2.0 está en §3.2 y §3.3." },
+    { "adr": "ADR-008", "clause": "3.5", "declaration": "none", "reason": "Gobierna la evolución futura de la línea 2.0.x; no hay deprecación vigente todavía." },
+    { "adr": "ADR-008", "clause": "3.6", "declaration": "none", "reason": "Es el criterio de las excepciones: su registro va en la sección propia del escape-hatch (AC-6), no como una ruptura." },
+    { "adr": "ADR-008", "clause": "3.7", "declaration": "api_removal", "pending": { "owner_adr": "ADR-003", "evidence": "El set de plantillas todavía no está en el árbol: los `*.Auto.cs` no se emiten todavía y ningún fragmento registra el retiro." }, "reason": "Los artefactos generados dejan de emitir `[DataContract]`/`[CollectionDataContract]` — criterio vinculante del Bolt del set." },
+    { "adr": "ADR-008", "clause": "3.8", "declaration": "none", "reason": "Interplay con los demás ADRs; no declara una ruptura propia." }
+  ]
+}

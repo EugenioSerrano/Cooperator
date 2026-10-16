@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC §6.D.2 (corrida roja) y §14: par de fixtures SINTÉTICOS versionados.
+    Este lado es el CONTRACT del par: la superficie "buena". El lado
+    `BrokenFixture/` produce un ensamblado con la MISMA identidad (nombre,
+    versión, token) pero con una ruptura intencional — un miembro público
+    retirado y una firma alterada — para probar el gate de forma determinista y
+    hermética, sin mutar la línea base real ni inventar tipos del framework.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Cooperator.ApiCompatFixture</AssemblyName>
+    <RootNamespace>Cooperator.ApiCompatFixture</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <EnablePackageValidation>false</EnablePackageValidation>
+    <NoWarn>$(NoWarn);CA1822</NoWarn>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    ADR-001 §3.1 — mapa de paquetes: nombre, TFM único (netstandard2.1), firma.
+    SPEC §4 / §6.A.2: proyecto SIN FUENTES. El provider ADO.NET NO se declara
+    aquí: ADR-005 §3 asigna la elección de versión —con dos criterios de
+    aceptación, incluido un smoke test de conexión real— al Bolt del provider.
+    ADR-004 §3.5 ya venció la excepción transitoria de
+    `System.Configuration.ConfigurationManager`, así que ese paquete no entra.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>Cooperator.Framework.Data</AssemblyName>
+    <RootNamespace>Cooperator.Framework.Data</RootNamespace>
+    <PackageId>Cooperator.Framework.Data</PackageId>
+    <IsPackable>true</IsPackable>
+    <Description>Capa de acceso a datos de Cooperator (gateway, loader, cache).</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- SPEC-261016-0020 6/A.1 (ADR-005 3.1): unico provider ADO.NET; System.Data.SqlClient NO se referencia. -->
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- SPEC-261016-0013 rev.3 §6/B.4: la jerarquia de excepciones de Data deriva de la base abstracta
+         de Library (BaseException, §B.2) y esa direccion esta permitida por ADR-001 §3.1. Es la
+         UNICA arista que este Bolt agrega. -->
+    <ProjectReference Include="..\Cooperator.Framework.Library\Cooperator.Framework.Library.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    SPEC-261016-0027 8.2: la lane de INTEGRACION del reverse - la primera prueba de integracion que tiene (en 1.4
+    no tenia ninguna). Se escribe, se construye y se verifica estaticamente en este V-Bounce; la corrida pertenece
+    al ciclo de test de integracion del Bolt (despues de AITL-MEM-Approval) y su resultado queda como hecho en
+    integration_test_runs[] del manifiesto.
+
+    La base de esquema conocido la aprovisiona SchemaProvisioning.sql (comiteado: es el insumo declarado de las
+    expectativas) y la cadena la aporta el ENTORNO por variable: nunca vive en el repositorio.
+
+    TFM net10.0-windows: el componente bajo prueba es del tooling (SPEC 6/D.1).
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>CooperatorModeler.Reverse.Integration.Tests</RootNamespace>
+    <UseMicrosoftTestingPlatformRunner>false</UseMicrosoftTestingPlatformRunner>
+    <TestingPlatformDotnetTestSupport>false</TestingPlatformDotnetTestSupport>
+    <NoWarn>$(NoWarn);CA1707;CA2007</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\CooperatorModeler\CooperatorModeler.csproj" />
+  </ItemGroup>
+
+</Project>

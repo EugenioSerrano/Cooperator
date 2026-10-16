@@ -1,0 +1,75 @@
+{
+  "bolt": "US-000.BOLT-014",
+  "bolt_ref": "devflow/functional/bolts/US-000.BOLT-014-provider-de-datos.md",
+  "spec": "SPEC-261016-0020",
+  "spec_ref": "devflow/spec/SPEC-261016-0020-provider-de-datos.md",
+  "spec_revision": 4,
+  "produced_by": "agent:dotnet-developer-agent",
+  "purpose": "La constancia de la capa de datos: la ruptura de superficie del metodo publico retirado y los cambios de COMPORTAMIENTO del port (el retiro del cache del host, con su paso siguiente declarado). Es el insumo de las notas de migracion (Bolt 028) y la que cubre las diferencias de miembro que el gate reporta para el ensamblado Data.",
+  "source_of_shape": "SPEC-261016-0020 6/E.2, 6/E.3 y 6/C.6; el aviso de frontera y las adjudicaciones del AITL-MEM-Approval del V-Bounce N°2 (MEM-261016-0407 8.3/8.5). Formato publicado por US-000.BOLT-028 (SPEC-261016-0047 6/A.2).",
+  "entries": [
+    {
+      "id": "BOLT014-01",
+      "kind": "method-removed",
+      "surface": "public",
+      "type": "Cooperator.Framework.Data.BaseRule.InternalDBHelper",
+      "member": "SetConnectionStringValue",
+      "signature": "public void SetConnectionStringValue(string value)",
+      "what": "Desaparece el metodo publico que fijaba la cadena de conexion de la regla y la guardaba en el Dictionary estatico de la capa. Era la via paralela a la configuracion: el consumidor podia inyectar una cadena en memoria fuera del contrato.",
+      "why": "ADR-004 3.2/3.3 y ADR-005 3.5 (SPEC-261016-0020 6/D.2): la cadena la entrega el CONTRATO de configuracion portable, ya resuelta y con su prefijo de esquema validado; se eliminan el Dictionary estatico y la heuristica que inspeccionaba su contenido. Un camino paralelo de cadena contradice esa unica via. La ruptura no figuraba en la lista del SPEC: se declara aqui con su reemplazo (ADR-008 3.1).",
+      "replacement": "Fijar la configuracion por el contrato (Bolt 011): la implementacion de ICooperatorConfiguration que la app asigna a CooperatorSettings.Current aporta la cadena, y la capa la lee resuelta por GetConnectionString(nombre).",
+      "owner_bolt": "US-000.BOLT-014",
+      "status": "executed-here",
+      "evidence": "El gate de compatibilidad reporta la diferencia de miembro (CP0002) de SetConnectionStringValue contra la linea base 1.4, y esta entrada la cubre; el control DataLayerContractTests verifica que BaseRule no conserva el metodo ni el Dictionary."
+    },
+    {
+      "id": "BOLT014-02",
+      "kind": "behavior-change",
+      "what": "Los CUATRO puntos de cache de la capa dejan de usar el cache del host (System.Web.HttpContext): las colecciones de BaseGateway y BaseLoader, el timeout de comandos de SQLHelper y la metadata de parametros de SqlHelperParameterCache. Los puntos quedan SIN CACHE: cada GetAll/GetAllDictionary consulta la base; el timeout se lee del catalogo en cada uso; la metadata se descubre por operacion (SqlCommandBuilder.DeriveParameters). El paquete deja de arrastrar la plataforma web y puede ser netstandard2.1.",
+      "why": "SPEC-261016-0020 6/C.6 (ampliacion de alcance de la revision 3, sobre la medicion del V-Bounce N°1, MEM-261016-0343 9.1) y ADR-004 3.1 (la decision de cache del framework) mas ADR-001 5: el port no compila en netstandard2.1 con System.Web, asi que el retiro ES condicion de compilacion. No es la sustitucion del Bolt 013: no se introduce ICacheProvider ni una cache interina propia.",
+      "replacement": "Nada que hacer en el consumidor: el resultado observable de cada operacion es el mismo (los datos se leen de la base). El EFECTO es de rendimiento: mas consultas donde antes habia cache, y el timeout leido del catalogo (Cooperator:Data:CommandTimeoutSeconds, default documentado 30 s) en cada uso.",
+      "next_step": "La SUSTITUCION de los cuatro puntos por el contrato ICacheProvider (con sus regiones, su capa de entradas, sus TTL y la invalidacion por clave) es del US-000.BOLT-013, que ejecuta DESPUES de este Bolt (secuencia 014-ampliado -> 013).",
+      "owner_bolt": "US-000.BOLT-014",
+      "status": "executed-here",
+      "evidence": "DataLayerContractTests verifica 0 HttpContext, 0 System.Web, 0 claves legacy (Coop_DAL_/Cooperator_DAL_) y 0 esperas activas en los cinco archivos de la capa, y el build de Data en netstandard2.1 sin la referencia web."
+    },
+    {
+      "id": "BOLT014-03",
+      "kind": "behavior-change",
+      "what": "El gate por token de la capa pierde su bypass web: CheckForToken ya no retorna sin verificar cuando el host es web (el bypass leia el cache del host). Sin la plataforma web ese camino no puede existir.",
+      "why": "SPEC-261016-0020 6/C.6 (el bypass estaba en la lista de usos medidos de BaseGateway.cs) y ADR-001 3.3: el gate por PublicKeyToken esta retirado del framework (F-10/OQ-003) y su retiro es del US-000.BOLT-015, que no se toca aca.",
+      "replacement": "Ninguno: la verificacion que quedaba es la del gate retirado, que el Bolt 015 elimina por completo. Mientras exista, corre siempre (no hay camino que la saltee por ser web).",
+      "next_step": "El retiro completo del gate por token (CheckForToken y su contraparte generada) es del US-000.BOLT-015.",
+      "owner_bolt": "US-000.BOLT-014",
+      "status": "executed-here",
+      "evidence": "DataLayerContractTests: 0 HttpContext en BaseGateway.cs; el control de la capa incluye el archivo donde vivia el bypass."
+    },
+    {
+      "id": "BOLT014-04",
+      "kind": "behavior-change",
+      "what": "Cambios de comportamiento del PROVEEDOR que la migracion debe absorber: (a) Encrypt pasa a Mandatory por defecto y TrustServerCertificate sigue en false, asi que las conexiones contra servidores con certificado autofirmado empiezan a fallar; (b) un parametro con DbType.Time exige TimeSpan (con DateTime deja de funcionar) y DbType.Date trunca la parte horaria; (c) el namespace cambia en todos los tipos del proveedor, con mapeos puntuales (SqlDataRecord/SqlMetaData viven en Microsoft.Data.SqlClient.Server).",
+      "why": "ADR-005 3.1 (SPEC-261016-0020 6/E.1): el proveedor unico es Microsoft.Data.SqlClient y estos tres cambios son documentados por el proveedor y verificados en su guia de migracion.",
+      "replacement": "Para (a): arreglar el certificado del servidor o declarar explicitamente TrustServerCertificate=true / Encrypt=false en la cadena. Para (b): pasar TimeSpan en los parametros de hora y revisar los sitios que usan Date. Para (c): ajustar los using y los mapeos de namespace en el codigo del consumidor.",
+      "next_step": "Verificar los tres contra la base real en el CICLO de test de integracion del Bolt (ProviderBehaviorTests) y leerlos en las notas de migracion del Bolt 028.",
+      "owner_bolt": "US-000.BOLT-014",
+      "status": "executed-here",
+      "evidence": "ProviderBehaviorTests (lane de integracion, escrita y compilada en este V-Bounce; su corrida es del ciclo) y el test de armado de parametros de DataLayerContractTests."
+    }
+  ],
+  "registered_obligations": [
+    {
+      "id": "BOLT014-OBL-01",
+      "obligation": "La corrida del ciclo de test de integracion (smoke real contra SQL Server, hazard de la conexion del llamador, timeout aplicado y los cambios de comportamiento del proveedor) no se ejecuto: los cuatro archivos de la lane estan escritos y compilados, y la corrida pertenece al ciclo del Bolt, despues de AITL-MEM-Approval.",
+      "owner": "el ciclo de test de integracion del US-000.BOLT-014",
+      "why": "SPEC-261016-0020 5 y 8.2 (integration_test_plan applicable) y 15: si el entorno no esta disponible, el V-Bounce cierra con los tests escritos, construidos y verificados estaticamente, y el ciclo queda pendiente.",
+      "evidence": "2.0/tests/Cooperator.Framework.Data.Integration.Tests/ (4 archivos, Category=Integration) integrado al comando reproducible como suite data-integration."
+    },
+    {
+      "id": "BOLT014-OBL-02",
+      "obligation": "La invariante del arnes sobre el ConfigurationManager se ajusto (a peticion del revisor) para prohibir la DECLARACION DIRECTA y no fallar por la aparicion TRANSITIVA en el lock del provider autorizado; la revision de fondo de esa aparicion queda para el Bolt del arnes si el dueño lo pide.",
+      "owner": "US-000.BOLT-001 (arnes) o su sucesor, si el dueño decide revisarlo",
+      "why": "AITL-MEM-Approval del V-Bounce N°2 (MEM-261016-0407 8.3), adjudicacion 2 con alcance exacto: SOLO las dos aserciones de BuildInvariantsTests.",
+      "evidence": "BuildInvariantsTests.No_lock_file_pulls_configuration_manager: la prohibicion se aplica a las dependencias de tipo Direct."
+    }
+  ]
+}

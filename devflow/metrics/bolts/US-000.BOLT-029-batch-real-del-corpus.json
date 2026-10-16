@@ -1,0 +1,121 @@
+{
+  "schema_version": "5.0",
+  "bolt": {
+    "id": "US-000.BOLT-029",
+    "type": "non-functional",
+    "test_integration": "not-required",
+    "ref": "devflow/functional/bolts/US-000.BOLT-029-batch-real-del-corpus.md",
+    "sources": [
+      "devflow/functional/user-stories/US-000-non-functional.md",
+      "devflow/reviews/REV-001-analisis-migracion-cooperator.md",
+      "devflow/adrs/ADR-002-formato-coop2-y-migrador.md"
+    ],
+    "generation": {
+      "created_at": "2026-10-15T23:41:08-03:00",
+      "created_by": "human:eugenioserrano",
+      "runs": [
+        {
+          "tool": "opencode",
+          "provider": "deepseek",
+          "model": "deepseek/deepseek-flash",
+          "tokens": {
+            "input_uncached": null,
+            "input_cached_read": null,
+            "input_cache_write": null,
+            "output": null
+          },
+          "agent": "dotnet-architect-agent"
+        }
+      ],
+      "duration_seconds": null
+    },
+    "review_ready_at": "2026-10-16T00:12:35-03:00",
+    "review_started_at": "2026-10-16T00:12:35-03:00",
+    "acceptance": {
+      "review_ready_at": null,
+      "review_started_at": null
+    }
+  },
+  "spec_revisions": [
+    {
+      "revision": 1,
+      "ref": "devflow/spec/SPEC-261016-0050-batch-real-del-corpus.md",
+      "sources": [
+        "devflow/functional/bolts/US-000.BOLT-029-batch-real-del-corpus.md",
+        "devflow/reviews/REV-001-analisis-migracion-cooperator.md",
+        "devflow/adrs/ADR-002-formato-coop2-y-migrador.md"
+      ],
+      "git_commit": "6aa497f793cd3ab9d83c68db7ef2c1d80d3421d4",
+      "generation": {
+        "created_at": "2026-10-16T00:50:00-03:00",
+        "created_by": "human:eugenioserrano",
+        "runs": [
+          {
+            "tool": "opencode",
+            "provider": "deepseek",
+            "model": "deepseek/deepseek-flash",
+            "tokens": {
+              "input_uncached": null,
+              "input_cached_read": null,
+              "input_cache_write": null,
+              "output": null
+            },
+            "agent": "dotnet-developer-agent"
+          }
+        ],
+        "duration_seconds": null
+      },
+      "review_ready_at": "2026-10-16T00:53:53-03:00",
+      "review_started_at": "2026-10-16T00:53:53-03:00"
+    }
+  ],
+  "v_bounces": [],
+  "checkpoint_approvals": [
+    {
+      "checkpoint": "AITL-BOLT-READY-Approval",
+      "subject": {
+        "ref": "devflow/functional/bolts/US-000.BOLT-029-batch-real-del-corpus.md"
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "agent:dotnet-architect-reviewer-agent",
+          "role": "architect",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:dotnet-architect-reviewer-agent",
+          "role": "architect",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "decided_at": "2026-10-16T00:12:35-03:00"
+    },
+    {
+      "checkpoint": "AITL-SPEC-Approval",
+      "subject": {
+        "ref": "devflow/spec/SPEC-261016-0050-batch-real-del-corpus.md",
+        "revision": 1
+      },
+      "decision": "approved",
+      "decided_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "written_by": [
+        {
+          "actor": "agent:dotnet-developer-reviewer-agent",
+          "role": "dev_validator",
+          "model": "deepseek/deepseek-v4-pro"
+        }
+      ],
+      "decided_at": "2026-10-16T00:53:53-03:00"
+    }
+  ],
+  "integration_test_runs": []
+}
