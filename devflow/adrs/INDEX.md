@@ -21,7 +21,9 @@ for the decisions it records.
 
 | ID | Document | Description |
 |----|----------|-------------|
-| —  | —        | —           |
+| ADR-001 | [ADR-001-layout-y-empaquetado-cooperator-2.md](ADR-001-layout-y-empaquetado-cooperator-2.md) | Layout, empaquetado y compatibilidad de Cooperator 2.0 (paquetes/TFMs, firma, dependencias) |
+| ADR-002 | [ADR-002-formato-coop2-y-migrador.md](ADR-002-formato-coop2-y-migrador.md) | Formato `.coop2` (JSON canónico) y migrador `.coop` → `.coop2` (`net48`, CLI) |
+| ADR-003 | [ADR-003-motor-scriban-headless-y-cli.md](ADR-003-motor-scriban-headless-y-cli.md) | Motor de generación headless (Scriban) + CLI determinista |
 
 ## ❌ Rejected
 
